@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+main {
+    background-color:beige;
+}
+
+ion-icon {
+    color: #337CA0;
+}
+
+#info-icon {
+    vertical-align: middle;
+    padding-left: 8px;
+    padding-bottom: 4px;
+}
+
+#copy-icon {
+    color: gray;
+    margin-left: 3%;
+    padding: 0 1%;
+    font-size: 1.3rem;
+}
