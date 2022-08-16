@@ -1,6 +1,10 @@
-# Knox
+# Knox - a vault for your web2 passwords
 
-## Knox - Proposal
+## %knox
+
+Knox is a vault for your web2 passwords.
+
+## Proposal
 
 ### Purpose
 
@@ -10,10 +14,21 @@
 
 #### Milestone 1 - MVP
 
-- Create a list of links stored on my ship.
+- Through the web client, user can -
 
-#### Milestone 2 -
+  - generate a new password
+  - save a new entry (website, username, password)
+  - edit an entry (change username/password)
+  - delete an entry
 
+- Through the command launcher, user can -
+  - generate a new password
+  - get the password for a given website
+
+#### Milestone 2 - Web Extension
+
+- Stand alone extension - brings all the functionality of client to extension, plus
+  - extension will autopopulate username/password fields if on known website
 - Integrate with %docs
 
 ### Milestone 3 -
@@ -28,7 +43,7 @@ TODO: Add further documentation on beginning Hoon development
 
 ## UI
 
-Knox is built primarily using [React], [Typescript], and [Tailwind CSS]. [Vite] ensures that all code and assets are loaded appropriately, bundles the application for distribution and provides a functional dev environment.
+The Knox web client is built primarily using [React], [Typescript], and [Tailwind CSS]. [Vite] ensures that all code and assets are loaded appropriately, bundles the application for distribution and provides a functional dev environment.
 
 ### Getting Started
 
