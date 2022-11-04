@@ -25,7 +25,9 @@ export function App() {
     };
     init();
     // if init doesn't contain beenWelcomed === true, send to welcome
-    navigate("/apps/knox/welcome");
+    // this is for dev
+    if (!window.localStorage.getItem("skipWelcome"))
+      navigate("/apps/knox/welcome");
   }, []);
 
   const handleUpdate = (upd) => {

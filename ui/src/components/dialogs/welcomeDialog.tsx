@@ -7,10 +7,6 @@ export const WelcomeDialog = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("si", selectedIndex);
-  }, [selectedIndex]);
-
   return (
     <div className="flex flex-col justify-center w-[95%] sm:max-w-[60%] xl:max-w-[40%]">
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -69,7 +65,6 @@ export const WelcomeDialog = () => {
           </Tab.Panel>
           <Tab.Panel>Get Started</Tab.Panel>
           <div className="flex justify-end mb-4 mr-2">
-            {/* {selectedIndex !== 0 && ( */}
             <button
               disabled={selectedIndex === 0}
               className={`mx-2 ${selectedIndex === 0 ? `text-gray-300` : ""}`}
@@ -77,7 +72,6 @@ export const WelcomeDialog = () => {
             >
               back
             </button>
-            {/* )} */}
             <button
               className="mx-2"
               onClick={() =>
