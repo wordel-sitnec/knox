@@ -39,6 +39,7 @@ export function App() {
     <main className="flex justify-center min-h-screen sm:py-5">
       <Routes>
         <Route
+          // this was for reload problem, investigate
           path={`/apps/knox` || `/apps/knox/`}
           exact={true}
           element={<Vault />}
