@@ -4,9 +4,11 @@ import { TableBody } from "./tableBody";
 
 // mocks
 import * as passwords from "../mocks/passwords.json";
-import { InfoModal } from "./infoModal";
+import { InfoModal } from "./dialogs/infoModal";
+import { WelcomeModal } from "./dialogs/welcomeModal";
 
-export function Vault() {
+export function Vault(props) {
+  // const { hasAgreed } = props;
   const { data } = passwords;
   console.log("data", data);
 
@@ -21,7 +23,8 @@ export function Vault() {
 
   return (
     <>
-      <InfoModal open={showInfo} setOpen={setShowInfo} />
+      {/* <WelcomeModal /> */}
+      {/* <InfoModal open={showInfo} setOpen={setShowInfo} /> */}
       <div className="overflow-x-auto bg-white relative shadow-lg sm:rounded-lg min-w-[60%] xl:max-w-[40%] sm:h-screen80">
         <div className="flex p-4 bg-gray-900 justify-between align-middle">
           <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle">

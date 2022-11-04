@@ -6,13 +6,9 @@ export const InfoModal = (props) => {
   const { open, setOpen } = props;
 
   return (
-    <Dialog
-      className="bg-black opacity-50"
-      open={open}
-      onClose={() => setOpen(false)}
-    >
+    <Dialog className="opacity-50" open={open} onClose={() => setOpen(false)}>
       <div className="flex items-center bg-neutral-700 justify-center min-h-screen">
-        <Dialog.Overlay className="fixed inset-0 bg-neutral-700 border" />
+        <Dialog.Overlay className="fixed inset-0 bg-neutral-700 border min-h-50" />
         <div className="relative border bg-black rounded max-w-sm mx-auto p-8">
           <Dialog.Title className="text-xl">Title of dialog</Dialog.Title>
           <Dialog.Description>

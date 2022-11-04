@@ -12,6 +12,7 @@ module.exports = {
   },
   screens: {},
   variants: {
-    extend: {}
+    extend: {},
+    outline: ["focus"],
   },
 };
