@@ -7,6 +7,7 @@ import { Charges, ChargeUpdateInitial, scryCharges } from "@urbit/api";
 // components
 import { Vault } from "./components/vault";
 import { WelcomeDialog } from "./components/dialogs/welcomeDialog";
+import { Login } from "./components/dialogs/login";
 
 const api = new Urbit("", "", window.desk);
 api.ship = window.ship;
@@ -17,6 +18,7 @@ export function App() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const path = location.pathname;
 
   useEffect(() => {
     // get init from knox
@@ -30,6 +32,12 @@ export function App() {
       navigate("/apps/knox/welcome");
   }, []);
 
+  // this works, but annoying for dev. turn on for later testing and for prod
+  useEffect(() => {
+    if (!window.sessionStorage.getItem("secret") && !path.includes("welcome"))
+      navigate("/apps/knox/login");
+  }, [path]);
+
   const handleUpdate = (upd) => {
     if ("init" in upd) {
       console.log("init");
@@ -38,18 +46,18 @@ export function App() {
   };
 
   return (
-    <main className="flex justify-center min-h-screen sm:py-5">
+    <main className="flex justify-center h-screen">
       <Routes>
-        <Route
-          // this was for reload problem, investigate
-          path={`/apps/knox` || `/apps/knox/`}
-          exact={true}
-          element={<Vault />}
-        />
         <Route
           path="/apps/knox/welcome"
           exact={true}
           element={<WelcomeDialog />}
+        />
+        <Route path="/apps/knox/login" exact={true} element={<Login />} />
+        <Route
+          // this was for reload problem, investigate
+          path={`/apps/knox` || `/apps/knox/`}
+          element={<Vault />}
         />
       </Routes>
     </main>

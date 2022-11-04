@@ -76,7 +76,7 @@ export const WelcomeDialog = () => {
               className="mx-2"
               onClick={() =>
                 selectedIndex === 2
-                  ? navigate("/apps/knox")
+                  ? navigate("/apps/knox/")
                   : setSelectedIndex(selectedIndex + 1)
               }
             >
