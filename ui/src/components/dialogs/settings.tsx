@@ -6,10 +6,9 @@ export const Settings = (props) => {
   const { open, setOpen } = props;
 
   return (
-    <Dialog className="opacity-80" open={open} onClose={() => setOpen(false)}>
-      <div className="flex items-center bg-neutral-700 justify-center min-h-screen">
-        <Dialog.Overlay className="fixed inset-0 bg-neutral-700 border min-h-50" />
-        <div className="relative border bg-black rounded max-w-sm mx-auto p-8">
+    <Dialog open={open} onClose={() => setOpen(false)}>
+      <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
+        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] h-[35%] flex justify-center items-center shadow-lg pb-10">
           <Dialog.Title className="text-xl">Title of dialog</Dialog.Title>
           <Dialog.Description className="text-white">
             Settings here

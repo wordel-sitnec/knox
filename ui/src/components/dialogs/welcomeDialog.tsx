@@ -16,7 +16,7 @@ export const WelcomeDialog = () => {
               <div
                 className={
                   selected
-                    ? "rounded-t-md bg-white text-white border-t-4 border-l-4 border-r border-black focus:outline-none"
+                    ? "rounded-t-md bg-white text-white border-t-4 border-l-2 border-r border-black focus:outline-none"
                     : "bg-black text-black border-l border-r border-black"
                 }
               >
@@ -42,7 +42,7 @@ export const WelcomeDialog = () => {
               <div
                 className={
                   selected
-                    ? "rounded-t-md bg-white text-white border-t-4 border-l border-r-4 border-black"
+                    ? "rounded-t-md bg-white text-white border-t-4 border-l border-r-2 border-black"
                     : "bg-black text-black border-l border-r border-black"
                 }
               >
@@ -51,7 +51,7 @@ export const WelcomeDialog = () => {
             )}
           </Tab>
         </Tab.List>
-        <Tab.Panels className="border-l-4 border-r-4 border-b-4 border-black bg-white h-[45%] sm:h-1/2 px-8 pt-6 pb-4 flex flex-col justify-between">
+        <Tab.Panels className="border-l-2 border-r-2 border-b-2 border-black bg-white h-[45%] sm:h-1/2 px-8 pt-6 pb-4 flex flex-col justify-between">
           <Tab.Panel>
             Welcome to Knox, a vault for your web2 passwords. <br />
             Remember, urbit is not really secure. <br />

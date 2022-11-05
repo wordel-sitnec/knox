@@ -26,7 +26,11 @@ export function Vault(props) {
     <>
       <InfoModal open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
-      <div className="overflow-x-auto bg-white relative shadow-lg sm:rounded-lg min-w-[60%] xl:max-w-[40%] sm:h-screen80">
+      <div
+        className={`overflow-x-auto bg-white relative shadow-lg sm:rounded-lg min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-10 ${
+          showSettings ? "opacity-50" : ""
+        }`}
+      >
         <div className="flex p-4 bg-gray-900 justify-between align-middle">
           <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle">
             knox

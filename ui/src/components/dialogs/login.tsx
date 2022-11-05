@@ -53,7 +53,7 @@ export const Login = () => {
       }}
     >
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
-        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] h-[35%] flex justify-center items-center shadow-lg pb-10">
+        <div className="border-2 border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] h-[35%] flex justify-center items-center shadow-lg pb-10">
           <Dialog.Description>
             <form className="flex flex-col" onSubmit={handleSubmit}>
               <div className="flex flex-col m-2">
