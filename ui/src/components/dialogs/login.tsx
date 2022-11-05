@@ -17,6 +17,7 @@ export const Login = () => {
   }, [open]);
 
   const handleShowPassword = (e) => {
+    console.log("e", e);
     e.preventDefault();
     setShowPassword(!showPassword);
   };
@@ -57,7 +58,11 @@ export const Login = () => {
           <Dialog.Description>
             <form className="flex flex-col" onSubmit={handleSubmit}>
               <div className="flex flex-col m-2">
-                <button onClick={handleShowPassword} className="self-end">
+                <button
+                  type="button"
+                  onClick={handleShowPassword}
+                  className="self-end"
+                >
                   {showPassword ? "hide" : "show"}
                 </button>
                 <input
@@ -71,10 +76,11 @@ export const Login = () => {
               </div>
 
               <button
+                disabled={!secret}
                 className="border-black border-solid border rounded m-2"
                 type="submit"
               >
-                Confirm
+                set secret
               </button>
             </form>
           </Dialog.Description>
