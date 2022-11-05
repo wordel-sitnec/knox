@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
+import bcrypt from "bcrypt";
+
+const saltRounds = 10;
 
 export const Login = () => {
   const [open, setOpen] = useState(true);
@@ -12,16 +15,24 @@ export const Login = () => {
     if (!open) navigate("/apps/knox/");
   }, [open]);
 
+  const handleChange = (e) => {
+    setSecret(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
-    console.log("secret", secret);
-    window.sessionStorage.setItem("secret", secret);
+    storeSecret(e.target.value);
     navigate("/apps/knox/");
   };
 
-  const handleChange = (e) => {
-    setSecret(e.target.value);
+  const storeSecret = (s) => {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      bcrypt.hash(s, salt, function (err, hash) {
+        // handle error - snack?
+        if (err) console.log(err);
+        window.sessionStorage.setItem("secret", hash);
+      });
+    });
   };
 
   return (
@@ -33,9 +44,13 @@ export const Login = () => {
       className="relative z-50"
     >
       <div className="fixed inset-0 flex items-center justify-center h-screen pb-36">
-        <div className="border-4 border-black bg-white rounded-md min-w-1/4">
+        <div className="border-4 border-black bg-white rounded-md w-[95%] sm:w-[450px] h-[45%] justify-center">
           <Dialog.Description>
-            <form className="flex flex-col" onSubmit={handleSubmit}>
+            {/* why is this form not centered, stuff is centered in it */}
+            <form
+              className="flex flex-col w-[99%] sm:w-5/6 justify-center"
+              onSubmit={handleSubmit}
+            >
               <input
                 type="password"
                 name="secret"

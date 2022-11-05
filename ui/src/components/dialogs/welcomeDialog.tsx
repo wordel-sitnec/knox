@@ -8,7 +8,7 @@ export const WelcomeDialog = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col justify-center w-[95%] sm:max-w-[60%] xl:max-w-[40%]">
+    <div className="flex flex-col justify-center w-[95%] sm:w-[450px] xl:max-w-[40%]">
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <Tab.List>
           <Tab className="w-1/3">
@@ -51,7 +51,7 @@ export const WelcomeDialog = () => {
             )}
           </Tab>
         </Tab.List>
-        <Tab.Panels className="border-l-4 border-r-4 border-b-4 border-black bg-white h-[40%] sm:h-1/2 px-8 pt-6 pb-4 flex flex-col justify-between">
+        <Tab.Panels className="border-l-4 border-r-4 border-b-4 border-black bg-white h-[45%] sm:h-1/2 px-8 pt-6 pb-4 flex flex-col justify-between">
           <Tab.Panel>
             Welcome to Knox, a vault for your web2 passwords. <br />
             Remember, urbit is not really secure. <br />
