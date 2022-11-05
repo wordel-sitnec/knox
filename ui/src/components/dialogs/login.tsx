@@ -2,18 +2,24 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const saltRounds = 10;
 
 export const Login = () => {
   const [open, setOpen] = useState(true);
   const [secret, setSecret] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!open) navigate("/apps/knox/");
   }, [open]);
+
+  const handleShowPassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
   const handleChange = (e) => {
     setSecret(e.target.value);
@@ -21,19 +27,23 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    storeSecret(e.target.value);
+    window.sessionStorage.setItem("secret", secret);
     navigate("/apps/knox/");
   };
 
-  const storeSecret = (s) => {
-    bcrypt.genSalt(saltRounds, function (err, salt) {
-      bcrypt.hash(s, salt, function (err, hash) {
-        // handle error - snack?
-        if (err) console.log(err);
-        window.sessionStorage.setItem("secret", hash);
-      });
-    });
-  };
+  // below is working example, but I think I can just save in plain text?
+  //   const storeSecret = (s) => {
+  //     bcrypt.genSalt(saltRounds, function (err, salt) {
+  //       bcrypt.hash(s, salt, function (err, hash) {
+  //         // handle error - snack?
+  //         if (err) {
+  //           console.log(err);
+  //           return;
+  //         }
+  //         window.sessionStorage.setItem("secret", hash);
+  //       });
+  //     });
+  //   };
 
   return (
     <Dialog
@@ -41,26 +51,27 @@ export const Login = () => {
       onClose={() => {
         setOpen(false);
       }}
-      className="relative z-50"
     >
-      <div className="fixed inset-0 flex items-center justify-center h-screen pb-36">
-        <div className="border-4 border-black bg-white rounded-md w-[95%] sm:w-[450px] h-[45%] justify-center">
+      <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
+        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] h-[35%] flex justify-center items-center shadow-lg pb-10">
           <Dialog.Description>
-            {/* why is this form not centered, stuff is centered in it */}
-            <form
-              className="flex flex-col w-[99%] sm:w-5/6 justify-center"
-              onSubmit={handleSubmit}
-            >
-              <input
-                type="password"
-                name="secret"
-                value={secret}
-                placeholder="set your secret"
-                onChange={(e) => handleChange(e)}
-                className="text-black border border-black my-8 mx-12 p-1"
-              ></input>
+            <form className="flex flex-col" onSubmit={handleSubmit}>
+              <div className="flex flex-col m-2">
+                <button onClick={handleShowPassword} className="self-end">
+                  {showPassword ? "hide" : "show"}
+                </button>
+                <input
+                  type={!showPassword ? "password" : null}
+                  name="secret"
+                  value={secret}
+                  placeholder="set your secret"
+                  onChange={(e) => handleChange(e)}
+                  className="text-black border border-black p-1"
+                ></input>
+              </div>
+
               <button
-                className="border-black border-solid border rounded mb-8 mx-12"
+                className="border-black border-solid border rounded m-2"
                 type="submit"
               >
                 Confirm

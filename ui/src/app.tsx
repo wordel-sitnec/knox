@@ -57,6 +57,7 @@ export function App() {
         <Route
           // this was for reload problem, investigate
           path={`/apps/knox` || `/apps/knox/`}
+          exact={true}
           element={<Vault />}
         />
       </Routes>

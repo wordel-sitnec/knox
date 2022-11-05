@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
+import bcrypt from "bcryptjs";
 
 import { password } from "./password";
 import { EditButton } from "./editButton";
