@@ -1,10 +1,10 @@
 /-  *knox
-/+  default-agent, dbug
+/+  default-agent, dbug, agentio
 |%
 +$  versioned-state
   $%  state-0
   ==
-+$  state-0  [%0 =entries]
++$  state-0  [%0 =vault]
 +$  card  card:agent:gall
 --
 %-  agent:dbug
@@ -43,9 +43,10 @@
 ++  on-watch  
   |=  =path
   ^-  (quip card _this)
-  ?>  ?=([%vault ~] path)
-  :_  this
-  [%give %fact ~ ~ !>(`update`[%init entries])]~
+  ?>  (team:title our.bowl src.bowl)
+  ?+  path  (on-watch:def path)
+    [%updates ~] `this
+  ==
 ::
 ++  on-peek
   |=  =path
@@ -53,8 +54,8 @@
   ?+  path  (on-peek:def path)
     [%x %vault ~]  ``noun+!>(entries)
   ==
-++  on-arvo  on-arvo:def
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def
+++  on-arvo  on-arvo:def
 ++  on-fail  on-fail:def
 --

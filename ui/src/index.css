@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 main {
+    /* find a nice dark color for background */
+    /* themes in settings - dark mode, other themes */
+    /* use a %gora to log in - once permissions are more built in, pay to keep %gora on some subscription model,  */
     background-color: #D9D6D4;
-    /* background-color: aqua; */
+    /* background-color: darkslategrey; */
 }
 
 ion-icon {
