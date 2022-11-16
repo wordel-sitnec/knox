@@ -54,7 +54,10 @@
   ?>  (team:title our.bowl src.bowl)
   ?+  path  (on-peek:def path)
     [%x %generate ~]  ``noun+!>(eny.bowl)
+    :: .^(@ %gx /=knox=/generate/noun)
     [%x %init ~]  ``noun+!>([vault settings])
+    :: in dojo, first build knoxsur from /=knox=/sur/knox/hoon, then
+    :: .^([vault:knoxsur settings:knoxsur] %gx /=knox=/init/noun)
    ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def
