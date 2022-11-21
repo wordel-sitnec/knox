@@ -8,7 +8,7 @@
 ++  grab
   |%
   ++  noun  action
-  ++  json  from-js
+  ++  json  dejs-action
   --
 ++  grad  %noun
 --

@@ -3,7 +3,7 @@
 +$  username  @t
 +$  password  @t
 +$  entry  [=website =username =password]
-:: +$  setting  $:(@t @t)
++$  setting  [@t @t]
 :: poke actions
 +$  action
   $%  [%add =entry]
@@ -13,9 +13,10 @@
 +$  update
   %+  pair  @
   $%  action
-      [%vault list=(list entry)]
-::    [%settings list=(list setting)]
+      [%vault =(list entry)]
+      [%settings =(list setting)]
   ==
 :: types for agent state
 +$  vault  (list entry)
++$  settings  (list setting)
 --

@@ -4,7 +4,7 @@
 +$  versioned-state
   $%  state-0
   ==
-+$  state-0  [%0 =vault]
++$  state-0  [%0 =vault =settings]
 +$  card  card:agent:gall
 --
 %-  agent:dbug
@@ -31,29 +31,31 @@
   ^-  (quip card _this)
   ?>  ?=(%knox-action mark)
   =/  act  !<(action vase)
+  ~&  >>  "entry of action is {<+.act>}"
   ?-  -.act
       %add
-    ?:  =(our.bowl target.act)
-      `this(entries [entry.act entries])
     ?>  =(our.bowl src.bowl)
-    :_  this
-    [%pass /pokes %agent [target.act %knox] %poke mark vase]~
+    `this(vault [entry.act vault])
+     %del  !!
+     %edit  !!    
   ==
 ::
-++  on-watch  
-  |=  =path
-  ^-  (quip card _this)
-  ?>  (team:title our.bowl src.bowl)
-  ?+  path  (on-watch:def path)
-    [%updates ~] `this
-  ==
+++  on-watch  on-watch:def
+  :: |=  =path
+  :: ^-  (quip card _this)
+  :: ?>  (team:title our.bowl src.bowl)
+  :: ?+  path  (on-watch:def path)
+  ::   [%updates ~] `this
+  :: ==
 ::
 ++  on-peek
   |=  =path
   ^-  (unit (unit cage))
+  ?>  (team:title our.bowl src.bowl)
   ?+  path  (on-peek:def path)
-    [%x %vault ~]  ``noun+!>(entries)
-  ==
+    [%x %generate ~]  ``noun+!>(eny.bowl)
+    [%x %init ~]  ``noun+!>([vault settings])
+   ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def
 ++  on-arvo  on-arvo:def
