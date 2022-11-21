@@ -31,13 +31,18 @@
   ^-  (quip card _this)
   ?>  ?=(%knox-action mark)
   =/  act  !<(action vase)
+  ~&  >>  "that action was a {<-.act>}"
   ~&  >>  "entry of action is {<+.act>}"
   ?-  -.act
       %add
     ?>  =(our.bowl src.bowl)
     `this(vault [entry.act vault])
-     %del  !!
-     %edit  !!    
+      ::
+      %del
+    ?>  =(our.bowl src.bowl)
+    `this(vault (oust [(need (find `(list)`[entry.act]~ vault)) 1] vault))
+      ::
+      %edit  !!    
   ==
 ::
 ++  on-watch  on-watch:def
