@@ -32,17 +32,21 @@
   ?>  ?=(%knox-action mark)
   =/  act  !<(action vase)
   ~&  >>  "that action was a {<-.act>}"
-  ~&  >>  "entry of action is {<+.act>}"
   ?-  -.act
       %add
     ?>  =(our.bowl src.bowl)
-    `this(vault [entry.act vault])
+    =/  id  (~(rad og eny:bowl) (pow 2 256))
+    ?:  (~(has by vault) id)
+      `this(vault (~(put by vault) (add id 1) entry.act)) :: if this doesn't prevent collision then it wasn't meant to be
+    `this(vault (~(put by vault) id entry.act))
       ::
       %del
     ?>  =(our.bowl src.bowl)
-    `this(vault (oust [(need (find `(list)`[entry.act]~ vault)) 1] vault))
+    `this(vault (~(del by vault) id.act))
       ::
-      %edit  !!    
+      %edit
+    ?>  =(our.bowl src.bowl)
+    `this(vault (~(put by vault) id.act entry.act))
   ==
 ::
 ++  on-watch  on-watch:def

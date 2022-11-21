@@ -2,21 +2,24 @@
 +$  website   @t
 +$  username  @t
 +$  password  @t
-+$  entry  [=website =username =password]
++$  updated   @da
++$  id        @ud  :: change this to dif type
++$  entry  [=website =username =password =updated]
 +$  setting  [@t @t]
 :: poke actions
 +$  action
   $%  [%add =entry]
-      [%edit =entry]
-      [%del =entry]
+      [%edit =id =entry]
+      [%del =id]
   ==
 +$  update
   %+  pair  @
   $%  action
-      [%vault =(list entry)]
-      [%settings =(list setting)]
+      :: idk if this is right but it compiles for now
+      [%vault =vault] 
+      [%settings =settings]
   ==
 :: types for agent state
-+$  vault  (list entry)
++$  vault  (map id entry)
 +$  settings  (list setting)
 --
