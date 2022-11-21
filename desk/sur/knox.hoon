@@ -8,8 +8,8 @@
 +$  setting  [@t @t]
 :: poke actions
 +$  action
-  $%  [%add =entry]
-      [%edit =id =entry]
+  $%  [%add =website =username =password]
+      [%edit =id =website =username =password]
       [%del =id]
   ==
 +$  update

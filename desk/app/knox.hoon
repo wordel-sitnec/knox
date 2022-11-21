@@ -33,12 +33,12 @@
   =/  act  !<(action vase)
   ~&  >>  "that action was a {<-.act>}"
   ?-  -.act
-      %add
+      %add 
     ?>  =(our.bowl src.bowl)
     =/  id  (~(rad og eny:bowl) (pow 2 256))
     ?:  (~(has by vault) id)
-      `this(vault (~(put by vault) (add id 1) entry.act)) :: if this doesn't prevent collision then it wasn't meant to be
-    `this(vault (~(put by vault) id entry.act))
+      `this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
+    `this(vault (~(put by vault) id `entry`[website.act username.act password.act now:bowl]))
       ::
       %del
     ?>  =(our.bowl src.bowl)
@@ -46,7 +46,7 @@
       ::
       %edit
     ?>  =(our.bowl src.bowl)
-    `this(vault (~(put by vault) id.act entry.act))
+    `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
   ==
 ::
 ++  on-watch  on-watch:def
