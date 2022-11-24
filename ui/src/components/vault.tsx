@@ -5,6 +5,7 @@ import { TableBody } from "./tableBody";
 
 import { InfoModal } from "./dialogs/infoModal";
 import { Settings } from "./dialogs/settings";
+import { AddModal } from "./dialogs/addModal";
 
 // mocks
 import * as passwords from "../mocks/passwords.json";
@@ -26,6 +27,7 @@ export function Vault(props) {
 
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleAdd = () => {
     console.log("api.ship", api.ship);
@@ -42,7 +44,7 @@ export function Vault(props) {
       mark: "knox-action",
       json: {
         edit: {
-          id: 748395298,
+          id: 1895202297,
           website: "test",
           username: "test",
           password: "newTest",
@@ -57,7 +59,7 @@ export function Vault(props) {
       mark: "knox-action",
       json: {
         del: {
-          id: 748395298,
+          id: 1895202297,
         },
       },
     });
@@ -67,29 +69,24 @@ export function Vault(props) {
     <>
       <InfoModal open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
+      <AddModal open={showAddModal} setOpen={setShowAddModal} />
       <div
         className={`overflow-x-auto bg-white relative shadow-lg sm:rounded-lg min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-10 ${
-          showSettings ? "opacity-50" : ""
+          showSettings || showAddModal ? "opacity-50" : ""
         }`}
       >
-        <div>
-          <button
-            className="w-20 text-xl border-2 border-black"
-            onClick={handleAdd}
-          >
-            add
+        <div className="bg-gray-900 flex justify-end">
+          <button className="bg-white text-xl font-bold border-black border-2 px-5">
+            Generate
           </button>
           <button
-            className="w-20 text-xl border-2 border-black"
-            onClick={handleEdit}
+            className="bg-white text-xl font-bold border-black border-2 px-5"
+            onClick={() => setShowAddModal(!showAddModal)}
           >
-            edit
+            Add
           </button>
-          <button
-            className="w-20 text-xl border-2 border-black"
-            onClick={handleDel}
-          >
-            del
+          <button className="bg-white text-xl font-bold border-black border-2 px-5">
+            Refresh
           </button>
         </div>
         <div className="flex p-4 bg-gray-900 justify-between align-middle">
