@@ -14,7 +14,7 @@ export function VaultTableBody(props) {
           <th className="p-2 px-6">username</th>
           <th className="p-2 px-3">password</th>
           <th className="p-2 px-6">view</th>
-          <th className="p-2 px-2">options</th>
+          <th className="p-2 px-2">edit</th>
         </tr>
       </thead>
       <tbody className="w-auto">

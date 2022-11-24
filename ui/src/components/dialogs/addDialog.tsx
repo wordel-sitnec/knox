@@ -21,9 +21,17 @@ export const AddDialog = (props) => {
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
-        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] shadow-lg py-10">
+        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] shadow-lg pb-14">
           <div className="flex flex-col items-center justify-center h-[100%]">
-            <Dialog.Title className="text-xl mt-2 mb-4">
+            <button
+              onClick={() => setOpen(false)}
+              className="p-1 mr-2 self-end"
+            >
+              {/* get color right */}
+              <ion-icon name="close" />
+            </button>
+
+            <Dialog.Title className="text-xl mb-4">
               Save a new entry
             </Dialog.Title>
             <input

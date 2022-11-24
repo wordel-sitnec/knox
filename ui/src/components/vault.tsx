@@ -28,7 +28,7 @@ export function Vault(props) {
 
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleAdd = () => {
     console.log("api.ship", api.ship);
