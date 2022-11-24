@@ -1,11 +1,16 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
+import Urbit from "@urbit/http-api";
 import { TableBody } from "./tableBody";
+
+import { InfoModal } from "./dialogs/infoModal";
+import { Settings } from "./dialogs/settings";
 
 // mocks
 import * as passwords from "../mocks/passwords.json";
-import { InfoModal } from "./dialogs/infoModal";
-import { Settings } from "./dialogs/settings";
+
+const api = new Urbit("", "", window.desk);
+api.ship = window.ship;
 
 export function Vault(props) {
   // const { hasAgreed } = props;
@@ -22,6 +27,42 @@ export function Vault(props) {
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
+  const handleAdd = () => {
+    console.log("api.ship", api.ship);
+    api.poke({
+      app: "knox",
+      mark: "knox-action",
+      json: { add: { website: "test", username: "test", password: "test" } },
+    });
+  };
+
+  const handleEdit = () => {
+    api.poke({
+      app: "knox",
+      mark: "knox-action",
+      json: {
+        edit: {
+          id: 748395298,
+          website: "test",
+          username: "test",
+          password: "newTest",
+        },
+      },
+    });
+  };
+
+  const handleDel = () => {
+    api.poke({
+      app: "knox",
+      mark: "knox-action",
+      json: {
+        del: {
+          id: 748395298,
+        },
+      },
+    });
+  };
+
   return (
     <>
       <InfoModal open={showInfo} setOpen={setShowInfo} />
@@ -31,6 +72,26 @@ export function Vault(props) {
           showSettings ? "opacity-50" : ""
         }`}
       >
+        <div>
+          <button
+            className="w-20 text-xl border-2 border-black"
+            onClick={handleAdd}
+          >
+            add
+          </button>
+          <button
+            className="w-20 text-xl border-2 border-black"
+            onClick={handleEdit}
+          >
+            edit
+          </button>
+          <button
+            className="w-20 text-xl border-2 border-black"
+            onClick={handleDel}
+          >
+            del
+          </button>
+        </div>
         <div className="flex p-4 bg-gray-900 justify-between align-middle">
           <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle">
             knox

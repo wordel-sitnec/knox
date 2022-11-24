@@ -20,17 +20,17 @@ export function App() {
   const location = useLocation();
   const path = location.pathname;
 
-  useEffect(() => {
-    // get init from knox
-    const init = async () => {
-      api.subscribe({ app: "knox", path: "/vault", event: handleUpdate });
-    };
-    init();
-    // if init doesn't contain beenWelcomed === true, send to welcome
-    // this is for dev
-    if (!window.localStorage.getItem("skipWelcome"))
-      navigate("/apps/knox/welcome");
-  }, []);
+  // useEffect(() => {
+  //   // get init from knox
+  //   const init = async () => {
+  //     api.subscribe({ app: "knox", path: "/vault", event: handleUpdate });
+  //   };
+  //   init();
+  //   // if init doesn't contain beenWelcomed === true, send to welcome
+  //   // this is for dev
+  //   if (!window.localStorage.getItem("skipWelcome"))
+  //     navigate("/apps/knox/welcome");
+  // }, []);
 
   // this works, but annoying for dev. turn on for later testing and for prod
   useEffect(() => {
