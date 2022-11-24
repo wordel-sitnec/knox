@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 import bcrypt from "bcryptjs";
 
-import { password } from "./password";
-import { EditButton } from "./editButton";
+import { password } from "../password";
+import { EditButton } from "../editButton";
 import { Popover } from "@headlessui/react";
 import { usePopper } from "react-popper";
 
-export function TableRow(props) {
+export function VaultTableRow(props) {
   const { pass } = props;
 
   const [passHidden, setPassHidden] = useState(true);

@@ -1,8 +1,8 @@
 // @ts-nocheck
 import React from "react";
-import { TableRow } from "./tableRow";
+import { VaultTableRow } from "./vaultTableRow";
 
-export function TableBody(props) {
+export function VaultTableBody(props) {
   const { searchValue, data } = props;
 
   return (
@@ -20,7 +20,7 @@ export function TableBody(props) {
       <tbody className="w-auto">
         {!searchValue
           ? data.map((pass, i) => {
-              return <TableRow key={i} pass={pass} />;
+              return <VaultTableRow key={i} pass={pass} />;
             })
           : data.map((pass, i) => {
               if (
@@ -29,7 +29,7 @@ export function TableBody(props) {
                   .includes(searchValue.toLowerCase()) ||
                 pass.username.toLowerCase().includes(searchValue.toLowerCase())
               )
-                return <TableRow key={i} pass={pass} />;
+                return <VaultTableRow key={i} pass={pass} />;
             })}
       </tbody>
       <tfoot></tfoot>

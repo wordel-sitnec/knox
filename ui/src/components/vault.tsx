@@ -1,11 +1,12 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import Urbit from "@urbit/http-api";
-import { TableBody } from "./tableBody";
+
+import { VaultTableBody } from "./vault/vaultTableBody";
 
 import { InfoModal } from "./dialogs/infoModal";
 import { Settings } from "./dialogs/settings";
-import { AddModal } from "./dialogs/addModal";
+import { AddDialog } from "./dialogs/addDialog";
 
 // mocks
 import * as passwords from "../mocks/passwords.json";
@@ -67,13 +68,15 @@ export function Vault(props) {
 
   return (
     <>
+      {/* set these to one component that switches based on dialog context */}
       <InfoModal open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
-      <AddModal open={showAddModal} setOpen={setShowAddModal} />
+      <AddDialog open={showAddModal} setOpen={setShowAddModal} />
       <div
         className={`overflow-x-auto bg-white relative shadow-lg sm:rounded-lg min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-10 ${
           showSettings || showAddModal ? "opacity-50" : ""
         }`}
+        // set this div state ternary to dialog context
       >
         <div className="bg-gray-900 flex justify-end">
           <button className="bg-white text-xl font-bold border-black border-2 px-5">
@@ -133,7 +136,7 @@ export function Vault(props) {
             </div>
           </div>
         </div>
-        <TableBody searchValue={searchValue} data={data} />
+        <VaultTableBody searchValue={searchValue} data={data} />
       </div>
     </>
   );

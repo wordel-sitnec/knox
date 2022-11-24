@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 
-export const AddModal = (props) => {
+export const AddDialog = (props) => {
   const { open, setOpen } = props;
 
   const [formState, setFormState] = useState({
