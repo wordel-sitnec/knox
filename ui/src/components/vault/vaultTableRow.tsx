@@ -16,7 +16,6 @@ export function VaultTableRow(props) {
     username: pass.username,
     password: pass.password,
   });
-  const [seeMenu, setSeeMenu] = useState(false);
 
   const [visible, setVisible] = useState(true);
   const [referenceRef, setReferenceRef] = useState(null);
@@ -24,10 +23,6 @@ export function VaultTableRow(props) {
 
   const handleShowPass = () => {
     setPassHidden(!passHidden);
-  };
-
-  const handleMenu = () => {
-    setSeeMenu(!seeMenu);
   };
 
   const handleSetEdit = () => {
@@ -85,7 +80,7 @@ export function VaultTableRow(props) {
               onChange={handleSetEditVals}
               value={editVals.website}
               name="website"
-            ></input>
+            />
           </td>
         ) : (
           <Popover className="hover:bg-gray-100">
@@ -93,7 +88,6 @@ export function VaultTableRow(props) {
               <Popover.Button
                 ref={setReferenceRef}
                 onClick={handleCopy}
-                //   className="px-1 z-10"
                 className="py-2 sm:px-4 hover:bg-gray-200"
                 data-tooltip-target="tooltip-default"
                 value={pass.website}
@@ -107,10 +101,7 @@ export function VaultTableRow(props) {
                   style={styles.popper}
                   {...attributes.popper}
                 >
-                  <ion-icon id="copy-icon" name="copy-outline"></ion-icon>
-                  {/* <p className="text-s text-gray-800 whitespace-nowrap">
-                    copied to clipboard
-                  </p> */}
+                  <ion-icon id="copy-icon" name="copy-outline" />
                 </Popover.Panel>
               )}
             </td>
@@ -126,7 +117,7 @@ export function VaultTableRow(props) {
             ></input>
           </td>
         ) : (
-          // wrap this in popover for copying
+          // wrap this in popover for copying - each popover needs to be own component I think
           <td className="p-2">
             <button
               onClick={handleCopy}
