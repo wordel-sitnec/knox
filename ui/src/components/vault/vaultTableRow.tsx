@@ -142,7 +142,8 @@ export function VaultTableRow(props) {
           <td className="py-2">
             <button
               onClick={handleCopy}
-              className="py-2 px-2 hover:bg-gray-200 z-0"
+              // change 200px below - need to set this to different screen sizes
+              className="py-2 px-2 hover:bg-gray-200 z-0 max-w-[200px] overflow-x-auto"
               // why wont it copy if password is hidden
               value={pass.password}
             >
@@ -151,7 +152,7 @@ export function VaultTableRow(props) {
           </td>
         )}
 
-        <td className="py-4">
+        <td className="text-center">
           <button onClick={handleShowPass}>
             {passHidden ? (
               <ion-icon name="eye"></ion-icon>
@@ -162,19 +163,19 @@ export function VaultTableRow(props) {
         </td>
 
         {editing ? (
-          <td>
-            <button>
+          <td className="text-center">
+            <button className="m-1">
               <ion-icon name="trash"></ion-icon>
             </button>
-            <button onClick={handleSetEdit}>
+            <button className="m-1" onClick={handleSetEdit}>
               <ion-icon name="close"></ion-icon>
             </button>
-            <button>
+            <button className="m-1">
               <ion-icon name="checkmark"></ion-icon>
             </button>
           </td>
         ) : (
-          <td>
+          <td className="text-center">
             <button onClick={handleSetEdit}>
               <ion-icon name="create-outline"></ion-icon>
             </button>

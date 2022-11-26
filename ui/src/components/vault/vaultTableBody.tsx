@@ -10,11 +10,11 @@ export function VaultTableBody(props) {
       <thead className="sticky top-0 bg-white z-50 border-b-2">
         <tr className="text-left">
           {/* <tr className="text-center"> */}
-          <th className="p-2 px-6">site</th>
-          <th className="p-2 px-6">username</th>
-          <th className="p-2 px-3">password</th>
-          <th className="p-2 px-6">view</th>
-          <th className="p-2 px-2">edit</th>
+          <th className="">site</th>
+          <th className="">username</th>
+          <th className="">password</th>
+          <th className="px-3">view</th>
+          <th className="px-3">edit</th>
         </tr>
       </thead>
       <tbody className="w-auto">
