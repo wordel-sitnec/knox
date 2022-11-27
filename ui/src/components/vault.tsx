@@ -7,6 +7,7 @@ import { VaultTableBody } from "./vault/vaultTableBody";
 import { InfoModal } from "./dialogs/infoModal";
 import { Settings } from "./dialogs/settings";
 import { AddDialog } from "./dialogs/addDialog";
+import { GenerateDialog } from "./dialogs/generateDialog";
 
 // mocks
 import * as passwords from "../mocks/passwords.json";
@@ -28,7 +29,8 @@ export function Vault(props) {
 
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showGenerateDialog, setShowGenerateDialog] = useState(false);
 
   const handleAdd = () => {
     console.log("api.ship", api.ship);
@@ -71,21 +73,28 @@ export function Vault(props) {
       {/* set these to one component that switches based on dialog context */}
       <InfoModal open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
-      <AddDialog open={showAddModal} setOpen={setShowAddModal} />
+      <AddDialog open={showAddDialog} setOpen={setShowAddDialog} />
+      <GenerateDialog
+        open={showGenerateDialog}
+        setOpen={setShowGenerateDialog}
+      />
       <div
         className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-10 ${
-          showSettings || showAddModal ? "opacity-50" : ""
+          showSettings || showAddDialog ? "opacity-50" : ""
         }`}
         // set this div state ternary to dialog context
       >
         {/* action buttons */}
         <div className="flex justify-end px-2">
-          <button className="text-xl font-bold px-2">
+          <button
+            className="text-xl font-bold px-2"
+            onClick={() => setShowGenerateDialog(!showGenerateDialog)}
+          >
             <ion-icon name="dice-outline" className="text-xl" />
           </button>
           <button
             className="text-xl font-bold px-2 hover:scale-120"
-            onClick={() => setShowAddModal(!showAddModal)}
+            onClick={() => setShowAddDialog(!showAddDialog)}
           >
             <ion-icon name="add" />
           </button>
