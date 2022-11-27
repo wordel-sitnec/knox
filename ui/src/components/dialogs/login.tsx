@@ -17,7 +17,6 @@ export const Login = () => {
   }, [open]);
 
   const handleShowPassword = (e) => {
-    console.log("e", e);
     e.preventDefault();
     setShowPassword(!showPassword);
   };

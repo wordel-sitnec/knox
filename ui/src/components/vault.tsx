@@ -73,26 +73,28 @@ export function Vault(props) {
       <Settings open={showSettings} setOpen={setShowSettings} />
       <AddDialog open={showAddModal} setOpen={setShowAddModal} />
       <div
-        className={`overflow-x-auto bg-white relative shadow-lg sm:rounded-lg min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-10 ${
+        className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-10 ${
           showSettings || showAddModal ? "opacity-50" : ""
         }`}
         // set this div state ternary to dialog context
       >
-        <div className="bg-gray-900 flex justify-end">
-          <button className="bg-white text-xl font-bold border-black border-2 px-5">
-            Generate
+        {/* action buttons */}
+        <div className="flex justify-end px-2">
+          <button className="text-xl font-bold px-2">
+            <ion-icon name="dice-outline" className="text-xl" />
           </button>
           <button
-            className="bg-white text-xl font-bold border-black border-2 px-5"
+            className="text-xl font-bold px-2 hover:scale-120"
             onClick={() => setShowAddModal(!showAddModal)}
           >
-            Add
+            <ion-icon name="add" />
           </button>
-          <button className="bg-white text-xl font-bold border-black border-2 px-5">
-            Refresh
+          <button className="text-xl font-bold pl-2">
+            <ion-icon name="reload" />
           </button>
         </div>
-        <div className="flex p-4 bg-gray-900 justify-between align-middle">
+        {/* title and search */}
+        <div className="flex p-4 justify-between border-l-2 border-r-2 border-black border-t-4 bg-white sm:rounded-t-lg">
           <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle">
             knox
             <span className="hidden md:inline"> - your password vault</span>
@@ -136,7 +138,21 @@ export function Vault(props) {
             </div>
           </div>
         </div>
-        <VaultTableBody searchValue={searchValue} data={data} />
+        {/* beginning of table */}
+        <div className="overflow-x-auto bg-white border-2 border-t border-black shadow-lg sm:rounded-b-lg sm:h-screen80">
+          <table className="w-full overflow-y-auto text-m text-gray-400">
+            <thead className="sticky top-0 bg-white z-10 py-4">
+              <tr className="text-left bg-gray-200">
+                <th className="py-2">site</th>
+                <th className="">username</th>
+                <th className="">password</th>
+                <th className="px-3">view</th>
+                <th className="px-3">edit</th>
+              </tr>
+            </thead>
+            <VaultTableBody searchValue={searchValue} data={data} />
+          </table>
+        </div>
       </div>
     </>
   );
