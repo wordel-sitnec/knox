@@ -12,6 +12,7 @@ main {
 
 ion-icon {
     color: #337CA0;
+    pointer-events: none;
     /* color: #374151; */
 }
 

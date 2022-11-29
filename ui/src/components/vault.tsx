@@ -31,7 +31,7 @@ export function Vault(props) {
   const [showSettings, setShowSettings] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showGenerateDialog, setShowGenerateDialog] = useState(false);
-  const [showGenerated, setShowGenerated] = useState(true);
+  const [showGenerated, setShowGenerated] = useState(false);
   // this state will need to change ^^
 
   const handleAdd = () => {
@@ -92,10 +92,13 @@ export function Vault(props) {
         <div className="flex justify-end px-2 mb-1">
           {showGenerated && (
             <div className="w-[33%] flex">
-              <button className="py-1 mx-1 sm:px-4 bg-gray-200 hover:bg-gray-300 w-[80%] overflow-x-auto">
+              <button className="border border-black rounded-md shadow-lg py-1 mx-1 px-1 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto">
                 passwordpasswordpasswordpassword
               </button>
-              <button>save</button>
+              {/* need to have some save the new password flow, what though */}
+              <button className="text-xl font-bold pl-2">
+                <ion-icon name="add" title="test" />
+              </button>
             </div>
           )}
           <button
