@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 
 export const AddDialog = (props) => {
-  const { open, setOpen } = props;
+  const { open, setOpen, password } = props;
 
   const [formState, setFormState] = useState({
     website: "",
     username: "",
-    password: "",
+    password: password ?? "",
+    // this doesn't work, why
   });
 
   const handleChange = (e) => {

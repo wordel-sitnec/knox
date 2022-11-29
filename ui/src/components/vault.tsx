@@ -32,7 +32,7 @@ export function Vault(props) {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showGenerateDialog, setShowGenerateDialog] = useState(false);
   const [showGenerated, setShowGenerated] = useState(false);
-  // this state will need to change ^^
+  // this state will need to change, this was for testing ^^
 
   const handleAdd = () => {
     console.log("api.ship", api.ship);
@@ -75,7 +75,11 @@ export function Vault(props) {
       {/* set these to one component that switches based on dialog context */}
       <InfoModal open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
-      <AddDialog open={showAddDialog} setOpen={setShowAddDialog} />
+      <AddDialog
+        open={showAddDialog}
+        setOpen={setShowAddDialog}
+        password={showGenerated ? "password" : null}
+      />
       <GenerateDialog
         open={showGenerateDialog}
         setOpen={setShowGenerateDialog}
@@ -91,19 +95,27 @@ export function Vault(props) {
         {/* action buttons */}
         <div className="flex justify-end px-2 mb-1">
           {showGenerated && (
-            <div className="w-[33%] flex">
-              <button className="border border-black rounded-md shadow-lg py-1 mx-1 px-1 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto">
+            <div className="w-[70%] sm:max-w-[50%] flex pr-4 justify-end">
+              <button className="border border-black rounded-md shadow py-1 mx-1 px-1 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto">
                 passwordpasswordpasswordpassword
               </button>
               {/* need to have some save the new password flow, what though */}
-              <button className="text-xl font-bold pl-2">
-                <ion-icon name="add" title="test" />
+              <button
+                className="text-xl font-bold pl-2"
+                onClick={() => setShowAddDialog(!showAddDialog)}
+              >
+                <ion-icon name="add" />
+              </button>
+              <button
+                onClick={() => setShowGenerated(false)}
+                className="text-xl pl-2"
+              >
+                <ion-icon name="close" />
               </button>
             </div>
           )}
           <button
-            className="text-xl font-bold px-2 m-0"
-            // onClick={() => setShowGenerateDialog(!showGenerateDialog)}
+            className="text-xl font-bold px-2"
             onClick={() => setShowGenerated(!showGenerated)}
           >
             <ion-icon name="dice-outline" className="text-xl" />
@@ -114,8 +126,11 @@ export function Vault(props) {
           >
             <ion-icon name="add" />
           </button>
-          <button className="text-xl font-bold pl-2">
-            <ion-icon name="reload" />
+          <button
+            className="text-xl font-bold px-2 hover:scale-120 my-1"
+            onClick={() => setShowSettings(true)}
+          >
+            <ion-icon name="settings-sharp" id="settings-icon" />
           </button>
         </div>
         {/* title and search */}
@@ -130,12 +145,6 @@ export function Vault(props) {
             ></ion-icon>
           </p>
           <div className="flex">
-            <button
-              onClick={() => setShowSettings(true)}
-              className="text-white"
-            >
-              <ion-icon name="settings-sharp" id="settings-icon"></ion-icon>
-            </button>
             <div className="relative">
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg
