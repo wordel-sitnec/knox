@@ -31,6 +31,8 @@ export function Vault(props) {
   const [showSettings, setShowSettings] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showGenerateDialog, setShowGenerateDialog] = useState(false);
+  const [showGenerated, setShowGenerated] = useState(true);
+  // this state will need to change ^^
 
   const handleAdd = () => {
     console.log("api.ship", api.ship);
@@ -79,21 +81,32 @@ export function Vault(props) {
         setOpen={setShowGenerateDialog}
       />
       <div
-        className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-10 ${
-          showSettings || showAddDialog ? "opacity-50" : ""
+        className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-8 ${
+          showSettings || showAddDialog || showGenerateDialog
+            ? "opacity-50"
+            : ""
         }`}
         // set this div state ternary to dialog context
       >
         {/* action buttons */}
-        <div className="flex justify-end px-2">
+        <div className="flex justify-end px-2 mb-1">
+          {showGenerated && (
+            <div className="w-[33%] flex">
+              <button className="py-1 mx-1 sm:px-4 bg-gray-200 hover:bg-gray-300 w-[80%] overflow-x-auto">
+                passwordpasswordpasswordpassword
+              </button>
+              <button>save</button>
+            </div>
+          )}
           <button
-            className="text-xl font-bold px-2"
-            onClick={() => setShowGenerateDialog(!showGenerateDialog)}
+            className="text-xl font-bold px-2 m-0"
+            // onClick={() => setShowGenerateDialog(!showGenerateDialog)}
+            onClick={() => setShowGenerated(!showGenerated)}
           >
             <ion-icon name="dice-outline" className="text-xl" />
           </button>
           <button
-            className="text-xl font-bold px-2 hover:scale-120"
+            className="text-xl font-bold px-2 hover:scale-120 my-1"
             onClick={() => setShowAddDialog(!showAddDialog)}
           >
             <ion-icon name="add" />
@@ -103,7 +116,7 @@ export function Vault(props) {
           </button>
         </div>
         {/* title and search */}
-        <div className="flex p-4 justify-between border-l-2 border-r-2 border-black border-t-4 bg-white sm:rounded-t-lg">
+        <div className="flex p-4 justify-between border-l border-r border-black border-t-4 bg-white sm:rounded-t-lg">
           <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle">
             knox
             <span className="hidden md:inline"> - your password vault</span>
@@ -148,7 +161,7 @@ export function Vault(props) {
           </div>
         </div>
         {/* beginning of table */}
-        <div className="overflow-x-auto bg-white border-2 border-t border-black shadow-lg sm:rounded-b-lg sm:h-screen80">
+        <div className="overflow-x-auto bg-white border border-t border-black shadow-lg sm:rounded-b-lg sm:h-screen80">
           <table className="w-full overflow-y-auto text-m text-gray-400">
             <thead className="sticky top-0 bg-white z-10 py-4">
               <tr className="text-left bg-gray-200">
