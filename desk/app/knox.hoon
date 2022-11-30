@@ -49,12 +49,7 @@
     `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
       %sett
     ?>  =(our.bowl src.bowl)
-    ?.  =(1 1)
-      ~&  "setting key not found - add, don't need to update"
-      `this(settings settings)
-    ~&  "setting key found - logic for updating here"
-::    `this(settings [setting.act settings])
-      `this(settings settings) 
+    `this(settings (~(put by settings) setting-key.act [setting-val.act]))
  ==
 ::
 ++  on-watch  on-watch:def
