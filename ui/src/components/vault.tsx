@@ -12,6 +12,7 @@ import { GenerateDialog } from "./dialogs/generateDialog";
 // mocks
 import * as passwords from "../mocks/passwords.json";
 
+// this needs to go into context
 const api = new Urbit("", "", window.desk);
 api.ship = window.ship;
 
