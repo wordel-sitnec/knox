@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { VaultTableBody } from "./vaultTableBody";
 
@@ -24,7 +24,7 @@ export function Vault(props) {
 
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showAddDialog, setShowAddDialog] = useState(true);
   const [showGenerateDialog, setShowGenerateDialog] = useState(false);
   const [showGenerated, setShowGenerated] = useState(false);
   // this state will need to change, this was for testing ^^
@@ -79,7 +79,7 @@ export function Vault(props) {
           {showGenerated && (
             <div className="w-[70%] sm:max-w-[50%] flex pr-4 justify-end">
               <button className="border border-black rounded-md shadow py-1 mx-1 px-1 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto">
-                passwordpasswordpasswordpassword
+                passwordpasswordpasswordpasswordpasswordpasswordpassword
               </button>
               {/* need to have some save the new password flow, what though */}
               <button
@@ -117,14 +117,12 @@ export function Vault(props) {
         </div>
         {/* title and search */}
         <div className="flex p-4 justify-between border-l border-r border-black border-t-4 bg-white sm:rounded-t-lg">
-          <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle">
+          <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle flex">
             knox
             <span className="hidden md:inline"> - your password vault</span>
-            <ion-icon
-              id="info-icon"
-              name="information-circle-outline"
-              onClick={() => setShowInfo(!showInfo)}
-            ></ion-icon>
+            <button className="px-2" onClick={() => setShowInfo(true)}>
+              <ion-icon name="information-circle-outline" />
+            </button>
           </p>
           <div className="flex">
             <div className="relative">

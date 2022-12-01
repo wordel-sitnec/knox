@@ -1,12 +1,19 @@
 // @ts-nocheck
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
+import bcrypt from "bcryptjs";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
+
+const saltRounds = 10;
 
 export const AddDialog = (props) => {
   const { open, setOpen, password } = props;
   const [urbitApi] = useContext(UrbitContext);
+  const [hashes, setHashes] = useState({});
+  const [disabled, setDisabled] = useState(true);
+  const [error, setError] = useState(false);
+  // use this to trigger error div in form
 
   const [formState, setFormState] = useState({
     website: "",
@@ -15,6 +22,12 @@ export const AddDialog = (props) => {
     // this doesn't work, why
   });
 
+  useEffect(() => {
+    if (formState.website && formState.username && formState.password)
+      setDisabled(false);
+    else setDisabled(true);
+  }, [formState]);
+
   const handleChange = (e) => {
     setFormState({
       ...formState,
@@ -22,23 +35,42 @@ export const AddDialog = (props) => {
     });
   };
 
-  const handleAdd = () => {
-    // add some validation here, plus need to hash everything
-    // handle error better
-    urbitApi
-      .poke({
-        app: "knox",
-        mark: "knox-action",
-        json: {
-          add: {
-            website: formState.website,
-            username: formState.username,
-            password: formState.password,
+  const getHashes = async () => {
+    let hashes = {};
+    Object.entries(formState).forEach((entry) => {
+      const [key, value] = entry;
+      bcrypt.genSalt(saltRounds, function (err, salt) {
+        bcrypt.hash(value, salt, function (err, hash) {
+          if (err) {
+            // set an error here for error div
+            console.log(err);
+            return;
+          }
+          hashes[key] = hash;
+        });
+      });
+    });
+    return hashes;
+  };
+
+  // this feels so close but doesn't work, why
+  const handleAdd = async () => {
+    await getHashes().then((res) =>
+      urbitApi
+        .poke({
+          app: "knox",
+          mark: "knox-action",
+          json: {
+            add: {
+              website: res.website,
+              username: res.username,
+              password: res.password,
+            },
           },
-        },
-      })
-      .then((res) => console.log("success", res))
-      .catch((err) => console.log("err"));
+        })
+        .then((res) => console.log("success", res))
+        .catch((err) => console.log("err", err))
+    );
   };
 
   return (
@@ -78,16 +110,13 @@ export const AddDialog = (props) => {
               onChange={handleChange}
               placeholder="password"
             />
-            <button
-              className="mt-1 mb-8 w-[75%] border border-black p-1 rounded"
-              // onClick={() => setOpen(false)}
-            >
+            <button className="mt-1 mb-8 w-[75%] border border-black p-1 rounded">
               Generate
             </button>
             <button
-              className="my-1 w-[75%] border border-black p-1 rounded"
-              // onClick={() => setOpen(false)}
+              className="my-1 w-[75%] border border-black p-1 rounded disabled:opacity-25 disabled:pointer-events-none"
               onClick={handleAdd}
+              disabled={disabled}
             >
               Save
             </button>

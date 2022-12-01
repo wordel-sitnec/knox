@@ -31,20 +31,6 @@ export const Login = () => {
     navigate("/apps/knox/");
   };
 
-  // below is working example, but I think I can just save in plain text?
-  //   const storeSecret = (s) => {
-  //     bcrypt.genSalt(saltRounds, function (err, salt) {
-  //       bcrypt.hash(s, salt, function (err, hash) {
-  //         // handle error - snack?
-  //         if (err) {
-  //           console.log(err);
-  //           return;
-  //         }
-  //         window.sessionStorage.setItem("secret", hash);
-  //       });
-  //     });
-  //   };
-
   return (
     <Dialog
       open={open}
