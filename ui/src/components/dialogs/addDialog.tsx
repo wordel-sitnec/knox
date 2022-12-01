@@ -8,17 +8,18 @@ import { UrbitContext } from "../../store/contexts/urbitContext";
 const saltRounds = 10;
 
 export const AddDialog = (props) => {
-  const { open, setOpen, password } = props;
+  const { open, setOpen, password: pword } = props;
   const [urbitApi] = useContext(UrbitContext);
-  const [hashes, setHashes] = useState({});
   const [disabled, setDisabled] = useState(true);
+  const [success, setSuccess] = useState(false);
+  // use this to trigger success div in form
   const [error, setError] = useState(false);
   // use this to trigger error div in form
 
   const [formState, setFormState] = useState({
     website: "",
     username: "",
-    password: password ?? "",
+    password: pword ?? "",
     // this doesn't work, why
   });
 
@@ -35,42 +36,38 @@ export const AddDialog = (props) => {
     });
   };
 
-  const getHashes = async () => {
-    let hashes = {};
-    Object.entries(formState).forEach((entry) => {
-      const [key, value] = entry;
-      bcrypt.genSalt(saltRounds, function (err, salt) {
-        bcrypt.hash(value, salt, function (err, hash) {
-          if (err) {
-            // set an error here for error div
-            console.log(err);
-            return;
-          }
-          hashes[key] = hash;
-        });
-      });
+  const handleSuccess = (res) => {
+    console.log("res", res);
+    setFormState({
+      website: "",
+      username: "",
+      password: "",
     });
-    return hashes;
   };
 
-  // this feels so close but doesn't work, why
-  const handleAdd = async () => {
-    await getHashes().then((res) =>
-      urbitApi
-        .poke({
-          app: "knox",
-          mark: "knox-action",
-          json: {
-            add: {
-              website: res.website,
-              username: res.username,
-              password: res.password,
-            },
+  const getHash = (value) => {
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(value, salt);
+    return hash;
+  };
+
+  const handleAdd = () => {
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          add: {
+            website: getHash(formState.website),
+            username: getHash(formState.username),
+            password: getHash(formState.password),
           },
-        })
-        .then((res) => console.log("success", res))
-        .catch((err) => console.log("err", err))
-    );
+        },
+      })
+      // handle success message, clearing formState, anything else?
+      .then((res) => handleSuccess(res))
+      // handle show error
+      .catch((err) => console.log("err", err));
   };
 
   return (
