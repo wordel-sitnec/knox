@@ -1,37 +1,29 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import Urbit from "@urbit/http-api";
-import { Charges, ChargeUpdateInitial, scryCharges } from "@urbit/api";
+import { UrbitContext } from "./store/contexts/urbitContext";
 
 // components
 import { Vault } from "./components/vault";
 import { WelcomeDialog } from "./components/dialogs/welcomeDialog";
 import { Login } from "./components/dialogs/login";
 
-const api = new Urbit("", "", window.desk);
-api.ship = window.ship;
-// set this to urbitAPI context
-
 export function App() {
-  const [vals, setVals] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
 
+  const [urbitApi] = useContext(UrbitContext);
+
   useEffect(() => {
     // get init from knox
     // const init = async () => {
-    //   api.subscribe({ app: "knox", path: "/vault", event: handleUpdate });
+    //   urbitApi.subscribe({ app: "knox", path: "/vault", event: handleUpdate });
     // };
     // init();
-
     // if init doesn't contain beenWelcomed === true, send to welcome
     // commented out for dev
     // navigate("/apps/knox/welcome");
-    console.log("ship in app", api.ship);
   }, []);
 
   // this works, but annoying for dev. turn on for later testing and for prod

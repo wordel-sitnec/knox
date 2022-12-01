@@ -1,20 +1,14 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-import Urbit from "@urbit/http-api";
 
-import { VaultTableBody } from "./vault/vaultTableBody";
+import { VaultTableBody } from "./vaultTableBody";
 
-import { InfoModal } from "./dialogs/infoModal";
-import { Settings } from "./dialogs/settings";
-import { AddDialog } from "./dialogs/addDialog";
-import { GenerateDialog } from "./dialogs/generateDialog";
+import { InfoModal } from "../dialogs/infoModal";
+import { Settings } from "../dialogs/settings";
+import { AddDialog } from "../dialogs/addDialog";
 
 // mocks
-import * as passwords from "../mocks/passwords.json";
-
-// this needs to go into context
-const api = new Urbit("", "", window.desk);
-api.ship = window.ship;
+import * as passwords from "../../mocks/passwords.json";
 
 export function Vault(props) {
   // const { hasAgreed } = props;
@@ -34,15 +28,6 @@ export function Vault(props) {
   const [showGenerateDialog, setShowGenerateDialog] = useState(false);
   const [showGenerated, setShowGenerated] = useState(false);
   // this state will need to change, this was for testing ^^
-
-  const handleAdd = () => {
-    console.log("api.ship", api.ship);
-    api.poke({
-      app: "knox",
-      mark: "knox-action",
-      json: { add: { website: "test", username: "test", password: "test" } },
-    });
-  };
 
   const handleEdit = () => {
     api.poke({
@@ -80,10 +65,6 @@ export function Vault(props) {
         open={showAddDialog}
         setOpen={setShowAddDialog}
         password={showGenerated ? "password" : null}
-      />
-      <GenerateDialog
-        open={showGenerateDialog}
-        setOpen={setShowGenerateDialog}
       />
       <div
         className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-8 ${

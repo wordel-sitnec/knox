@@ -1,9 +1,12 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Dialog } from "@headlessui/react";
+
+import { UrbitContext } from "../../store/contexts/urbitContext";
 
 export const AddDialog = (props) => {
   const { open, setOpen, password } = props;
+  const [urbitApi] = useContext(UrbitContext);
 
   const [formState, setFormState] = useState({
     website: "",
@@ -17,6 +20,25 @@ export const AddDialog = (props) => {
       ...formState,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleAdd = () => {
+    // add some validation here, plus need to hash everything
+    // handle error better
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          add: {
+            website: formState.website,
+            username: formState.username,
+            password: formState.password,
+          },
+        },
+      })
+      .then((res) => console.log("success", res))
+      .catch((err) => console.log("err"));
   };
 
   return (
@@ -65,6 +87,7 @@ export const AddDialog = (props) => {
             <button
               className="my-1 w-[75%] border border-black p-1 rounded"
               // onClick={() => setOpen(false)}
+              onClick={handleAdd}
             >
               Save
             </button>
