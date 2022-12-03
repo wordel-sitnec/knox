@@ -5,6 +5,8 @@ import { Dialog } from "@headlessui/react";
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { getHash } from "../../utils";
 
+import rabbit from "crypto-js/rabbit";
+
 export const AddDialog = (props) => {
   const { open, setOpen, password: pword } = props;
   const [urbitApi] = useContext(UrbitContext);
@@ -19,6 +21,12 @@ export const AddDialog = (props) => {
     password: pword ?? "",
     // this doesn't work, why
   });
+
+  const rabbitTest = async () => {
+    const hella = await rabbit.encrypt("hi", "hi");
+    console.log(hella);
+  };
+  rabbitTest();
 
   // reset form state when modal closes
   useEffect(() => {
@@ -90,7 +98,7 @@ export const AddDialog = (props) => {
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
-        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 shadow-lg pb-14">
+        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 sm:max-h-[420px] shadow-lg pb-14">
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => setOpen(false)}
