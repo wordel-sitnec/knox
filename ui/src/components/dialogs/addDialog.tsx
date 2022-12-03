@@ -77,7 +77,6 @@ export const AddDialog = (props) => {
         mark: "knox-action",
         json: {
           add: {
-            // need util to get secret
             website: aesEncrypt(formState.website, getSecret()),
             username: aesEncrypt(formState.username, getSecret()),
             password: aesEncrypt(formState.password, getSecret()),

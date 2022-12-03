@@ -176,7 +176,7 @@ export function VaultTableRow(props) {
         ) : (
           <td className="text-center">
             <button onClick={handleSetEdit}>
-              <ion-icon name="create-outline"></ion-icon>
+              <ion-icon name="pencil"></ion-icon>
             </button>
           </td>
         )}

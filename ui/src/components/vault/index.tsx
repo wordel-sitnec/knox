@@ -24,7 +24,7 @@ export function Vault(props) {
 
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAddDialog, setShowAddDialog] = useState(true);
+  const [showAddDialog, setShowAddDialog] = useState(false);
   const [showGenerateDialog, setShowGenerateDialog] = useState(false);
   const [showGenerated, setShowGenerated] = useState(false);
   // this state will need to change, this was for testing ^^
