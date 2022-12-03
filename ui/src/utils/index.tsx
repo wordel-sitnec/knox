@@ -1,8 +1,7 @@
 // @ts-nocheck
 import React from "react";
-import bcrypt from "bcryptjs";
-
-const saltRounds = 10;
+import AES from "crypto-js/aes";
+import CryptoJS from "crypto-js";
 
 export const ComposeComponents = ({ components = [], children = <></> }) => {
   return components.reverse().reduce((child, Component) => {
@@ -10,8 +9,18 @@ export const ComposeComponents = ({ components = [], children = <></> }) => {
   }, children);
 };
 
-export const getHash = (value) => {
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hash = bcrypt.hashSync(value, salt);
-  return hash;
+export const getSecret = () => {
+  return window.sessionStorage.getItem("secret");
+};
+
+export const aesEncrypt = (string, secret) => {
+  if (!string || !secret) return;
+  const encrypted = AES.encrypt(string, secret);
+  return encrypted.toString();
+};
+
+export const aesDecrypt = (string, secret) => {
+  if (!string || !secret) return;
+  const decrypted = AES.decrypt(string, secret).toString(CryptoJS.enc.Utf8);
+  return decrypted;
 };

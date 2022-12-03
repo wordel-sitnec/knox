@@ -10,8 +10,5 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [urbitPlugin({ base: 'knox', target: SHIP_URL, secure: false }), reactRefresh()],
-    // optimizeDeps: {
-    //   include: ['bcrypt']
-    // }
   });
 };

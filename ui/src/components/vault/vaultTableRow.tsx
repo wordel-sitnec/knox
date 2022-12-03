@@ -1,6 +1,5 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-import bcrypt from "bcryptjs";
 
 import { password } from "./password";
 import { Popover } from "@headlessui/react";

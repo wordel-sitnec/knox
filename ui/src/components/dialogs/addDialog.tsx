@@ -3,9 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
-import { getHash } from "../../utils";
-
-import rabbit from "crypto-js/rabbit";
+import { aesEncrypt, getSecret } from "../../utils";
 
 export const AddDialog = (props) => {
   const { open, setOpen, password: pword } = props;
@@ -21,12 +19,6 @@ export const AddDialog = (props) => {
     password: pword ?? "",
     // this doesn't work, why
   });
-
-  const rabbitTest = async () => {
-    const hella = await rabbit.encrypt("hi", "hi");
-    console.log(hella);
-  };
-  rabbitTest();
 
   // reset form state when modal closes
   useEffect(() => {
@@ -85,9 +77,10 @@ export const AddDialog = (props) => {
         mark: "knox-action",
         json: {
           add: {
-            website: getHash(formState.website),
-            username: getHash(formState.username),
-            password: getHash(formState.password),
+            // need util to get secret
+            website: aesEncrypt(formState.website, getSecret()),
+            username: aesEncrypt(formState.username, getSecret()),
+            password: aesEncrypt(formState.password, getSecret()),
           },
         },
       })
