@@ -8,7 +8,7 @@ import { getSecret, storeSecret } from "../../utils";
 
 export const WelcomeDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
-  const [selectedIndex, setSelectedIndex] = useState(2);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [secret, setSecret] = useState("");
   const [showSecret, setShowSecret] = useState(false);
   const [showSecretThatYouSet, setShowSecretThatYouSet] = useState(false);
@@ -169,7 +169,7 @@ export const WelcomeDialog = () => {
                 value={secret}
                 type={!showSecret ? "password" : null}
               />
-              <div className="inline">
+              <div>
                 <button
                   className="border border-black p-1 px-2 ml-2"
                   onClick={() => setShowSecret(!showSecret)}
