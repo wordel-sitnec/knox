@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
-import { storeSecret } from "../../utils";
+import { getSecret, storeSecret } from "../../utils";
 
 export const WelcomeDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(2);
   const [secret, setSecret] = useState("");
   const [showSecret, setShowSecret] = useState(false);
+  const [showSecretThatYouSet, setShowSecretThatYouSet] = useState(false);
   const [dontShow, setDontShow] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -42,8 +43,13 @@ export const WelcomeDialog = () => {
     setSecret(e.target.value);
   };
 
+  const handleSetSecret = (secret) => {
+    storeSecret(secret);
+    setSecret("");
+  };
+
   return (
-    <div className="flex flex-col justify-center w-[95%] sm:w-[450px] xl:max-w-[40%]">
+    <div className="flex flex-col justify-center w-[95%] xl:max-w-[40%]">
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <Tab.List>
           <Tab className="w-1/4">
@@ -99,7 +105,7 @@ export const WelcomeDialog = () => {
             )}
           </Tab>
         </Tab.List>
-        <Tab.Panels className="border-l-2 border-r-2 border-b-2 border-black bg-white sm:min-h-[55%] px-8 pt-6 pb-4 flex flex-col justify-between">
+        <Tab.Panels className="border-l-2 border-r-2 border-b-2 border-black bg-white md:min-h-[25%] px-8 pt-6 pb-4 flex flex-col justify-between">
           <Tab.Panel>
             Welcome to <span className="font-bold">Knox</span>, a vault for your
             web2 passwords. <br />
@@ -172,7 +178,7 @@ export const WelcomeDialog = () => {
                 </button>
                 <button
                   className="border border-black p-1 px-2 ml-2"
-                  onClick={() => storeSecret(secret)}
+                  onClick={() => handleSetSecret(secret)}
                 >
                   save
                 </button>
@@ -181,9 +187,25 @@ export const WelcomeDialog = () => {
             Do not forget this, write it down or something.
             <br />
             <br />
+            You can change your secret here (just use the form above again), but
+            once you save an entry using a secret you probably shouldn't change
+            it. Changing your secret feature coming post alpha.
+            <button
+              onClick={() => setShowSecretThatYouSet(!showSecretThatYouSet)}
+              className="border border-black p-1 px-2 mt-3"
+            >
+              Show me my secret
+            </button>
+            {showSecretThatYouSet && (
+              <p className="pt-2">
+                Your secret is <span className="font-bold">{getSecret()}</span>
+              </p>
+            )}
+            <br />
           </Tab.Panel>
           <Tab.Panel>
             Get Started
+            {/* TODO: input align is a little off on mobile  */}
             <div className="flex mt-4">
               <input
                 type="checkbox"
