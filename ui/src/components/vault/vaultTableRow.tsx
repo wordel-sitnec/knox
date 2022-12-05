@@ -1,5 +1,8 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+import dialogActions from "../../store/actions/dialogActions";
+import { DialogContext } from "../../store/contexts/dialogContext";
 
 import { password } from "./password";
 import { Popover } from "@headlessui/react";
@@ -7,6 +10,9 @@ import { usePopper } from "react-popper";
 
 export function VaultTableRow(props) {
   const { pass } = props;
+
+  const [, dialogDispatch] = useContext(DialogContext);
+  const { openDeleteDialog } = dialogActions;
 
   const [passHidden, setPassHidden] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -163,7 +169,10 @@ export function VaultTableRow(props) {
 
         {editing ? (
           <td className="text-center">
-            <button className="m-1">
+            <button
+              onClick={() => dialogDispatch(openDeleteDialog())}
+              className="m-1"
+            >
               <ion-icon name="trash"></ion-icon>
             </button>
             <button className="m-1" onClick={handleSetEdit}>

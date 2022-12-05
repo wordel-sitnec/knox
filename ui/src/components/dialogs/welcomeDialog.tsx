@@ -169,9 +169,9 @@ export const WelcomeDialog = () => {
                 value={secret}
                 type={!showSecret ? "password" : null}
               />
-              <div>
+              <div className="inline ml-2">
                 <button
-                  className="border border-black p-1 px-2 ml-2"
+                  className="border border-black p-1 px-2"
                   onClick={() => setShowSecret(!showSecret)}
                 >
                   {showSecret ? "hide" : "show"}
@@ -190,17 +190,20 @@ export const WelcomeDialog = () => {
             You can change your secret here (just use the form above again), but
             once you save an entry using a secret you probably shouldn't change
             it. Changing your secret feature coming post alpha.
-            <button
-              onClick={() => setShowSecretThatYouSet(!showSecretThatYouSet)}
-              className="border border-black p-1 px-2 mt-3"
-            >
-              Show me my secret
-            </button>
-            {showSecretThatYouSet && (
-              <p className="pt-2">
-                Your secret is <span className="font-bold">{getSecret()}</span>
-              </p>
-            )}
+            <div>
+              <button
+                onClick={() => setShowSecretThatYouSet(!showSecretThatYouSet)}
+                className="border border-black p-1 px-2 mt-3"
+              >
+                Show me my secret
+              </button>
+              {showSecretThatYouSet && (
+                <p className="pt-2">
+                  Your secret is{" "}
+                  <span className="font-bold">{getSecret()}</span>
+                </p>
+              )}
+            </div>
             <br />
           </Tab.Panel>
           <Tab.Panel>

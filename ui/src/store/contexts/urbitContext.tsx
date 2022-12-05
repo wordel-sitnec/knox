@@ -2,7 +2,7 @@
 import React, { createContext, useState } from "react";
 import Urbit from "@urbit/http-api";
 
-export const UrbitContext = createContext([{}, () => {}]);
+export const UrbitContext = createContext({});
 const { Provider } = UrbitContext;
 
 export const UrbitProvider = ({ children }) => {

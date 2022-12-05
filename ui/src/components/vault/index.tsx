@@ -1,11 +1,16 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { VaultTableBody } from "./vaultTableBody";
 
 import { InfoModal } from "../dialogs/infoModal";
 import { Settings } from "../dialogs/settings";
 import { AddDialog } from "../dialogs/addDialog";
+import { DeleteDialog } from "../dialogs/deleteDialog";
+
+import { UrbitContext } from "../../store/contexts/urbitContext";
+import { DialogContext } from "../../store/contexts/dialogContext";
+import dialogActions from "../../store/actions/dialogActions";
 
 // mocks
 import * as passwords from "../../mocks/passwords.json";
@@ -22,9 +27,13 @@ export function Vault(props) {
     setSearchValue(value);
   };
 
+  const [dialogState, dialogDispatch] = useContext(DialogContext);
+  const { openAddDialog } = dialogActions;
+
+  console.log("dialogState", dialogState);
+
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAddDialog, setShowAddDialog] = useState(false);
   const [showGenerateDialog, setShowGenerateDialog] = useState(false);
   const [showGenerated, setShowGenerated] = useState(false);
   // this state will need to change, this was for testing ^^
@@ -61,14 +70,14 @@ export function Vault(props) {
       {/* set these to one component that switches based on dialog context */}
       <InfoModal open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
-      <AddDialog
-        open={showAddDialog}
-        setOpen={setShowAddDialog}
-        password={showGenerated ? "password" : null}
-      />
+      <AddDialog password={showGenerated ? "password" : null} />
+      <DeleteDialog />
       <div
         className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-8 ${
-          showSettings || showAddDialog || showGenerateDialog
+          dialogState.addOpen ||
+          dialogState.deleteOpen ||
+          showSettings ||
+          showGenerateDialog
             ? "opacity-50"
             : ""
         }`}
@@ -84,7 +93,7 @@ export function Vault(props) {
               {/* need to have some save the new password flow, what though */}
               <button
                 className="text-xl font-bold pl-2"
-                onClick={() => setShowAddDialog(!showAddDialog)}
+                onClick={() => dialogDispatch(openAddDialog())}
               >
                 <ion-icon name="add" />
               </button>
@@ -104,7 +113,7 @@ export function Vault(props) {
           </button>
           <button
             className="text-xl font-bold px-2 hover:scale-120 my-1"
-            onClick={() => setShowAddDialog(!showAddDialog)}
+            onClick={() => dialogDispatch(openAddDialog())}
           >
             <ion-icon name="add" />
           </button>

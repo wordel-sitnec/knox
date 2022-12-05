@@ -3,11 +3,14 @@ import React, { useState, useContext, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
+import { DialogContext } from "../../store/contexts/dialogContext";
+import dialogActions from "../../store/actions/dialogActions";
 import { aesEncrypt, getSecret } from "../../utils";
 
 export const AddDialog = (props) => {
-  const { open, setOpen, password: pword } = props;
+  const { password: pword } = props;
   const [urbitApi] = useContext(UrbitContext);
+  const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -20,6 +23,8 @@ export const AddDialog = (props) => {
     // this doesn't work, why
   });
 
+  const { closeAddDialog } = dialogActions;
+
   // reset form state when modal closes
   useEffect(() => {
     setFormState({
@@ -27,7 +32,7 @@ export const AddDialog = (props) => {
       username: "",
       password: pword ?? "",
     });
-  }, [open]);
+  }, [dialogState.addOpen]);
 
   // validate form - improve this
   useEffect(() => {
@@ -88,12 +93,15 @@ export const AddDialog = (props) => {
   };
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)}>
+    <Dialog
+      open={dialogState.addOpen}
+      onClose={() => dialogDispatch(closeAddDialog())}
+    >
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
         <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 sm:max-h-[420px] shadow-lg pb-14">
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => dialogDispatch(closeAddDialog())}
               className="p-1 mr-2 self-end"
             >
               {/* get color right */}
