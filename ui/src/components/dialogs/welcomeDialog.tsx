@@ -134,14 +134,14 @@ export const WelcomeDialog = () => {
             <br />
           </Tab.Panel>
           <Tab.Panel>
-            For now, all Knox entries are encrypted/decrypted client side
-            (again, due to userspace permission security considerations) with a
-            secret that is never saved on your urbit - only in session storage.
+            For now, none of your raw information (including your secret cipher)
+            is actually saved to your urbit - Knox entries are encrypted and
+            decrypted client side with a secret set to session storage.
             <br />
             <br />
-            This means Knox cannot tell if you're using the correct secret to
-            decrypt - this will only become apparent when Knox is unable to
-            decrypt your entries.
+            This means Knox cannot tell if you've successfully "logged in" -
+            this will only become apparent when Knox is unable to decipher your
+            entries.
             <br />
             <br />
             This also means that any entries saved using the wrong secret will
@@ -157,7 +157,7 @@ export const WelcomeDialog = () => {
             <br />
             <div className="mt-1 mb-4">
               <input
-                className="border border-black p-1 sm:w-[60%]"
+                className="border border-black p-1 w-[60%]"
                 placeholder="secret"
                 onChange={handleSecret}
                 value={secret}
