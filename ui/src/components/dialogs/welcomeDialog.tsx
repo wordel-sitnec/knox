@@ -16,7 +16,7 @@ export const WelcomeDialog = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  const handlePoke = () => {
+  const handleSaveSettings = () => {
     urbitApi
       .poke({
         app: "knox",
@@ -34,7 +34,7 @@ export const WelcomeDialog = () => {
 
   const handleNext = () => {
     if (selectedIndex === 3) {
-      if (dontShow) handlePoke();
+      if (dontShow) handleSaveSettings();
       else navigate("/apps/knox/");
     } else setSelectedIndex(selectedIndex + 1);
   };
@@ -189,7 +189,8 @@ export const WelcomeDialog = () => {
             <br />
             You can change your secret here (just use the form above again), but
             once you save an entry using a secret you probably shouldn't change
-            it. Changing your secret feature coming post alpha.
+            it. The ability to change your secret, along with the re-encrypting
+            of all the data that entails, is coming post alpha.
             <div>
               <button
                 onClick={() => setShowSecretThatYouSet(!showSecretThatYouSet)}
