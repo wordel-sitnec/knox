@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const actionTypes = {
   OPEN_DELETE: "OPEN_DELETE",
   CLOSE_DELETE: "CLOSE_DELETE",
@@ -7,8 +8,9 @@ export const actionTypes = {
 };
 
 export const actions = {
-  openDeleteDialog: () => ({
+  openDeleteDialog: (id) => ({
     type: actionTypes.OPEN_DELETE,
+    id: id,
   }),
 
   closeDeleteDialog: () => ({

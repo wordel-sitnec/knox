@@ -8,8 +8,12 @@ import { password } from "./password";
 import { Popover } from "@headlessui/react";
 import { usePopper } from "react-popper";
 
+// TODO: need to get settings from settings context, change what happens with delete button accordingly
+// show warning ? modal : just delete
 export function VaultTableRow(props) {
   const { pass } = props;
+  // TODO: this id can go away once mocks/data has id field
+  const id = "hi";
 
   const [, dialogDispatch] = useContext(DialogContext);
   const { openDeleteDialog } = dialogActions;
@@ -170,7 +174,8 @@ export function VaultTableRow(props) {
         {editing ? (
           <td className="text-center">
             <button
-              onClick={() => dialogDispatch(openDeleteDialog())}
+              // TODO: set arg to pass.id once mocks/data has id field
+              onClick={() => dialogDispatch(openDeleteDialog(id))}
               className="m-1"
             >
               <ion-icon name="trash"></ion-icon>

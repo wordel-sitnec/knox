@@ -55,7 +55,7 @@ export const AddDialog = (props) => {
   };
 
   const handleSuccess = (res) => {
-    // log for dev, remove later
+    // TODO: log for dev, remove later
     console.log("res", res);
     setSuccess(true);
     setDisabled(true);
@@ -68,7 +68,7 @@ export const AddDialog = (props) => {
   };
 
   const handleError = (err) => {
-    // log for error, remove later
+    // TODO: log for error, remove later
     console.log("err", err);
     setLoading(false);
     setError(true);
@@ -150,6 +150,7 @@ export const AddDialog = (props) => {
                 {!loading ? (
                   "Save"
                 ) : (
+                  // TODO: update this to match delete dialog spinner
                   <svg
                     className="animate-spin h-6 w-6 rounded-full border-black border-t-2 border-solid"
                     viewBox="0 0 24 24"

@@ -14,12 +14,14 @@ export const dialogReducer = (state, action) => {
       return {
         ...state,
         deleteOpen: true,
+        deleteId: action.id,
       };
     }
     case actionTypes.CLOSE_DELETE: {
       return {
         ...state,
         deleteOpen: false,
+        deleteId: "",
       };
     }
     case actionTypes.OPEN_ADD: {
