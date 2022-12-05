@@ -15,6 +15,11 @@ export const getSecret = () => {
   return window.sessionStorage.getItem("secret");
 };
 
+// set secret to session storage
+export const storeSecret = (secret) => {
+  window.sessionStorage.setItem("secret", secret);
+};
+
 // for encrypting a value before sending to knox
 export const aesEncrypt = (string, secret) => {
   if (!string || !secret) return;
