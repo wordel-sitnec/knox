@@ -9,6 +9,7 @@
   :~  [%add (ot ~[website+so username+so password+so])]
       [%edit (ot ~[id+ni website+so username+so password+so])]
       [%del (ot ~[id+ni])]
+      [%sett (ot ~[setting-key:so setting-val:so])]
   ==
 :: ++  enjs-update
 ::   =,  enjs:format
