@@ -16,8 +16,7 @@ import dialogActions from "../../store/actions/dialogActions";
 // mocks
 import * as passwords from "../../mocks/passwords.json";
 
-export function Vault(props) {
-  // const { hasAgreed } = props;
+export function Vault() {
   const { data } = passwords;
   console.log("data", data);
 
@@ -66,7 +65,6 @@ export function Vault(props) {
 
   return (
     <>
-      {/* set these to one component that switches based on dialog context */}
       <InfoModal open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
       <AddDialog password={showGenerated ? "password" : null} />
@@ -164,14 +162,21 @@ export function Vault(props) {
         </div>
         {/* beginning of table */}
         <div className="overflow-x-auto bg-white border border-t border-black shadow-lg sm:rounded-b-lg sm:h-screen80">
-          <table className="w-full overflow-y-auto text-m text-gray-400">
-            <thead className="sticky top-0 bg-white z-10 py-4">
-              <tr className="text-left bg-gray-200">
-                <th className="py-2">site</th>
+          <table className="w-full text-gray-400 table-fixed">
+            <colgroup>
+              <col className="w-[30%]" />
+              <col className="w-[30%]" />
+              <col className="w-[20%]" />
+              <col className="w-[10%]" />
+              <col className="w-[10%]" />
+            </colgroup>
+            <thead className="sticky top-0 bg-white z-10">
+              <tr className="text-left bg-gray-200 text-center">
+                <th className="">site</th>
                 <th className="">username</th>
                 <th className="">password</th>
-                <th className="px-3">view</th>
-                <th className="px-3">edit</th>
+                <th className="">view</th>
+                <th className="">edit</th>
               </tr>
             </thead>
             <VaultTableBody searchValue={searchValue} data={data} />

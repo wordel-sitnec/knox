@@ -13,10 +13,9 @@ import { aesDecrypt, aesEncrypt } from "../../utils";
 // TODO: need to get settings from settings context, change what happens with delete button accordingly
 // show warning ? modal : just delete
 export function VaultTableRow(props) {
+  // TODO: remove mocks
   const { pass } = props;
-  // TODO: these can go away once I don't have to mock anymore
   const mockEntry = { ...pass, id: parseInt("3718284774") };
-  const id = "hi";
 
   const [, dialogDispatch] = useContext(DialogContext);
   const { openDeleteDialog, openEditDialog } = dialogActions;
@@ -63,12 +62,17 @@ export function VaultTableRow(props) {
   return (
     <>
       <tr className="bg-white hover:bg-gray-100 border-b">
-        <Popover className="hover:bg-gray-100">
-          <td className="p-2">
+        {/*
+         * TODO: popover causing some layout difficulties,
+         * namely sizing, centering, overflow..
+         * may remove, but then how to signal copy?
+         * */}
+        <Popover className="hover:bg-gray-100 max-w-full">
+          <td className="p-2 max-w-full">
             <Popover.Button
               ref={setReferenceRef}
               onClick={handleCopy}
-              className="py-2 sm:px-4 hover:bg-gray-200"
+              className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
               data-tooltip-target="tooltip-default"
               value={pass.website}
             >
@@ -91,7 +95,7 @@ export function VaultTableRow(props) {
         <td className="p-2">
           <button
             onClick={handleCopy}
-            className="py-2 sm:px-4 hover:bg-gray-200"
+            className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
             value={pass.username}
           >
             {pass.username}
@@ -102,7 +106,7 @@ export function VaultTableRow(props) {
           <button
             onClick={handleCopy}
             // TODO: change 200px below - need to set this to different screen sizes
-            className="py-2 px-2 hover:bg-gray-200 z-0 max-w-[200px] overflow-x-auto"
+            className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap"
             // TODO: why wont it copy if password is hidden
             value={pass.password}
           >
