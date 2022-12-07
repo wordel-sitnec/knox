@@ -6,9 +6,6 @@ import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 
 import { password } from "./password";
-import { Popover } from "@headlessui/react";
-import { usePopper } from "react-popper";
-import { aesDecrypt, aesEncrypt } from "../../utils";
 
 // TODO: need to get settings from settings context, change what happens with delete button accordingly
 // show warning ? modal : just delete
@@ -20,98 +17,86 @@ export function VaultTableRow(props) {
   const [, dialogDispatch] = useContext(DialogContext);
   const { openDeleteDialog, openEditDialog } = dialogActions;
 
+  const defaultVisible = {
+    site: false,
+    user: false,
+    pass: false,
+  };
+
   const [passHidden, setPassHidden] = useState(true);
-  const [visible, setVisible] = useState(true);
-  const [referenceRef, setReferenceRef] = useState(null);
-  const [popperRef, setPopperRef] = useState(null);
+  const [visible, setVisible] = useState(defaultVisible);
 
   const handleShowPass = () => {
     setPassHidden(!passHidden);
   };
 
+  // set a timeout to hide copy icon
   useEffect(() => {
-    if (visible) {
+    if (Object.values(visible).some((val) => val === true)) {
       setTimeout(() => {
-        setVisible(false);
+        setVisible(defaultVisible);
       }, "3500");
     }
   }, [visible]);
 
+  // TODO: this doesn't work on iOS, revisit
   const handleCopy = (e) => {
     if (e.target.value) {
       navigator.clipboard.writeText(e.target.value);
-      setVisible(true);
+      setVisible({
+        ...visible,
+        [e.target.name]: true,
+      });
     }
-    // TODO: do I actually want this alert
-    // alert("Copied the text: " + e.target.value);
   };
-
-  const { styles, attributes } = usePopper(referenceRef, popperRef, {
-    placement: "right",
-    modifiers: [
-      {
-        name: "offset",
-        enabled: true,
-        options: {
-          offset: [7, 3],
-        },
-      },
-    ],
-  });
 
   return (
     <>
       <tr className="bg-white hover:bg-gray-100 border-b">
-        {/*
-         * TODO: popover causing some layout difficulties,
-         * namely sizing, centering, overflow..
-         * may remove, but then how to signal copy?
-         * */}
-        <Popover className="hover:bg-gray-100 max-w-full">
-          <td className="p-2 max-w-full">
-            <Popover.Button
-              ref={setReferenceRef}
+        <td className="p-2">
+          <div className="flex justify-center items-center">
+            <button
               onClick={handleCopy}
               className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
-              data-tooltip-target="tooltip-default"
               value={pass.website}
+              name="site"
             >
               {pass.website}
-            </Popover.Button>
-            {visible && (
-              <Popover.Panel
-                id="arrow"
-                ref={setPopperRef}
-                style={styles.popper}
-                {...attributes.popper}
-              >
-                <ion-icon id="copy-icon" name="copy-outline" />
-              </Popover.Panel>
-            )}
-          </td>
-        </Popover>
-
-        {/* TODO: wrap this in popover for copying - each popover needs to be own component I think */}
-        <td className="p-2">
-          <button
-            onClick={handleCopy}
-            className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
-            value={pass.username}
-          >
-            {pass.username}
-          </button>
+            </button>
+            {visible.site && <ion-icon id="copy-icon" name="copy-outline" />}
+          </div>
         </td>
 
+        <td className="p-2">
+          <div className="flex justify-center items-center">
+            <button
+              onClick={handleCopy}
+              className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
+              value={pass.username}
+              name="user"
+            >
+              {pass.username}
+            </button>
+            {visible.user && <ion-icon id="copy-icon" name="copy-outline" />}
+          </div>
+        </td>
+
+        {/*
+         * TODO: right now can copy password even if hidden
+         * might be a nice thing to add to settings
+         */}
         <td className="py-2">
-          <button
-            onClick={handleCopy}
-            // TODO: change 200px below - need to set this to different screen sizes
-            className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap"
-            // TODO: why wont it copy if password is hidden
-            value={pass.password}
-          >
-            {passHidden ? password() : pass.password}
-          </button>
+          <div className="flex justify-center items-center">
+            <button
+              onClick={handleCopy}
+              className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap"
+              value={pass.password}
+              name="pass"
+            >
+              {passHidden ? password() : pass.password}
+            </button>
+            {visible.pass && <ion-icon id="copy-icon" name="copy-outline" />}
+          </div>
         </td>
 
         <td className="text-center">

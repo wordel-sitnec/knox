@@ -71,7 +71,7 @@ export function Vault() {
       <EditDialog />
       <DeleteDialog />
       <div
-        className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-8 ${
+        className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-2 sm:mt-8 mx-2 ${
           dialogState.addOpen ||
           dialogState.deleteOpen ||
           dialogState.editOpen ||

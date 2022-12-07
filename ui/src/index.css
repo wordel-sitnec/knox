@@ -20,7 +20,8 @@ ion-icon {
     color: gray;
     margin-left: 3%;
     padding: 0 1%;
-    font-size: 1.3rem;
+    /* TODO: size is hard coded, should revisit */
+    font-size: 1.3em;
 }
 
 #settings-icon {
