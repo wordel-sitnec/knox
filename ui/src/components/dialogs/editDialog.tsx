@@ -7,32 +7,29 @@ import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 import { aesEncrypt, getSecret } from "../../utils";
 
-export const AddDialog = (props) => {
-  const { password: pword } = props;
+/*
+ * TODO: Would be nice to keep editing inline (no separate dialog),
+ * but this might require some extra UI considerations.. how to handle
+ * success/errors - snack? etc
+ */
+export const EditDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
+  const { closeEditDialog } = dialogActions;
+
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [formState, setFormState] = useState({});
 
-  const [formState, setFormState] = useState({
-    website: "",
-    username: "",
-    password: pword ?? "",
-    // this doesn't work, why
-  });
-
-  const { closeAddDialog } = dialogActions;
-
-  // reset form state when modal closes
   useEffect(() => {
     setFormState({
-      website: "",
-      username: "",
-      password: pword ?? "",
+      website: dialogState.editWebsite,
+      username: dialogState.editUsername,
+      password: dialogState.editPassword,
     });
-  }, [dialogState.addOpen]);
+  }, [dialogState.editOpen]);
 
   // TODO: validate form - improve this
   useEffect(() => {
@@ -60,11 +57,6 @@ export const AddDialog = (props) => {
     setSuccess(true);
     setDisabled(true);
     setLoading(false);
-    setFormState({
-      website: "",
-      username: "",
-      password: "",
-    });
   };
 
   const handleError = (err) => {
@@ -74,17 +66,19 @@ export const AddDialog = (props) => {
     setError(true);
   };
 
-  const handleAdd = () => {
+  const handleEdit = () => {
     setLoading(true);
     urbitApi
       .poke({
         app: "knox",
         mark: "knox-action",
         json: {
-          add: {
+          edit: {
             website: aesEncrypt(formState.website, getSecret()),
             username: aesEncrypt(formState.username, getSecret()),
             password: aesEncrypt(formState.password, getSecret()),
+            // TODO: set this to id from dialog state
+            id: parseInt("3718284774"),
           },
         },
       })
@@ -94,14 +88,14 @@ export const AddDialog = (props) => {
 
   return (
     <Dialog
-      open={dialogState.addOpen}
-      onClose={() => dialogDispatch(closeAddDialog())}
+      open={dialogState.editOpen}
+      onClose={() => dialogDispatch(closeEditDialog())}
     >
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
         <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 sm:max-h-[420px] shadow-lg pb-14">
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
-              onClick={() => dialogDispatch(closeAddDialog())}
+              onClick={() => dialogDispatch(closeEditDialog())}
               className="p-1 mr-2 self-end"
             >
               {/* get color right */}
@@ -109,28 +103,30 @@ export const AddDialog = (props) => {
             </button>
 
             <Dialog.Title className="text-xl mb-6">
-              Save a new entry
+              Edit this entry
             </Dialog.Title>
             <input
               className="my-1 w-[75%] border border-black p-1"
+              placeholder="website"
               name="website"
               value={formState.website}
               onChange={handleChange}
-              placeholder="website"
             />
             <input
               className="my-1 w-[75%] border border-black p-1"
+              placeholder="username"
               name="username"
               value={formState.username}
               onChange={handleChange}
-              placeholder="username"
             />
             <input
               className="my-1 w-[75%] border border-black p-1"
+              placeholder="password"
               name="password"
               value={formState.password}
               onChange={handleChange}
-              placeholder="password"
+              // TODO: add button to show password
+              type="password"
             />
             <button
               onClick={() => setError(!error)}
@@ -139,13 +135,18 @@ export const AddDialog = (props) => {
               Generate
             </button>
 
+            {/*
+             * TODO: slight bug with this button,
+             * sometimes gets stuck if you click too many times,
+             * same with add dialog
+             */}
             {!success ? (
               <button
                 className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center ${
                   !loading && "disabled:opacity-25 disabled:pointer-events-none"
                 }`}
-                onClick={handleAdd}
-                disabled={disabled}
+                onClick={handleEdit}
+                disabled={loading || disabled}
               >
                 {!loading ? "Save" : <div className="animate-spin">~</div>}
               </button>

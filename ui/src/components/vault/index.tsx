@@ -7,6 +7,7 @@ import { InfoModal } from "../dialogs/infoModal";
 import { Settings } from "../dialogs/settings";
 import { AddDialog } from "../dialogs/addDialog";
 import { DeleteDialog } from "../dialogs/deleteDialog";
+import { EditDialog } from "../dialogs/editDialog";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
@@ -29,8 +30,6 @@ export function Vault(props) {
 
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const { openAddDialog } = dialogActions;
-
-  console.log("dialogState", dialogState);
 
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -71,11 +70,13 @@ export function Vault(props) {
       <InfoModal open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
       <AddDialog password={showGenerated ? "password" : null} />
+      <EditDialog />
       <DeleteDialog />
       <div
         className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-8 ${
           dialogState.addOpen ||
           dialogState.deleteOpen ||
+          dialogState.editOpen ||
           showSettings ||
           showGenerateDialog
             ? "opacity-50"

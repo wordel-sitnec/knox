@@ -7,8 +7,13 @@ const { Provider } = DialogContext;
 
 export const defaultState = {
   deleteOpen: false,
-  deleteId: "69420",
+  deleteId: "",
   addOpen: false,
+  editOpen: false,
+  editWebsite: "",
+  editUsername: "",
+  editPassword: "",
+  editId: "",
 };
 
 export const DialogProvider = ({ children }) => {

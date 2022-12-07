@@ -1,10 +1,5 @@
 // @ts-nocheck
-import { defaultState } from "../contexts/dialogContext";
 import { actionTypes } from "../actions/dialogActions";
-
-const dialogTypes = {
-  DELETE: "DELETE",
-};
 
 export const dialogReducer = (state, action) => {
   if (!action || !action.type) return state;
@@ -34,6 +29,26 @@ export const dialogReducer = (state, action) => {
       return {
         ...state,
         addOpen: false,
+      };
+    }
+    case actionTypes.OPEN_EDIT: {
+      return {
+        ...state,
+        editOpen: true,
+        editWebsite: action.website,
+        editUsername: action.username,
+        editPassword: action.password,
+        editId: action.id,
+      };
+    }
+    case actionTypes.CLOSE_EDIT: {
+      return {
+        ...state,
+        editOpen: false,
+        editWebsite: "",
+        editUsername: "",
+        editPassword: "",
+        editId: "",
       };
     }
   }

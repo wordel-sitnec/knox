@@ -5,6 +5,8 @@ export const actionTypes = {
   DELETE: "DELETE",
   OPEN_ADD: "OPEN_ADD",
   CLOSE_ADD: "CLOSE_ADD",
+  OPEN_EDIT: "OPEN_EDIT",
+  CLOSE_EDIT: "CLOSE_EDIT",
 };
 
 export const actions = {
@@ -25,6 +27,16 @@ export const actions = {
   }),
   closeAddDialog: () => ({
     type: actionTypes.CLOSE_ADD,
+  }),
+  openEditDialog: (entry) => ({
+    type: actionTypes.OPEN_EDIT,
+    website: entry.website,
+    username: entry.username,
+    password: entry.password,
+    id: entry.id,
+  }),
+  closeEditDialog: () => ({
+    type: actionTypes.CLOSE_EDIT,
   }),
 };
 

@@ -1,53 +1,33 @@
 // @ts-nocheck
 import React, { useState, useEffect, useContext } from "react";
 
-import dialogActions from "../../store/actions/dialogActions";
+import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
+import dialogActions from "../../store/actions/dialogActions";
 
 import { password } from "./password";
 import { Popover } from "@headlessui/react";
 import { usePopper } from "react-popper";
+import { aesDecrypt, aesEncrypt } from "../../utils";
 
 // TODO: need to get settings from settings context, change what happens with delete button accordingly
 // show warning ? modal : just delete
 export function VaultTableRow(props) {
   const { pass } = props;
-  // TODO: this id can go away once mocks/data has id field
+  // TODO: these can go away once I don't have to mock anymore
+  const mockEntry = { ...pass, id: parseInt("3718284774") };
   const id = "hi";
 
   const [, dialogDispatch] = useContext(DialogContext);
-  const { openDeleteDialog } = dialogActions;
+  const { openDeleteDialog, openEditDialog } = dialogActions;
 
   const [passHidden, setPassHidden] = useState(true);
-  const [editing, setEditing] = useState(false);
-  const [editVals, setEditVals] = useState({
-    website: pass.website,
-    username: pass.username,
-    password: pass.password,
-  });
-
   const [visible, setVisible] = useState(true);
   const [referenceRef, setReferenceRef] = useState(null);
   const [popperRef, setPopperRef] = useState(null);
 
   const handleShowPass = () => {
     setPassHidden(!passHidden);
-  };
-
-  const handleSetEdit = () => {
-    setEditVals({
-      website: pass.website,
-      username: pass.username,
-      password: pass.password,
-    });
-    setEditing(!editing);
-  };
-
-  const handleSetEditVals = (e) => {
-    setEditVals({
-      ...editVals,
-      [e.target.name]: e.target.value,
-    });
   };
 
   useEffect(() => {
@@ -63,7 +43,7 @@ export function VaultTableRow(props) {
       navigator.clipboard.writeText(e.target.value);
       setVisible(true);
     }
-    /* Alert the copied text */
+    // TODO: do I actually want this alert
     // alert("Copied the text: " + e.target.value);
   };
 
@@ -83,83 +63,52 @@ export function VaultTableRow(props) {
   return (
     <>
       <tr className="bg-white hover:bg-gray-100 border-b">
-        {editing ? (
+        <Popover className="hover:bg-gray-100">
           <td className="p-2">
-            <input
-              onChange={handleSetEditVals}
-              value={editVals.website}
-              name="website"
-            />
-          </td>
-        ) : (
-          <Popover className="hover:bg-gray-100">
-            <td className="p-2">
-              <Popover.Button
-                ref={setReferenceRef}
-                onClick={handleCopy}
-                className="py-2 sm:px-4 hover:bg-gray-200"
-                data-tooltip-target="tooltip-default"
-                value={pass.website}
-              >
-                {pass.website}
-              </Popover.Button>
-              {visible && (
-                <Popover.Panel
-                  id="arrow"
-                  ref={setPopperRef}
-                  style={styles.popper}
-                  {...attributes.popper}
-                >
-                  <ion-icon id="copy-icon" name="copy-outline" />
-                </Popover.Panel>
-              )}
-            </td>
-          </Popover>
-        )}
-
-        {editing ? (
-          <td className="p-2">
-            <input
-              onChange={handleSetEditVals}
-              value={editVals.username}
-              name="username"
-            ></input>
-          </td>
-        ) : (
-          // wrap this in popover for copying - each popover needs to be own component I think
-          <td className="p-2">
-            <button
+            <Popover.Button
+              ref={setReferenceRef}
               onClick={handleCopy}
               className="py-2 sm:px-4 hover:bg-gray-200"
-              value={pass.username}
+              data-tooltip-target="tooltip-default"
+              value={pass.website}
             >
-              {pass.username}
-            </button>
+              {pass.website}
+            </Popover.Button>
+            {visible && (
+              <Popover.Panel
+                id="arrow"
+                ref={setPopperRef}
+                style={styles.popper}
+                {...attributes.popper}
+              >
+                <ion-icon id="copy-icon" name="copy-outline" />
+              </Popover.Panel>
+            )}
           </td>
-        )}
+        </Popover>
 
-        {editing ? (
-          <td className="p-2">
-            <input
-              onChange={handleSetEditVals}
-              placeholder={passHidden ? "password hidden" : null}
-              value={passHidden ? "" : editVals.password}
-              name="password"
-            ></input>
-          </td>
-        ) : (
-          <td className="py-2">
-            <button
-              onClick={handleCopy}
-              // change 200px below - need to set this to different screen sizes
-              className="py-2 px-2 hover:bg-gray-200 z-0 max-w-[200px] overflow-x-auto"
-              // why wont it copy if password is hidden
-              value={pass.password}
-            >
-              {passHidden ? password() : pass.password}
-            </button>
-          </td>
-        )}
+        {/* TODO: wrap this in popover for copying - each popover needs to be own component I think */}
+        <td className="p-2">
+          <button
+            onClick={handleCopy}
+            className="py-2 sm:px-4 hover:bg-gray-200"
+            value={pass.username}
+          >
+            {pass.username}
+          </button>
+        </td>
+
+        <td className="py-2">
+          <button
+            onClick={handleCopy}
+            // TODO: change 200px below - need to set this to different screen sizes
+            className="py-2 px-2 hover:bg-gray-200 z-0 max-w-[200px] overflow-x-auto"
+            // TODO: why wont it copy if password is hidden
+            value={pass.password}
+          >
+            {passHidden ? password() : pass.password}
+          </button>
+        </td>
 
         <td className="text-center">
           <button onClick={handleShowPass}>
@@ -171,29 +120,23 @@ export function VaultTableRow(props) {
           </button>
         </td>
 
-        {editing ? (
-          <td className="text-center">
-            <button
-              // TODO: set arg to pass.id once mocks/data has id field
-              onClick={() => dialogDispatch(openDeleteDialog(id))}
-              className="m-1"
-            >
-              <ion-icon name="trash"></ion-icon>
-            </button>
-            <button className="m-1" onClick={handleSetEdit}>
-              <ion-icon name="close"></ion-icon>
-            </button>
-            <button className="m-1">
-              <ion-icon name="checkmark"></ion-icon>
-            </button>
-          </td>
-        ) : (
-          <td className="text-center">
-            <button onClick={handleSetEdit}>
-              <ion-icon name="pencil"></ion-icon>
-            </button>
-          </td>
-        )}
+        <td className="text-center">
+          {/* TODO: Delete button here next to edit now. Should come back to this UX */}
+          <button
+            // TODO: make sure the arg below is correct shape - see dialog actions
+            onClick={() => dialogDispatch(openEditDialog(mockEntry))}
+            className="px-2"
+          >
+            <ion-icon name="pencil"></ion-icon>
+          </button>
+          <button
+            // TODO: make sure the arg below is correct shape - need id
+            onClick={() => dialogDispatch(openDeleteDialog("12345"))}
+            className="px-2"
+          >
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </td>
       </tr>
     </>
   );
