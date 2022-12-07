@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 
 import { VaultTableBody } from "./vaultTableBody";
 
-import { InfoModal } from "../dialogs/infoModal";
+import { InfoDialog } from "../dialogs/infoDialog";
 import { Settings } from "../dialogs/settings";
 import { AddDialog } from "../dialogs/addDialog";
 import { DeleteDialog } from "../dialogs/deleteDialog";
@@ -65,11 +65,16 @@ export function Vault() {
 
   return (
     <>
-      <InfoModal open={showInfo} setOpen={setShowInfo} />
+      <InfoDialog open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
       <AddDialog password={showGenerated ? "password" : null} />
       <EditDialog />
       <DeleteDialog />
+
+      {/*
+       * TODO: should refactor the small screen view so so much space
+       * isn't taken up by action buttons, search, etc
+       */}
       <div
         className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-2 sm:mt-8 mx-2 ${
           dialogState.addOpen ||
@@ -80,7 +85,6 @@ export function Vault() {
             ? "opacity-50"
             : ""
         }`}
-        // set this div state ternary to dialog context
       >
         {/* action buttons */}
         <div className="flex justify-end px-2 mb-1">
@@ -89,7 +93,7 @@ export function Vault() {
               <button className="border border-black rounded-md shadow py-1 mx-1 px-1 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto">
                 passwordpasswordpasswordpasswordpasswordpasswordpassword
               </button>
-              {/* need to have some save the new password flow, what though */}
+              {/* TODO: need to have some save the new password flow, what though */}
               <button
                 className="text-xl font-bold pl-2"
                 onClick={() => dialogDispatch(openAddDialog())}

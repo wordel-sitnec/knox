@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 
-export const InfoModal = (props) => {
+export const InfoDialog = (props) => {
   const { open, setOpen } = props;
 
   return (
