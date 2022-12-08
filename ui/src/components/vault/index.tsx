@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 import { VaultTableBody } from "./vaultTableBody";
 
@@ -21,47 +21,35 @@ export function Vault() {
   console.log("data", data);
 
   const [searchValue, setSearchValue] = useState("");
+  const [showInfo, setShowInfo] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [generatedCopied, setGeneratedCopied] = useState(false);
+  const [showGenerateDialog, setShowGenerateDialog] = useState(false);
+  const [showGenerated, setShowGenerated] = useState(false);
+  // this state will need to change, this was for testing ^^
+
+  const [dialogState, dialogDispatch] = useContext(DialogContext);
+  const { openAddDialog } = dialogActions;
 
   const handleSearch = (e) => {
     const { value } = e.target;
     setSearchValue(value);
   };
 
-  const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const { openAddDialog } = dialogActions;
-
-  const [showInfo, setShowInfo] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const [showGenerateDialog, setShowGenerateDialog] = useState(false);
-  const [showGenerated, setShowGenerated] = useState(false);
-  // this state will need to change, this was for testing ^^
-
-  const handleEdit = () => {
-    api.poke({
-      app: "knox",
-      mark: "knox-action",
-      json: {
-        edit: {
-          id: 1895202297,
-          website: "test",
-          username: "test",
-          password: "newTest",
-        },
-      },
-    });
+  const handleCopy = (e) => {
+    if (e.target.value) {
+      navigator.clipboard.writeText(e.target.value);
+      setGeneratedCopied(true);
+    }
   };
 
-  const handleDel = () => {
-    api.poke({
-      app: "knox",
-      mark: "knox-action",
-      json: {
-        del: {
-          id: 1895202297,
-        },
-      },
-    });
-  };
+  useEffect(() => {
+    if (generatedCopied) {
+      setTimeout(() => {
+        setGeneratedCopied(false);
+      }, "3500");
+    }
+  }, [generatedCopied]);
 
   return (
     <>
@@ -87,29 +75,47 @@ export function Vault() {
         }`}
       >
         {/* TODO: generated stuff - will probably change */}
-        <div className="flex justify-end px-2 mb-1">
+        <div
+          className={`flex pr-2 py-1 mb-1 ${
+            showGenerated ? "justify-between" : "justify-end"
+          }`}
+        >
           {showGenerated && (
-            <div className="w-[70%] sm:max-w-[50%] flex pr-4 justify-end">
-              <button className="border border-black rounded-md shadow py-1 mx-1 px-1 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto">
+            <div className="w-[70%] sm:max-w-[50%] flex">
+              <button
+                onClick={handleCopy}
+                className="border border-black rounded-md shadow py-1 px-2 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto"
+                value="generatedPassword"
+              >
                 passwordpasswordpasswordpasswordpasswordpasswordpassword
               </button>
-              {/* TODO: need to have some save the new password flow, what though */}
-              <button
-                className="text-xl font-bold pl-2"
-                onClick={() => dialogDispatch(openAddDialog())}
-              >
-                <ion-icon name="add" />
-              </button>
-              <button
-                onClick={() => setShowGenerated(false)}
-                className="text-xl pl-2"
-              >
-                <ion-icon name="close" />
-              </button>
+              <div className="flex items-center">
+                {generatedCopied && (
+                  <ion-icon
+                    id="generated-copy-icon"
+                    name="copy-outline"
+                    className="pl-2"
+                  />
+                )}
+                {/* TODO: need to have some save the new password flow, what though */}
+                <button
+                  className="text-xl font-bold pl-2"
+                  onClick={() => dialogDispatch(openAddDialog())}
+                >
+                  <ion-icon name="add" />
+                </button>
+                <button
+                  onClick={() => setShowGenerated(false)}
+                  className="text-xl pl-2"
+                >
+                  <ion-icon name="close" />
+                </button>
+              </div>
             </div>
           )}
           {/* action buttons */}
-          <div>
+          <div className="">
+            {/* TODO: make this button generate a new password and not close if already open */}
             <button
               className="text-xl font-bold px-2"
               onClick={() => setShowGenerated(!showGenerated)}

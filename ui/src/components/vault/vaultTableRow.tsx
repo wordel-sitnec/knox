@@ -17,14 +17,14 @@ export function VaultTableRow(props) {
   const [, dialogDispatch] = useContext(DialogContext);
   const { openDeleteDialog, openEditDialog } = dialogActions;
 
-  const defaultVisible = {
+  const defaultCopied = {
     site: false,
     user: false,
     pass: false,
   };
 
   const [passHidden, setPassHidden] = useState(true);
-  const [visible, setVisible] = useState(defaultVisible);
+  const [copied, setCopied] = useState(defaultCopied);
 
   const handleShowPass = () => {
     setPassHidden(!passHidden);
@@ -32,19 +32,19 @@ export function VaultTableRow(props) {
 
   // set a timeout to hide copy icon
   useEffect(() => {
-    if (Object.values(visible).some((val) => val === true)) {
+    if (Object.values(copied).some((val) => val === true)) {
       setTimeout(() => {
-        setVisible(defaultVisible);
+        setCopied(defaultCopied);
       }, "3500");
     }
-  }, [visible]);
+  }, [copied]);
 
   // TODO: this doesn't work on iOS, revisit
   const handleCopy = (e) => {
     if (e.target.value) {
       navigator.clipboard.writeText(e.target.value);
-      setVisible({
-        ...visible,
+      setCopied({
+        ...copied,
         [e.target.name]: true,
       });
     }
@@ -63,7 +63,7 @@ export function VaultTableRow(props) {
             >
               {pass.website}
             </button>
-            {visible.site && <ion-icon id="copy-icon" name="copy-outline" />}
+            {copied.site && <ion-icon id="copy-icon" name="copy-outline" />}
           </div>
         </td>
 
@@ -77,7 +77,7 @@ export function VaultTableRow(props) {
             >
               {pass.username}
             </button>
-            {visible.user && <ion-icon id="copy-icon" name="copy-outline" />}
+            {copied.user && <ion-icon id="copy-icon" name="copy-outline" />}
           </div>
         </td>
 
@@ -95,7 +95,7 @@ export function VaultTableRow(props) {
             >
               {passHidden ? password() : pass.password}
             </button>
-            {visible.pass && <ion-icon id="copy-icon" name="copy-outline" />}
+            {copied.pass && <ion-icon id="copy-icon" name="copy-outline" />}
           </div>
         </td>
 
