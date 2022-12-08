@@ -101,30 +101,28 @@ export function VaultTableRow(props) {
 
         <td className="text-center">
           <button onClick={handleShowPass}>
-            {passHidden ? (
-              <ion-icon name="eye"></ion-icon>
-            ) : (
-              <ion-icon name="eye-off"></ion-icon>
-            )}
+            {passHidden ? <ion-icon name="eye" /> : <ion-icon name="eye-off" />}
           </button>
         </td>
 
         <td className="text-center">
           {/* TODO: Delete button here next to edit now. Should come back to this UX */}
-          <button
-            // TODO: make sure the arg below is correct shape - see dialog actions
-            onClick={() => dialogDispatch(openEditDialog(mockEntry))}
-            className="px-2"
-          >
-            <ion-icon name="pencil"></ion-icon>
-          </button>
-          <button
-            // TODO: make sure the arg below is correct shape - need id
-            onClick={() => dialogDispatch(openDeleteDialog("12345"))}
-            className="px-2"
-          >
-            <ion-icon name="trash"></ion-icon>
-          </button>
+          <div className="whitespace-nowrap">
+            <button
+              // TODO: make sure the arg below is correct shape - see dialog actions
+              onClick={() => dialogDispatch(openEditDialog(mockEntry))}
+              className="pr-1 md:px-2"
+            >
+              <ion-icon name="pencil" />
+            </button>
+            <button
+              // TODO: make sure the arg below is correct shape - need id
+              onClick={() => dialogDispatch(openDeleteDialog("12345"))}
+              className="pl-1 md:px-2"
+            >
+              <ion-icon name="trash" />
+            </button>
+          </div>
         </td>
       </tr>
     </>

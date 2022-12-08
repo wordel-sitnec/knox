@@ -16,6 +16,7 @@ export function App() {
   const [urbitApi] = useContext(UrbitContext);
 
   useEffect(() => {
+    // TODO: finish this init and redirect
     // get init from knox
     // const init = async () => {
     //   urbitApi.subscribe({ app: "knox", path: "/vault", event: handleUpdate });

@@ -86,7 +86,7 @@ export function Vault() {
             : ""
         }`}
       >
-        {/* action buttons */}
+        {/* TODO: generated stuff - will probably change */}
         <div className="flex justify-end px-2 mb-1">
           {showGenerated && (
             <div className="w-[70%] sm:max-w-[50%] flex pr-4 justify-end">
@@ -108,27 +108,30 @@ export function Vault() {
               </button>
             </div>
           )}
-          <button
-            className="text-xl font-bold px-2"
-            onClick={() => setShowGenerated(!showGenerated)}
-          >
-            <ion-icon name="dice-outline" className="text-xl" />
-          </button>
-          <button
-            className="text-xl font-bold px-2 hover:scale-120 my-1"
-            onClick={() => dialogDispatch(openAddDialog())}
-          >
-            <ion-icon name="add" />
-          </button>
-          <button
-            className="text-xl font-bold px-2 hover:scale-120 my-1"
-            onClick={() => setShowSettings(true)}
-          >
-            <ion-icon name="settings-sharp" id="settings-icon" />
-          </button>
+          {/* action buttons */}
+          <div>
+            <button
+              className="text-xl font-bold px-2"
+              onClick={() => setShowGenerated(!showGenerated)}
+            >
+              <ion-icon name="dice-outline" className="text-xl" />
+            </button>
+            <button
+              className="text-xl font-bold px-2 hover:scale-120 my-1"
+              onClick={() => dialogDispatch(openAddDialog())}
+            >
+              <ion-icon name="add" />
+            </button>
+            <button
+              className="text-xl font-bold px-2 hover:scale-120 my-1"
+              onClick={() => setShowSettings(true)}
+            >
+              <ion-icon name="settings-sharp" id="settings-icon" />
+            </button>
+          </div>
         </div>
         {/* title and search */}
-        <div className="flex p-4 justify-between border-l border-r border-black border-t-4 bg-white sm:rounded-t-lg">
+        <div className="flex p-2 sm:p-4 justify-between border-l border-r border-black border-t-4 bg-white sm:rounded-t-lg">
           <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle flex">
             knox
             <span className="hidden md:inline"> - your password vault</span>
@@ -160,7 +163,7 @@ export function Vault() {
                 placeholder="search"
                 onChange={handleSearch}
                 value={searchValue}
-              ></input>
+              />
             </div>
           </div>
         </div>
@@ -168,11 +171,11 @@ export function Vault() {
         <div className="overflow-x-auto bg-white border border-t border-black shadow-lg sm:rounded-b-lg sm:h-screen80">
           <table className="w-full text-gray-400 table-fixed">
             <colgroup>
-              <col className="w-[30%]" />
+              <col className="w-[25%]" />
               <col className="w-[30%]" />
               <col className="w-[20%]" />
-              <col className="w-[10%]" />
-              <col className="w-[10%]" />
+              <col className="w-[8%]" />
+              <col className="w-[12%]" />
             </colgroup>
             <thead className="sticky top-0 bg-white z-10">
               <tr className="text-left bg-gray-200 text-center">
