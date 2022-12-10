@@ -5,7 +5,7 @@ import { Dialog } from "@headlessui/react";
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
-import { aesEncrypt, getSecret } from "../../utils";
+import { aesEncrypt, generatePassword, getSecret } from "../../utils";
 
 export const AddDialog = (props) => {
   const { password: pword } = props;
@@ -43,7 +43,11 @@ export const AddDialog = (props) => {
 
   // clear error and success messages after 5 seconds
   useEffect(() => {
-    if (success) setTimeout(() => setSuccess(false), 5000);
+    if (success)
+      setTimeout(() => {
+        setSuccess(false);
+        setFormState({ website: "", username: "", password: "" });
+      }, 5000);
     if (error) setTimeout(() => setError(false), 7000);
   }, [success, error]);
 
@@ -54,17 +58,24 @@ export const AddDialog = (props) => {
     });
   };
 
+  const handleGenerate = () => {
+    const pass = generatePassword();
+    setFormState({
+      ...formState,
+      password: pass,
+    });
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(formState.password);
+  };
+
   const handleSuccess = (res) => {
     // TODO: log for dev, remove later
     console.log("res", res);
     setSuccess(true);
     setDisabled(true);
     setLoading(false);
-    setFormState({
-      website: "",
-      username: "",
-      password: "",
-    });
   };
 
   const handleError = (err) => {
@@ -133,7 +144,7 @@ export const AddDialog = (props) => {
               placeholder="password"
             />
             <button
-              onClick={() => setError(!error)}
+              onClick={handleGenerate}
               className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
             >
               Generate
@@ -157,6 +168,14 @@ export const AddDialog = (props) => {
             {error && (
               <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400">
                 Something went wrong. Try again.
+              </button>
+            )}
+            {success && (
+              <button
+                onClick={handleCopy}
+                className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
+              >
+                Copy password
               </button>
             )}
           </div>

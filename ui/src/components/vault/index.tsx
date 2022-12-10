@@ -56,6 +56,14 @@ export function Vault() {
     }
   }, [generatedCopied]);
 
+  // close generated when opening a dialog, add to if necessary
+  useEffect(() => {
+    if (dialogState.addOpen || dialogState.editOpen) {
+      setGenerated("");
+      setShowGenerated(false);
+    }
+  }, [dialogState.addOpen, dialogState.editOpen]);
+
   return (
     <>
       <InfoDialog open={showInfo} setOpen={setShowInfo} />

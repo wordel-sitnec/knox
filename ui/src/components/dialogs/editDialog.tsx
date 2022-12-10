@@ -5,7 +5,7 @@ import { Dialog } from "@headlessui/react";
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
-import { aesEncrypt, getSecret } from "../../utils";
+import { aesEncrypt, getSecret, generatePassword } from "../../utils";
 
 /*
  * TODO: Would be nice to keep editing inline (no separate dialog),
@@ -49,6 +49,18 @@ export const EditDialog = () => {
       ...formState,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleGenerate = () => {
+    const pass = generatePassword();
+    setFormState({
+      ...formState,
+      password: pass,
+    });
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(formState.password);
   };
 
   const handleSuccess = (res) => {
@@ -126,10 +138,10 @@ export const EditDialog = () => {
               value={formState.password}
               onChange={handleChange}
               // TODO: add button to show password
-              type="password"
+              // type="password"
             />
             <button
-              onClick={() => setError(!error)}
+              onClick={handleGenerate}
               className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
             >
               Generate
@@ -158,6 +170,14 @@ export const EditDialog = () => {
             {error && (
               <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400">
                 Something went wrong. Try again.
+              </button>
+            )}
+            {!error && (
+              <button
+                onClick={handleCopy}
+                className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
+              >
+                Copy password
               </button>
             )}
           </div>
