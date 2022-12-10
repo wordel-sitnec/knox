@@ -177,7 +177,7 @@ export const EditDialog = () => {
                 Something went wrong. Try again.
               </button>
             )}
-            {!error && (
+            {!error && Boolean(formState?.password?.length) && (
               <button
                 onClick={handleCopy}
                 className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
