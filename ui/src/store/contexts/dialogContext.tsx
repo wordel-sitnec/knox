@@ -14,6 +14,7 @@ export const defaultState = {
   editUsername: "",
   editPassword: "",
   editId: "",
+  settingsOpen: false,
 };
 
 export const DialogProvider = ({ children }) => {

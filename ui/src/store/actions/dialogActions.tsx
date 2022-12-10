@@ -7,6 +7,8 @@ export const actionTypes = {
   CLOSE_ADD: "CLOSE_ADD",
   OPEN_EDIT: "OPEN_EDIT",
   CLOSE_EDIT: "CLOSE_EDIT",
+  OPEN_SETTINGS: "OPEN_SETTINGS",
+  CLOSE_SETTINGS: "CLOSE_SETTINGS",
 };
 
 export const actions = {
@@ -37,6 +39,12 @@ export const actions = {
   }),
   closeEditDialog: () => ({
     type: actionTypes.CLOSE_EDIT,
+  }),
+  openSettingsDialog: () => ({
+    type: actionTypes.OPEN_SETTINGS,
+  }),
+  closeSettingsDialog: () => ({
+    type: actionTypes.CLOSE_SETTINGS,
   }),
 };
 

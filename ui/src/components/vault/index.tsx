@@ -8,7 +8,7 @@ import { generatePassword } from "../../utils";
 
 import { VaultTableBody } from "./vaultTableBody";
 import { InfoDialog } from "../dialogs/infoDialog";
-import { Settings } from "../dialogs/settings";
+import { SettingsDialog } from "../dialogs/settingsDialog";
 import { AddDialog } from "../dialogs/addDialog";
 import { DeleteDialog } from "../dialogs/deleteDialog";
 import { EditDialog } from "../dialogs/editDialog";
@@ -22,14 +22,12 @@ export function Vault() {
 
   const [searchValue, setSearchValue] = useState("");
   const [showInfo, setShowInfo] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [generated, setGenerated] = useState("");
   const [showGenerated, setShowGenerated] = useState(false);
   const [generatedCopied, setGeneratedCopied] = useState(false);
-  // this state will need to change, this was for testing ^^
 
   const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const { openAddDialog } = dialogActions;
+  const { openAddDialog, openSettingsDialog } = dialogActions;
 
   const handleSearch = (e) => {
     const { value } = e.target;
@@ -58,16 +56,21 @@ export function Vault() {
 
   // close generated when opening a dialog, add to if necessary
   useEffect(() => {
-    if (dialogState.addOpen || dialogState.editOpen) {
+    if (
+      dialogState.addOpen ||
+      dialogState.editOpen ||
+      dialogState.deleteOpen ||
+      dialogState.settingsOpen
+    ) {
       setGenerated("");
       setShowGenerated(false);
     }
-  }, [dialogState.addOpen, dialogState.editOpen]);
+  }, [dialogState]);
 
   return (
     <>
       <InfoDialog open={showInfo} setOpen={setShowInfo} />
-      <Settings open={showSettings} setOpen={setShowSettings} />
+      <SettingsDialog />
       <AddDialog password={showGenerated ? generated : null} />
       <EditDialog />
       <DeleteDialog />
@@ -81,7 +84,7 @@ export function Vault() {
           dialogState.addOpen ||
           dialogState.deleteOpen ||
           dialogState.editOpen ||
-          showSettings
+          dialogState.settingsOpen
             ? "opacity-50"
             : ""
         }`}
@@ -140,7 +143,7 @@ export function Vault() {
             </button>
             <button
               className="text-xl font-bold px-2 hover:scale-120 my-1"
-              onClick={() => setShowSettings(true)}
+              onClick={() => dialogDispatch(openSettingsDialog())}
             >
               <ion-icon name="settings-sharp" id="settings-icon" />
             </button>

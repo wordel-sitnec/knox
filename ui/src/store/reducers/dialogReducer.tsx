@@ -51,5 +51,17 @@ export const dialogReducer = (state, action) => {
         editId: "",
       };
     }
+    case actionTypes.OPEN_SETTINGS: {
+      return {
+        ...state,
+        settingsOpen: true,
+      };
+    }
+    case actionTypes.CLOSE_SETTINGS: {
+      return {
+        ...state,
+        settingsOpen: false,
+      };
+    }
   }
 };
