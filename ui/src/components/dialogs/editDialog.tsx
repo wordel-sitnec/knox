@@ -22,6 +22,7 @@ export const EditDialog = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [formState, setFormState] = useState({});
+  const [showPass, setShowPass] = useState(false);
 
   useEffect(() => {
     setFormState({
@@ -131,15 +132,19 @@ export const EditDialog = () => {
               value={formState.username}
               onChange={handleChange}
             />
-            <input
-              className="my-1 w-[75%] border border-black p-1"
-              placeholder="password"
-              name="password"
-              value={formState.password}
-              onChange={handleChange}
-              // TODO: add button to show password
-              // type="password"
-            />
+            <div className="w-3/4 flex justify-between">
+              <input
+                className="my-1 border border-black p-1 w-full"
+                placeholder="password"
+                name="password"
+                value={formState.password}
+                onChange={handleChange}
+                type={!showPass ? "password" : ""}
+              />
+              <button onClick={() => setShowPass(!showPass)} className="pl-1">
+                {!showPass ? "show" : "hide"}
+              </button>
+            </div>
             <button
               onClick={handleGenerate}
               className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"

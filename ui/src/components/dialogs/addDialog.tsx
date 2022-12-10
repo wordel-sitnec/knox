@@ -15,6 +15,7 @@ export const AddDialog = (props) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [showPass, setShowPass] = useState(true);
 
   const [formState, setFormState] = useState({
     website: "",
@@ -136,13 +137,19 @@ export const AddDialog = (props) => {
               onChange={handleChange}
               placeholder="username"
             />
-            <input
-              className="my-1 w-[75%] border border-black p-1"
-              name="password"
-              value={formState.password}
-              onChange={handleChange}
-              placeholder="password"
-            />
+            <div className="w-3/4 flex justify-between">
+              <input
+                className="my-1 border border-black p-1 w-full"
+                name="password"
+                value={formState.password}
+                onChange={handleChange}
+                placeholder="password"
+                type={!showPass ? "password" : ""}
+              />
+              <button onClick={() => setShowPass(!showPass)} className="pl-1">
+                {!showPass ? "show" : "hide"}
+              </button>
+            </div>
             <button
               onClick={handleGenerate}
               className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
