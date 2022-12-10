@@ -1,17 +1,17 @@
 // @ts-nocheck
 import React, { useContext, useState, useEffect } from "react";
 
-import { VaultTableBody } from "./vaultTableBody";
+import { UrbitContext } from "../../store/contexts/urbitContext";
+import { DialogContext } from "../../store/contexts/dialogContext";
+import dialogActions from "../../store/actions/dialogActions";
+import { generatePassword } from "../../utils";
 
+import { VaultTableBody } from "./vaultTableBody";
 import { InfoDialog } from "../dialogs/infoDialog";
 import { Settings } from "../dialogs/settings";
 import { AddDialog } from "../dialogs/addDialog";
 import { DeleteDialog } from "../dialogs/deleteDialog";
 import { EditDialog } from "../dialogs/editDialog";
-
-import { UrbitContext } from "../../store/contexts/urbitContext";
-import { DialogContext } from "../../store/contexts/dialogContext";
-import dialogActions from "../../store/actions/dialogActions";
 
 // mocks
 import * as passwords from "../../mocks/passwords.json";
@@ -23,9 +23,9 @@ export function Vault() {
   const [searchValue, setSearchValue] = useState("");
   const [showInfo, setShowInfo] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [generatedCopied, setGeneratedCopied] = useState(false);
-  const [showGenerateDialog, setShowGenerateDialog] = useState(false);
+  const [generated, setGenerated] = useState("");
   const [showGenerated, setShowGenerated] = useState(false);
+  const [generatedCopied, setGeneratedCopied] = useState(false);
   // this state will need to change, this was for testing ^^
 
   const [dialogState, dialogDispatch] = useContext(DialogContext);
@@ -43,6 +43,11 @@ export function Vault() {
     }
   };
 
+  const handleDice = () => {
+    if (!showGenerated) setShowGenerated(true);
+    setGenerated(generatePassword());
+  };
+
   useEffect(() => {
     if (generatedCopied) {
       setTimeout(() => {
@@ -55,7 +60,7 @@ export function Vault() {
     <>
       <InfoDialog open={showInfo} setOpen={setShowInfo} />
       <Settings open={showSettings} setOpen={setShowSettings} />
-      <AddDialog password={showGenerated ? "password" : null} />
+      <AddDialog password={showGenerated ? generated : null} />
       <EditDialog />
       <DeleteDialog />
 
@@ -68,8 +73,7 @@ export function Vault() {
           dialogState.addOpen ||
           dialogState.deleteOpen ||
           dialogState.editOpen ||
-          showSettings ||
-          showGenerateDialog
+          showSettings
             ? "opacity-50"
             : ""
         }`}
@@ -80,14 +84,15 @@ export function Vault() {
             showGenerated ? "justify-between" : "justify-end"
           }`}
         >
+          {/* TODO: close this when add dialog is entered and then closed */}
           {showGenerated && (
             <div className="w-[70%] sm:max-w-[50%] flex">
               <button
                 onClick={handleCopy}
                 className="border border-black rounded-md shadow py-1 px-2 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto"
-                value="generatedPassword"
+                value={generated}
               >
-                passwordpasswordpasswordpasswordpasswordpasswordpassword
+                {generated}
               </button>
               <div className="flex items-center">
                 {generatedCopied && (
@@ -116,10 +121,7 @@ export function Vault() {
           {/* action buttons */}
           <div className="">
             {/* TODO: make this button generate a new password and not close if already open */}
-            <button
-              className="text-xl font-bold px-2"
-              onClick={() => setShowGenerated(!showGenerated)}
-            >
+            <button className="text-xl font-bold px-2" onClick={handleDice}>
               <ion-icon name="dice-outline" className="text-xl" />
             </button>
             <button
