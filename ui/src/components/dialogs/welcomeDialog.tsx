@@ -49,7 +49,7 @@ export const WelcomeDialog = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-[95%] xl:max-w-[40%]">
+    <div className="flex flex-col justify-center w-[95%] lg:max-w-[40%]">
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <Tab.List>
           <Tab className="w-1/4">
