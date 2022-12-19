@@ -15,11 +15,8 @@
       [%sett =setting-key =setting-val]
   ==
 +$  update
-  %+  pair  @
-  $%  action
-      :: idk if this is right but it compiles for now
-      [%vault =vault] 
-      [%settings =settings]
+  $%  [%init =vault =settings]
+      action
   ==
 :: types for agent state
 +$  vault  (map id entry)

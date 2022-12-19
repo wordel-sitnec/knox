@@ -20,6 +20,7 @@ export function Vault() {
   const { data } = passwords;
   console.log("data", data);
 
+  const [urbitApi] = useContext(UrbitContext);
   const [searchValue, setSearchValue] = useState("");
   const [showInfo, setShowInfo] = useState(false);
   const [generated, setGenerated] = useState("");

@@ -29,36 +29,33 @@
 ++  on-poke
   |=  [=mark =vase]
   ^-  (quip card _this)
+  ?>  =(our.bowl src.bowl)
   ?>  ?=(%knox-action mark)
   =/  act  !<(action vase)
   ~&  >>  "that action was a {<-.act>}"
   ?-  -.act
       %add 
-    ?>  =(our.bowl src.bowl)
     =/  id  (~(rad og eny:bowl) (pow 2 32))  :: basic id handling, should improve
     ?.  (~(has by vault) id)
       `this(vault (~(put by vault) id `entry`[website.act username.act password.act now:bowl]))
     `this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
       ::
       %del
-    ?>  =(our.bowl src.bowl)
     `this(vault (~(del by vault) id.act))
       ::
       %edit
-    ?>  =(our.bowl src.bowl)
     `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
       %sett
-    ?>  =(our.bowl src.bowl)
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
  ==
 ::
-++  on-watch  on-watch:def
-  :: |=  =path
-  :: ^-  (quip card _this)
-  :: ?>  (team:title our.bowl src.bowl)
-  :: ?+  path  (on-watch:def path)
-  ::   [%updates ~] `this
-  :: ==
+++  on-watch
+  |=  =path
+  ^-  (quip card _this)
+  ?>  (team:title our.bowl src.bowl)
+  ?>  ?=([%values ~] path)
+  :_  this
+  [%give %fact ~ %knox-update !>([%init vault settings])]~
 ::
 ++  on-peek
   |=  =path
