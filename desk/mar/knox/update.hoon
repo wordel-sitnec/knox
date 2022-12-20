@@ -3,12 +3,7 @@
 ++  grow
   |%
   ++  noun  upd
-  ++  json
-    =,  enjs:format
-    ^-  ^json
-    ?-    -.upd
-      %init  (frond 'init' a+(vault.upd) a+(settings.upd))
-      ==
+  ++  json  enjs-update
   --
 ++  grab
   |%

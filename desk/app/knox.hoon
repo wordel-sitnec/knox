@@ -41,7 +41,8 @@
     `this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
       ::
       %del
-    `this(vault (~(del by vault) id.act))
+    :_  this(vault (~(del by vault) id.act))
+    [%give %fact ~[/updates] %knox-update !>(`update`act)]~
       ::
       %edit
     `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
@@ -53,9 +54,9 @@
   |=  =path
   ^-  (quip card _this)
   ?>  (team:title our.bowl src.bowl)
-  ?>  ?=([%values ~] path)
-  :_  this
-  [%give %fact ~ %knox-update !>([%init vault settings])]~
+  ?+  path  (on-watch:def path)
+    [%updates ~]  `this
+  ==
 ::
 ++  on-peek
   |=  =path
@@ -64,8 +65,9 @@
   ?+  path  (on-peek:def path)
     [%x %generate ~]  ``noun+!>(eny.bowl)
     :: .^(@ %gx /=knox=/generate/noun)
-    [%x %init ~]  ``noun+!>([vault settings])
-    :: in dojo, first build knoxsur from /=knox=/sur/knox/hoon, then
+    [%x %init ~]  ``noun+!>(`update`[%init vault settings])
+    :: in dojo, first build knoxsur from /=knox=/sur/knox/hoon, then scry
+    :: =knoxsur -build-file /=knox=/sur/knox/hoon
     :: .^([vault:knoxsur settings:knoxsur] %gx /=knox=/init/noun)
    ==
 ++  on-leave  on-leave:def

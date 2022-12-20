@@ -48,6 +48,15 @@ export function Vault() {
   };
 
   useEffect(() => {
+    urbitApi.scry({
+      app: "knox",
+      path: "/init",
+    })
+    .then((res) => console.log("res", res))
+    .catch((err) => console.log('err', err));
+  }, [])
+
+  useEffect(() => {
     if (generatedCopied) {
       setTimeout(() => {
         setGeneratedCopied(false);

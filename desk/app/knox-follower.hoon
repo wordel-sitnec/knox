@@ -18,17 +18,17 @@
       %sub
     ~&  >>  action
     :_  this
-    [%pass /values-wire %agent [p.action %knox] %watch /values]~
+    [%pass /updates-wire %agent [p.action %knox] %watch /updates]~
   ::
       %unsub
     :_  this
-    [%pass /values-wire %agent [p.action %knox] %leave ~]~
+    [%pass /updates-wire %agent [p.action %knox] %leave ~]~
   ==
 ::
 ++  on-agent
   |=  [=wire =sign:agent:gall]
   ^-  (quip card _this)
-  ?>  ?=([%values-wire ~] wire)
+  ?>  ?=([%updates-wire ~] wire)
   ?+    -.sign  (on-agent:def wire sign)
       %watch-ack
     ?~  p.sign
@@ -38,7 +38,7 @@
       %kick
     %-  (slog '%knox-follower: Got kick, resubscribing...' ~)
     :_  this
-    [%pass /values-wire %agent [src.bowl %knox] %watch /values]~
+    [%pass /updates-wire %agent [src.bowl %knox] %watch /updates]~
   ::
     %fact
     ~&  >>  fact+p.cage.sign
