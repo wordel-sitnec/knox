@@ -65,7 +65,11 @@
   ?+  path  (on-peek:def path)
     [%x %generate ~]  ``noun+!>(eny.bowl)
     :: .^(@ %gx /=knox=/generate/noun)
-    [%x %init ~]  ``noun+!>(`update`[%init vault settings])
+     [%x %init ~]
+    :^  ~  ~  %knox-update
+    !>  ^-  update
+    [%init [vault settings]]
+    :: ``noun+!>(`update`[%init vault settings])
     :: in dojo, first build knoxsur from /=knox=/sur/knox/hoon, then scry
     :: =knoxsur -build-file /=knox=/sur/knox/hoon
     :: .^([vault:knoxsur settings:knoxsur] %gx /=knox=/init/noun)
