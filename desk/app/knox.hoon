@@ -36,16 +36,19 @@
   ?-  -.act
       %add 
     =/  id  (~(rad og eny:bowl) (pow 2 32))  :: basic id handling, should improve
+    :_  
     ?.  (~(has by vault) id)
-      `this(vault (~(put by vault) id `entry`[website.act username.act password.act now:bowl]))
-    `this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
+      this(vault (~(put by vault) id `entry`[website.act username.act password.act now:bowl]))
+    this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
+    [%give %fact ~[/updates] %knox-update !>(`update`act)]~
       ::
       %del
     :_  this(vault (~(del by vault) id.act))
     [%give %fact ~[/updates] %knox-update !>(`update`act)]~
       ::
       %edit
-    `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
+    :_  this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
+    [%give %fact ~[/updates] %knox-update !>(`update`act)]~
       %sett
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
  ==
@@ -53,10 +56,11 @@
 ++  on-watch
   |=  =path
   ^-  (quip card _this)
-  ?>  (team:title our.bowl src.bowl)
-  ?+  path  (on-watch:def path)
-    [%updates ~]  `this
-  ==
+  ?>  ?=([%updates ~] path)
+  :: [%updates ~]  `this
+  :_  this
+  :: [%give %fact ~ %knox-update !>(`update`[%init settings])]~
+  [%give %fact ~ %knox-update !>(`update`[%del `id`2])]~
 ::
 ++  on-peek
   |=  =path
@@ -65,10 +69,7 @@
   ?+  path  (on-peek:def path)
     [%x %generate ~]  ``noun+!>(eny.bowl)
     :: .^(@ %gx /=knox=/generate/noun)
-     [%x %init ~]
-    :^  ~  ~  %knox-update
-    !>  ^-  update
-    [%init [vault settings]]
+     [%x %init ~]  ``noun+!>([vault settings])
     :: ``noun+!>(`update`[%init vault settings])
     :: in dojo, first build knoxsur from /=knox=/sur/knox/hoon, then scry
     :: =knoxsur -build-file /=knox=/sur/knox/hoon

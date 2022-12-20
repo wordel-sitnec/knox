@@ -15,7 +15,7 @@
       [%sett =setting-key =setting-val]
   ==
 +$  update
-  $%  [%init =vault =settings]
+  $%  [%init =settings]
       action
   ==
 :: types for agent state

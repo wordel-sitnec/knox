@@ -47,10 +47,15 @@ export function Vault() {
     setGenerated(generatePassword());
   };
 
+  const handleEvent = (upd) => {
+    console.log('upd', upd)
+  }
+
   useEffect(() => {
-    urbitApi.scry({
+    urbitApi.subscribe({
       app: "knox",
-      path: "/init",
+      path: "/updates",
+      event: handleEvent
     })
     .then((res) => console.log("res", res))
     .catch((err) => console.log('err', err));

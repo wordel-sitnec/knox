@@ -11,69 +11,63 @@
       [%del (ot ~[id+ni])]
       [%sett (ot ~[setting-key+so setting-val+so])]
   ==
- ++  enjs-update
+++  enjs-update
   =,  enjs:format
   |=  upd=update
   ^-  json
-  ~&  upd
+  ~&  >>  upd
   |^
   ?-  -.upd
-         %init
-        %+  frond  'init'
+           %del  (frond 'del' s+(scot %ud id.upd))
+           %add  
+        %+  frond  'add'
         %-  pairs
-        :~  ['vault' vault] 
-            ['settings' settings]
-  ==    ==
+        :~  ['website' s+website.upd]
+            ['username' s+username.upd]
+            ['password' s+password.upd]
+        ==
+           %edit
+        %+  frond  'edit'
+        %-  pairs
+        :~  ['website' s+website.upd]
+            ['username' s+username.upd]
+            ['password' s+password.upd]
+            ['id' s+(scot %ud id.upd)]
+        ==
+           %sett  !!
+          ::  below is example turning settings into list and then passing to setsets
+           %init  !!
+          ::  (frond 'init' a+(turn ~(tap by settings.upd) setsets))
+          :: %init  (frond 'init' o+(~(rut by settings.upd) setsets))
+          ::  (frond 'init' (~(run by settings.upd) setsets))
+        :: %+  frond  'init'
+        :: %-  pairs
+        :: :~  ['key' s+(scot %tas 'val')]
+        :: ==
+        :: %+  frond  'init'
+        :: %-  pairs
+        :: :~  ['']
+        :: frond 'init' s+(scot %t 'hi'))
+    ==
   --
-  ++  vault
-    |=  vlt=^vault
-    ^-  jon
-    %-  pairs
-    :~  ['id' (numb id.vlt)]
-        ['website' s+website.vlt]
-        ['username' s+username.vlt]
-        ['password' s+password.vlt]
-    ==
-  ++  settings
-    |=  set=^settings
-    ^-  json
-    %-  pairs
-    :~  ['setting-key' s+setting-key.set]
-        ['setting-val' s+setting-val.set]
-    ==
-::       %vault
-::     %-  pairs
-::     :~
-::       ['vault' a+(turn list.q.upd entry)]
-:: ::    ['settings' s+'hi']
-::     ==
-::       %add
-:: !!
-:: ::    %-  pairs
-:: ::    :~
-:: ::      ['vault' a+(turn entry.q.upd entry)]
-:: ::    ==
-::       %edit
-:: !!
-:: ::    %-  pairs
-:: ::    :~
-:: ::      ['vault' a+(turn list.q.upd entry)]
-:: ::    ==
-::       %del
-:: !!
-:: ::    %-  pairs
-:: ::    :~
-:: ::      ['vault' a+(turn list.q.upd entry)]
-:: ::    ==
-::   ==
-::   ++  entry
-::     |=  ent=^entry
-::     ^-  json
-::     %-  pairs
-::     :~
-::       ['website' s+website.ent]
-::       ['username' s+username.ent]
-::       ['password' s+password.ent]
-::     ==
-::   --
+  ++  setsets
+      |=  setts=[@t @t]
+      ~&  >>  "setts {<setts>}"
+      !!
+      :: (frond:enjs:format `@t`p.setts s+(scot %t q.setts))
+      :: |=  setts=@t
+  ::     (frond:enjs:format 'hi' s+(scot %t setts))
+  ::
+  ::
+  :: ++  vault
+  ::   :-  %o
+  ::   :~  ['id' (numb id.vault.upd)]
+  ::       ['entry' (entry entry.vault.upd)]
+  ::   ==
+  :: ++  entry
+  ::   :-  %o
+  ::   :~  [%s website.vault.upd]
+  ::       [%s username.vault.upd]
+  ::       [%s password.vault.upd]
+  ::   ==
 --
