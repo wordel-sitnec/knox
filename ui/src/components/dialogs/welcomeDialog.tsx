@@ -52,8 +52,8 @@ export const WelcomeDialog = () => {
           },
         },
       })
-      .then(() => navigate("/apps/knox/"))
-      .catch((err) => setError(true));
+      .then(() => navigate("/apps/knox/login"))
+      .catch(() => setError(true));
   };
 
   const handleNext = () => {
@@ -140,7 +140,7 @@ export const WelcomeDialog = () => {
               target="_blank"
               className="underline"
             >
-              urbit is not really secure yet.
+              your urbit is not really secure yet.
             </a>{" "}
             <br />
             <br />

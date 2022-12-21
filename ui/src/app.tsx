@@ -4,8 +4,6 @@ import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { UrbitContext } from "./store/contexts/urbitContext";
 import { SettingsContext } from "./store/contexts/settingsContext";
 import settingsActions from "./store/actions/settingsActions";
-import { VaultContext } from "./store/contexts/vaultContext";
-import vaultActions from "./store/actions/vaultActions";
 import { getSecret } from "./utils";
 
 // components
@@ -37,15 +35,23 @@ export function App() {
     // TODO: set to entries context
     console.log("init", upd);
     if (upd.init) {
+      // TODO: this is a bit janky but it works for redirecting to welcome
+      const setsObj = upd.init.settings.find((set) =>
+        Object.keys(set).includes("showWelcome")
+      );
       const settings = upd.init.settings;
       settingsDispatch(setSettings(settings));
+      if (setsObj.showWelcome === "true") navigate("/apps/knox/welcome");
     }
   };
 
   useEffect(() => {
-    if (!getSecret() && !path.includes("welcome")) navigate("/apps/knox/login");
-    if (settingsState.showWelcome && !path.includes("welcome"))
-      navigate("/apps/knox/welcome");
+    // TODO: this is still a cluster, clean the redirects up
+    // if (!getSecret() && !path.includes("welcome"))
+    // return navigate("/apps/knox/login");
+    if (getSecret() && path.includes("login") && !path.includes("welcome"))
+      return navigate("/apps/knox");
+    if (!getSecret()) return navigate("/apps/knox/login");
   }, [path, settingsState]);
 
   return (
