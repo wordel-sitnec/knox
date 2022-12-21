@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useContext, useState, useEffect } from "react";
 
-import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import dialogActions from "../../store/actions/dialogActions";
@@ -20,9 +19,7 @@ import * as passwords from "../../mocks/passwords.json";
 
 export function Vault() {
   const { data } = passwords;
-  console.log("data", data);
 
-  const [urbitApi] = useContext(UrbitContext);
   const [searchValue, setSearchValue] = useState("");
   const [showInfo, setShowInfo] = useState(false);
   const [generated, setGenerated] = useState("");

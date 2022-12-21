@@ -9,7 +9,6 @@ export const vaultReducer = (state, action) => {
     case actionTypes.SET_VAULT: {
       // TODO: do I want to decrypt here? it makes search easier later
       const vault = action.vault;
-      console.log("vault in reducer", vault);
       let newVault = [];
       vault.forEach((entry) => {
         newVault.push({
