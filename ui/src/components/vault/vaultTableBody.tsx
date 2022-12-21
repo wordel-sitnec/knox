@@ -1,22 +1,25 @@
 // @ts-nocheck
-import React from "react";
+import React, { useContext } from "react";
+import { VaultContext } from "../../store/contexts/vaultContext";
+
 import { VaultTableRow } from "./vaultTableRow";
 
 export function VaultTableBody(props) {
-  const { searchValue, data } = props;
+  const [vaultState] = useContext(VaultContext);
+  const { searchValue } = props;
 
   return (
     <tbody className="w-auto">
       {!searchValue
-        ? data.map((pass, i) => {
-            return <VaultTableRow key={i} pass={pass} />;
+        ? vaultState.map((entry, i) => {
+            return <VaultTableRow key={i} entry={entry} />;
           })
-        : data.map((pass, i) => {
+        : vaultState.map((entry, i) => {
             if (
-              pass.website.toLowerCase().includes(searchValue.toLowerCase()) ||
-              pass.username.toLowerCase().includes(searchValue.toLowerCase())
+              entry.website.toLowerCase().includes(searchValue.toLowerCase()) ||
+              entry.username.toLowerCase().includes(searchValue.toLowerCase())
             )
-              return <VaultTableRow key={i} pass={pass} />;
+              return <VaultTableRow key={i} entry={entry} />;
           })}
     </tbody>
   );

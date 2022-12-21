@@ -87,3 +87,12 @@ export const generatePassword = () => {
   password = password.shuffle();
   return password;
 };
+
+// for parsing urbit ids (numbers)
+export const parseNumber = (urbId) => {
+  let id = "";
+  for (let i = 0; i < urbId.length; i++) {
+    if (urbId[i] !== ".") id += urbId[i];
+  }
+  return id;
+};

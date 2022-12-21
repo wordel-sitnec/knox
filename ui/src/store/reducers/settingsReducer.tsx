@@ -17,5 +17,14 @@ export const settingsReducer = (state, action) => {
         settingsOpen: false,
       };
     }
+    case actionTypes.SET_SETTINGS: {
+      // TODO: finish this setting to entries business
+      console.log("settings in reducer", action.settings);
+      const showWelcome = action.settings.find((set) => {
+        return set.showWelcome ? Object.values(set.showWelcome) : null;
+      });
+      console.log("showWelcome", showWelcome);
+      return state;
+    }
   }
 };

@@ -30,10 +30,7 @@ export const DeleteDialog = () => {
         mark: "knox-action",
         json: {
           del: {
-            // TODO: remove these comments
-            // id: dialogState.deleteId,
-            id: 116181301,
-            // id: "",
+            id: parseInt(dialogState.deleteId),
           },
         },
       })

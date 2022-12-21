@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect, useContext } from "react";
 
-import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 
@@ -11,8 +10,7 @@ import { password } from "./password";
 // show warning ? modal : just delete
 export function VaultTableRow(props) {
   // TODO: remove mocks
-  const { pass } = props;
-  const mockEntry = { ...pass, id: parseInt("3718284774") };
+  const { entry } = props;
 
   const [, dialogDispatch] = useContext(DialogContext);
   const { openDeleteDialog, openEditDialog } = dialogActions;
@@ -58,10 +56,10 @@ export function VaultTableRow(props) {
             <button
               onClick={handleCopy}
               className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
-              value={pass.website}
+              value={entry.website}
               name="site"
             >
-              {pass.website}
+              {entry.website}
             </button>
             {copied.site && <ion-icon id="copy-icon" name="copy-outline" />}
           </div>
@@ -72,10 +70,10 @@ export function VaultTableRow(props) {
             <button
               onClick={handleCopy}
               className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
-              value={pass.username}
+              value={entry.username}
               name="user"
             >
-              {pass.username}
+              {entry.username}
             </button>
             {copied.user && <ion-icon id="copy-icon" name="copy-outline" />}
           </div>
@@ -90,10 +88,10 @@ export function VaultTableRow(props) {
             <button
               onClick={handleCopy}
               className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap"
-              value={pass.password}
+              value={entry.password}
               name="pass"
             >
-              {passHidden ? password() : pass.password}
+              {passHidden ? password() : entry.password}
             </button>
             {copied.pass && <ion-icon id="copy-icon" name="copy-outline" />}
           </div>
@@ -110,14 +108,14 @@ export function VaultTableRow(props) {
           <div className="whitespace-nowrap">
             <button
               // TODO: make sure the arg below is correct shape - see dialog actions
-              onClick={() => dialogDispatch(openEditDialog(mockEntry))}
+              onClick={() => dialogDispatch(openEditDialog(entry))}
               className="pr-1 md:px-2"
             >
               <ion-icon name="pencil" />
             </button>
             <button
               // TODO: make sure the arg below is correct shape - need id
-              onClick={() => dialogDispatch(openDeleteDialog("12345"))}
+              onClick={() => dialogDispatch(openDeleteDialog(entry.id))}
               className="pl-1 md:px-2"
             >
               <ion-icon name="trash" />

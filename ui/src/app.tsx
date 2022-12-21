@@ -2,6 +2,10 @@
 import React, { useEffect, useContext } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { UrbitContext } from "./store/contexts/urbitContext";
+import { SettingsContext } from "./store/contexts/settingsContext";
+import settingsActions from "./store/actions/settingsActions";
+import { VaultContext } from "./store/contexts/vaultContext";
+import vaultActions from "./store/actions/vaultActions";
 
 // components
 import { Vault } from "./components/vault";
@@ -14,28 +18,36 @@ export function App() {
   const path = location.pathname;
 
   const [urbitApi] = useContext(UrbitContext);
+  const [settingsState, settingsDispatch] = useContext(SettingsContext);
+  const [, vaultDispatch] = useContext(VaultContext);
+  const { setSettings } = settingsActions;
+  const { setVault } = vaultActions;
 
   useEffect(() => {
-    urbitApi.subscribe({
-      app: "knox",
-      path: "/updates",
-      event: handleEvent
-    })
-    // use this to set an error?
-    .catch((err) => console.log('err', err));
-  }, [])
+    urbitApi
+      .subscribe({
+        app: "knox",
+        path: "/updates",
+        event: handleEvent,
+      })
+      // TODO: use this to set an error?
+      .catch((err) => console.log("err", err));
+  }, []);
 
-  // this works, but annoying for dev. turn on for later testing and for prod
+  // TODO: this works, but annoying for dev. turn on for later testing and for prod
   useEffect(() => {
     if (!window.sessionStorage.getItem("secret") && !path.includes("welcome"))
       navigate("/apps/knox/login");
   }, [path]);
 
   const handleEvent = (upd) => {
-    // set to entries context
-    console.log('upd', upd)
+    // TODO: set to entries context
+    console.log("upd", upd);
     if (upd.init) {
-      // const 
+      const settings = upd.init.settings;
+      const vault = upd.init.vault;
+      settingsDispatch(setSettings(settings));
+      vaultDispatch(setVault(vault));
     }
   };
 

@@ -90,8 +90,7 @@ export const EditDialog = () => {
             website: aesEncrypt(formState.website, getSecret()),
             username: aesEncrypt(formState.username, getSecret()),
             password: aesEncrypt(formState.password, getSecret()),
-            // TODO: set this to id from dialog state
-            id: parseInt("4120250727"),
+            id: parseInt(dialogState.editId),
           },
         },
       })
