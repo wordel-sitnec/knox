@@ -2,6 +2,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 
+import VaultContext from "../../store/contexts/vaultContext";
+import vaultActions from "../../store/actions/vaultActions";
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
@@ -10,6 +12,7 @@ import { aesEncrypt, generatePassword, getSecret } from "../../utils";
 export const AddDialog = (props) => {
   const { password: pword } = props;
   const [urbitApi] = useContext(UrbitContext);
+  const [, vaultDispatch] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -21,10 +24,10 @@ export const AddDialog = (props) => {
     website: "",
     username: "",
     password: pword ?? "",
-    // this doesn't work, why
   });
 
   const { closeAddDialog } = dialogActions;
+  const { setVault } = vaultActions;
 
   // reset form state when modal closes
   useEffect(() => {
@@ -73,10 +76,10 @@ export const AddDialog = (props) => {
 
   const handleSuccess = (res) => {
     // TODO: log for dev, remove later
-    console.log("res", res);
     setSuccess(true);
     setDisabled(true);
     setLoading(false);
+    handleScry();
   };
 
   const handleError = (err) => {
@@ -84,6 +87,17 @@ export const AddDialog = (props) => {
     console.log("err", err);
     setLoading(false);
     setError(true);
+  };
+
+  const handleScry = () => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/vault",
+      })
+      .then((res) => vaultDispatch(setVault(res.vault)))
+      // TODO: handle this error?
+      .catch((err) => console.log("err", err));
   };
 
   const handleAdd = () => {
@@ -100,7 +114,7 @@ export const AddDialog = (props) => {
           },
         },
       })
-      .then((res) => handleSuccess(res))
+      .then(() => handleSuccess())
       .catch((err) => handleError(err));
   };
 

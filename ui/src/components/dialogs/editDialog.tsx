@@ -2,6 +2,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 
+import { VaultContext } from "../../store/contexts/vaultContext";
+import vaultActions from "../../store/actions/vaultActions";
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
@@ -14,8 +16,10 @@ import { aesEncrypt, getSecret, generatePassword } from "../../utils";
  */
 export const EditDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
+  const [, vaultDispatch] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const { closeEditDialog } = dialogActions;
+  const { setVault } = vaultActions;
 
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -64,12 +68,11 @@ export const EditDialog = () => {
     navigator.clipboard.writeText(formState.password);
   };
 
-  const handleSuccess = (res) => {
-    // TODO: log for dev, remove later
-    console.log("res", res);
+  const handleSuccess = () => {
     setSuccess(true);
     setDisabled(true);
     setLoading(false);
+    handleScry();
   };
 
   const handleError = (err) => {
@@ -94,8 +97,19 @@ export const EditDialog = () => {
           },
         },
       })
-      .then((res) => handleSuccess(res))
+      .then(() => handleSuccess())
       .catch((err) => handleError(err));
+  };
+
+  const handleScry = () => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/vault",
+      })
+      .then((res) => vaultDispatch(setVault(res.vault)))
+      // TODO: handle this error?
+      .catch((err) => console.log("err", err));
   };
 
   return (

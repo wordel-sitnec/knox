@@ -2,12 +2,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 
+import { VaultContext } from "../../store/contexts/vaultContext";
+import vaultActions from "../../store/actions/vaultActions";
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 
 export const DeleteDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
+  const [, vaultDispatch] = useContext(VaultContext);
+  const { setVault } = vaultActions;
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const { closeDeleteDialog } = dialogActions;
   const [loading, setLoading] = useState(false);
@@ -34,15 +38,14 @@ export const DeleteDialog = () => {
           },
         },
       })
-      .then((res) => handleSuccess(res))
+      .then(() => handleSuccess())
       .catch((err) => handleError(err));
   };
 
-  const handleSuccess = (res) => {
-    // TODO: remove log
-    console.log("res", res);
+  const handleSuccess = () => {
     setLoading(false);
     setSuccess(true);
+    handleScry();
   };
 
   const handleError = (err) => {
@@ -50,6 +53,17 @@ export const DeleteDialog = () => {
     console.log("err", err);
     setLoading(false);
     setError(true);
+  };
+
+  const handleScry = () => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/vault",
+      })
+      .then((res) => vaultDispatch(setVault(res.vault)))
+      // TODO: handle this error?
+      .catch((err) => console.log("err", err));
   };
 
   return (

@@ -36,21 +36,21 @@
   ?-  -.act
       %add 
     =/  id  (~(rad og eny:bowl) (pow 2 32))  :: basic id handling, should improve
-    :_  
     ?.  (~(has by vault) id)
-      this(vault (~(put by vault) id `entry`[website.act username.act password.act now:bowl]))
-    this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
-    [%give %fact ~[/updates] %knox-update !>(`update`[%vault vault])]~
+      `this(vault (~(put by vault) id `entry`[website.act username.act password.act now:bowl]))
+    `this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
       ::
       %del
-    :_  this(vault (~(del by vault) id.act))
-    [%give %fact ~[/updates] %knox-update !>(`update`[%vault vault])]~
+    `this(vault (~(del by vault) id.act))
       ::
       %edit
-    :_  this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
-    [%give %fact ~[/updates] %knox-update !>(`update`[%vault vault])]~
+    `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
       %sett
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
+    :: removed all the updates, sample is below 
+    :: %edit
+    :: :_  this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
+    :: [%give %fact ~[/updates] %knox-update !>(`update`[%vault vault])]~
  ==
 ::
 ++  on-watch
@@ -65,9 +65,11 @@
   ^-  (unit (unit cage))
   ?>  (team:title our.bowl src.bowl)
   ?+  path  (on-peek:def path)
-    [%x %generate ~]  ``noun+!>(eny.bowl)
-    :: .^(@ %gx /=knox=/generate/noun)
-    [%x %init ~]  ``noun+!>([vault settings])
+      [%x %generate ~]  ``noun+!>(eny.bowl)
+      [%x %vault ~]
+    :^  ~  ~  %knox-update
+    !>  ^-  update
+    [%vault vault]
    ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def

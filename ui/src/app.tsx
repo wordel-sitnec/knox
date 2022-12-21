@@ -49,9 +49,6 @@ export function App() {
       settingsDispatch(setSettings(settings));
       vaultDispatch(setVault(vault));
     }
-    if (upd.vault) {
-      vaultDispatch(setVault(upd.vault));
-    }
   };
 
   return (
