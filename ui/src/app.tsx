@@ -16,16 +16,14 @@ export function App() {
   const [urbitApi] = useContext(UrbitContext);
 
   useEffect(() => {
-    // TODO: finish this init and redirect
-    // get init from knox
-    // const init = async () => {
-    //   urbitApi.subscribe({ app: "knox", path: "/vault", event: handleUpdate });
-    // };
-    // init();
-    // if init doesn't contain beenWelcomed === true, send to welcome
-    // commented out for dev
-    // navigate("/apps/knox/welcome");
-  }, []);
+    urbitApi.subscribe({
+      app: "knox",
+      path: "/updates",
+      event: handleEvent
+    })
+    // use this to set an error?
+    .catch((err) => console.log('err', err));
+  }, [])
 
   // this works, but annoying for dev. turn on for later testing and for prod
   useEffect(() => {
@@ -33,11 +31,11 @@ export function App() {
       navigate("/apps/knox/login");
   }, [path]);
 
-  const handleUpdate = (upd) => {
+  const handleEvent = (upd) => {
     // set to entries context
-    if ("init" in upd) {
-      console.log("init");
-      setVals(upd.init);
+    console.log('upd', upd)
+    if (upd.init) {
+      // const 
     }
   };
 

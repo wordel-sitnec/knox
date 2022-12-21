@@ -3,12 +3,14 @@ import React, { useContext, useState, useEffect } from "react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
+import { SettingsContext } from "../../store/contexts/settingsContext";
 import dialogActions from "../../store/actions/dialogActions";
+import settingsActions from "../../store/actions/settingsActions";
 import { generatePassword } from "../../utils";
 
 import { VaultTableBody } from "./vaultTableBody";
 import { InfoDialog } from "../dialogs/infoDialog";
-import { SettingsDialog } from "../dialogs/settingsDialog";
+import { Settings } from "../dialogs/settings";
 import { AddDialog } from "../dialogs/addDialog";
 import { DeleteDialog } from "../dialogs/deleteDialog";
 import { EditDialog } from "../dialogs/editDialog";
@@ -28,7 +30,9 @@ export function Vault() {
   const [generatedCopied, setGeneratedCopied] = useState(false);
 
   const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const { openAddDialog, openSettingsDialog } = dialogActions;
+  const [settingsState, settingsDispatch] = useContext(SettingsContext);
+  const { openAddDialog } = dialogActions;
+  const { openSettings } = settingsActions;
 
   const handleSearch = (e) => {
     const { value } = e.target;
@@ -47,20 +51,6 @@ export function Vault() {
     setGenerated(generatePassword());
   };
 
-  const handleEvent = (upd) => {
-    console.log('upd', upd)
-  }
-
-  useEffect(() => {
-    urbitApi.subscribe({
-      app: "knox",
-      path: "/updates",
-      event: handleEvent
-    })
-    .then((res) => console.log("res", res))
-    .catch((err) => console.log('err', err));
-  }, [])
-
   useEffect(() => {
     if (generatedCopied) {
       setTimeout(() => {
@@ -75,7 +65,7 @@ export function Vault() {
       dialogState.addOpen ||
       dialogState.editOpen ||
       dialogState.deleteOpen ||
-      dialogState.settingsOpen
+      settingsState.settingsOpen
     ) {
       setGenerated("");
       setShowGenerated(false);
@@ -85,7 +75,7 @@ export function Vault() {
   return (
     <>
       <InfoDialog open={showInfo} setOpen={setShowInfo} />
-      <SettingsDialog />
+      <Settings />
       <AddDialog password={showGenerated ? generated : null} />
       <EditDialog />
       <DeleteDialog />
@@ -158,7 +148,7 @@ export function Vault() {
             </button>
             <button
               className="text-xl font-bold px-2 hover:scale-120 my-1"
-              onClick={() => dialogDispatch(openSettingsDialog())}
+              onClick={() => settingsDispatch(openSettings())}
             >
               <ion-icon name="settings-sharp" id="settings-icon" />
             </button>
