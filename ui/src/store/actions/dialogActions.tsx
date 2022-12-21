@@ -7,8 +7,6 @@ export const actionTypes = {
   CLOSE_ADD: "CLOSE_ADD",
   OPEN_EDIT: "OPEN_EDIT",
   CLOSE_EDIT: "CLOSE_EDIT",
-  OPEN_SETTINGS: "OPEN_SETTINGS",
-  CLOSE_SETTINGS: "CLOSE_SETTINGS",
 };
 
 export const actions = {
@@ -24,12 +22,15 @@ export const actions = {
   delete: () => ({
     type: actionTypes.DELETE,
   }),
+
   openAddDialog: () => ({
     type: actionTypes.OPEN_ADD,
   }),
+
   closeAddDialog: () => ({
     type: actionTypes.CLOSE_ADD,
   }),
+
   openEditDialog: (entry) => ({
     type: actionTypes.OPEN_EDIT,
     website: entry.website,
@@ -37,14 +38,9 @@ export const actions = {
     password: entry.password,
     id: entry.id,
   }),
+
   closeEditDialog: () => ({
     type: actionTypes.CLOSE_EDIT,
-  }),
-  openSettingsDialog: () => ({
-    type: actionTypes.OPEN_SETTINGS,
-  }),
-  closeSettingsDialog: () => ({
-    type: actionTypes.CLOSE_SETTINGS,
   }),
 };
 

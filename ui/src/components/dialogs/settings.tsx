@@ -9,11 +9,9 @@ export const Settings = () => {
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const { closeSettings } = settingsActions;
 
-  console.log("state", settingsState)
-
   return (
     <Dialog
-      open={true}
+      open={settingsState.settingsOpen}
       onClose={() => settingsDispatch(closeSettings())}
     >
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
