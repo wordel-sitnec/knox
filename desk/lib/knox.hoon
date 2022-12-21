@@ -15,7 +15,7 @@
   =,  enjs:format
   |=  upd=update
   ^-  json
-  ~&  >>  upd
+  ~&  >>  "update: {<upd>}"
   |^
   ?-  -.upd
            %del  (frond 'del' s+(scot %ud id.upd))
@@ -36,7 +36,11 @@
         ==
            %sett  !!
           ::  below is example turning settings into list and then passing to setsets
-           %init  !!
+           %init
+        %+  frond  'init'
+        %-  pairs  
+        :~  ['settings' a+(turn ~(tap by settings.upd) setsets)]
+        ==
           ::  (frond 'init' a+(turn ~(tap by settings.upd) setsets))
           :: %init  (frond 'init' o+(~(rut by settings.upd) setsets))
           ::  (frond 'init' (~(run by settings.upd) setsets))
@@ -53,7 +57,9 @@
   ++  setsets
       |=  setts=[@t @t]
       ~&  >>  "setts {<setts>}"
-      !!
+      ~&  >>  "- {<-.setts>}"
+      (frond:enjs:format `@t`-.setts s+(scot %tas +.setts))
+      :: !!
       :: (frond:enjs:format `@t`p.setts s+(scot %t q.setts))
       :: |=  setts=@t
   ::     (frond:enjs:format 'hi' s+(scot %t setts))

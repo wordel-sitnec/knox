@@ -59,8 +59,8 @@
   ?>  ?=([%updates ~] path)
   :: [%updates ~]  `this
   :_  this
-  :: [%give %fact ~ %knox-update !>(`update`[%init settings])]~
-  [%give %fact ~ %knox-update !>(`update`[%del `id`2])]~
+  [%give %fact ~ %knox-update !>(`update`[%init settings])]~
+  :: [%give %fact ~ %knox-update !>(`update`[%del `id`2])]~
 ::
 ++  on-peek
   |=  =path
