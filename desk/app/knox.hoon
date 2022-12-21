@@ -40,15 +40,15 @@
     ?.  (~(has by vault) id)
       this(vault (~(put by vault) id `entry`[website.act username.act password.act now:bowl]))
     this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
-    [%give %fact ~[/updates] %knox-update !>(`update`act)]~
+    [%give %fact ~[/updates] %knox-update !>(`update`[%vault vault])]~
       ::
       %del
     :_  this(vault (~(del by vault) id.act))
-    [%give %fact ~[/updates] %knox-update !>(`update`act)]~
+    [%give %fact ~[/updates] %knox-update !>(`update`[%vault vault])]~
       ::
       %edit
     :_  this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
-    [%give %fact ~[/updates] %knox-update !>(`update`act)]~
+    [%give %fact ~[/updates] %knox-update !>(`update`[%vault vault])]~
       %sett
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
  ==
@@ -67,7 +67,7 @@
   ?+  path  (on-peek:def path)
     [%x %generate ~]  ``noun+!>(eny.bowl)
     :: .^(@ %gx /=knox=/generate/noun)
-     [%x %init ~]  ``noun+!>([vault settings])
+    [%x %init ~]  ``noun+!>([vault settings])
    ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def

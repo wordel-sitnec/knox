@@ -16,6 +16,7 @@
   ==
 +$  update
   $%  [%init =vault =settings]
+      [%vault =vault]
       action
   ==
 :: types for agent state

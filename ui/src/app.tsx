@@ -6,6 +6,7 @@ import { SettingsContext } from "./store/contexts/settingsContext";
 import settingsActions from "./store/actions/settingsActions";
 import { VaultContext } from "./store/contexts/vaultContext";
 import vaultActions from "./store/actions/vaultActions";
+import { getSecret } from "./utils";
 
 // components
 import { Vault } from "./components/vault";
@@ -19,7 +20,7 @@ export function App() {
 
   const [urbitApi] = useContext(UrbitContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
-  const [, vaultDispatch] = useContext(VaultContext);
+  const [vaultState, vaultDispatch] = useContext(VaultContext);
   const { setSettings } = settingsActions;
   const { setVault } = vaultActions;
 
@@ -36,8 +37,7 @@ export function App() {
 
   // TODO: this works, but annoying for dev. turn on for later testing and for prod
   useEffect(() => {
-    if (!window.sessionStorage.getItem("secret") && !path.includes("welcome"))
-      navigate("/apps/knox/login");
+    if (!getSecret() && !path.includes("welcome")) navigate("/apps/knox/login");
   }, [path]);
 
   const handleEvent = (upd) => {
@@ -48,6 +48,9 @@ export function App() {
       const vault = upd.init.vault;
       settingsDispatch(setSettings(settings));
       vaultDispatch(setVault(vault));
+    }
+    if (upd.vault) {
+      vaultDispatch(setVault(upd.vault));
     }
   };
 

@@ -34,6 +34,7 @@
         ==
            %del  (frond 'del' s+(scot %ud id.upd))
            %sett  !!
+           %vault  (frond 'vault' a+(turn ~(tap by vault.upd) vault))
            %init
         %+  frond  'init'
         %-  pairs  

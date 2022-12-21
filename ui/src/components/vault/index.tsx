@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useContext, useState, useEffect } from "react";
 
+import VaultContext from "../../store/contexts/vaultContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import dialogActions from "../../store/actions/dialogActions";
@@ -14,18 +15,14 @@ import { AddDialog } from "../dialogs/addDialog";
 import { DeleteDialog } from "../dialogs/deleteDialog";
 import { EditDialog } from "../dialogs/editDialog";
 
-// mocks
-import * as passwords from "../../mocks/passwords.json";
-
 export function Vault() {
-  const { data } = passwords;
-
   const [searchValue, setSearchValue] = useState("");
   const [showInfo, setShowInfo] = useState(false);
   const [generated, setGenerated] = useState("");
   const [showGenerated, setShowGenerated] = useState(false);
   const [generatedCopied, setGeneratedCopied] = useState(false);
 
+  const [vaultState] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const { openAddDialog } = dialogActions;
@@ -67,7 +64,7 @@ export function Vault() {
       setGenerated("");
       setShowGenerated(false);
     }
-  }, [dialogState]);
+  }, [dialogState, settingsState]);
 
   return (
     <>
@@ -207,7 +204,7 @@ export function Vault() {
                 <th className="">edit</th>
               </tr>
             </thead>
-            <VaultTableBody searchValue={searchValue} data={data} />
+            <VaultTableBody searchValue={searchValue} vault={vaultState} />
           </table>
         </div>
       </div>
