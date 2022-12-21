@@ -1,11 +1,13 @@
 // @ts-nocheck
 import React, { useContext, useState, useEffect } from "react";
 
-import VaultContext from "../../store/contexts/vaultContext";
+import { UrbitContext } from "../../store/contexts/urbitContext";
+import { VaultContext } from "../../store/contexts/vaultContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import dialogActions from "../../store/actions/dialogActions";
 import settingsActions from "../../store/actions/settingsActions";
+import vaultActions from "../../store/actions/vaultActions";
 import { generatePassword } from "../../utils";
 
 import { VaultTableBody } from "./vaultTableBody";
@@ -22,11 +24,24 @@ export function Vault() {
   const [showGenerated, setShowGenerated] = useState(false);
   const [generatedCopied, setGeneratedCopied] = useState(false);
 
-  const [vaultState] = useContext(VaultContext);
+  const [urbitApi] = useContext(UrbitContext);
+  const [vaultState, vaultDispatch] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const { openAddDialog } = dialogActions;
   const { openSettings } = settingsActions;
+  const { setVault } = vaultActions;
+
+  useEffect(() => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/vault",
+      })
+      .then((res) => vaultDispatch(setVault(res.vault)))
+      // TODO: use this to set an error?
+      .catch((err) => console.log("err", err));
+  }, []);
 
   const handleSearch = (e) => {
     const { value } = e.target;

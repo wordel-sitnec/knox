@@ -1,13 +1,18 @@
 // @ts-nocheck
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
+import { SettingsContext } from "../../store/contexts/settingsContext";
+import settingsActions from "../../store/actions/settingsActions";
 import { getSecret, storeSecret } from "../../utils";
 
 export const WelcomeDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
+  const [, settingsDispatch] = useContext(SettingsContext);
+  const { setSettings } = settingsActions;
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [secret, setSecret] = useState("");
   const [showSecret, setShowSecret] = useState(false);
@@ -15,6 +20,25 @@ export const WelcomeDialog = () => {
   const [dontShow, setDontShow] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    urbitApi
+      .subscribe({
+        app: "knox",
+        path: "/updates",
+        event: handleEvent,
+      })
+      // TODO: use this to set an error?
+      .catch((err) => console.log("err", err));
+  }, []);
+
+  const handleEvent = (upd) => {
+    console.log("init", upd);
+    if (upd.init) {
+      const settings = upd.init.settings;
+      settingsDispatch(setSettings(settings));
+    }
+  };
 
   const handleSaveSettings = () => {
     urbitApi
@@ -28,7 +52,7 @@ export const WelcomeDialog = () => {
           },
         },
       })
-      .then((res) => navigate("/apps/knox/"))
+      .then(() => navigate("/apps/knox/"))
       .catch((err) => setError(true));
   };
 

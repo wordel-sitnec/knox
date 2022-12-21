@@ -19,10 +19,28 @@ export const settingsReducer = (state, action) => {
     }
     case actionTypes.SET_SETTINGS: {
       // TODO: finish this setting to entries business
-      const showWelcome = action.settings.find((set) => {
-        return set.showWelcome ? Object.values(set.showWelcome) : null;
+      let setsObj = {
+        settingsOpen: state.settingsOpen,
+      };
+      action.settings.forEach((set) => {
+        let val = Object.values(set)[0];
+        switch (val) {
+          case "true":
+            val = true;
+            break;
+          case "false":
+            val = false;
+            break;
+          default:
+            return val;
+        }
+        setsObj = {
+          ...setsObj,
+          [Object.keys(set)[0]]: val,
+        };
       });
-      return state;
+
+      return setsObj;
     }
   }
 };

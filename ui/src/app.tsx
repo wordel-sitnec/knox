@@ -20,9 +20,7 @@ export function App() {
 
   const [urbitApi] = useContext(UrbitContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
-  const [vaultState, vaultDispatch] = useContext(VaultContext);
   const { setSettings } = settingsActions;
-  const { setVault } = vaultActions;
 
   useEffect(() => {
     urbitApi
@@ -35,23 +33,20 @@ export function App() {
       .catch((err) => console.log("err", err));
   }, []);
 
-  // TODO: where do I send them to welcome?
-
-  // TODO: this works, but annoying for dev. turn on for later testing and for prod
-  useEffect(() => {
-    if (!getSecret() && !path.includes("welcome")) navigate("/apps/knox/login");
-  }, [path]);
-
   const handleEvent = (upd) => {
     // TODO: set to entries context
-    console.log("upd", upd);
+    console.log("init", upd);
     if (upd.init) {
       const settings = upd.init.settings;
-      const vault = upd.init.vault;
       settingsDispatch(setSettings(settings));
-      vaultDispatch(setVault(vault));
     }
   };
+
+  useEffect(() => {
+    if (!getSecret() && !path.includes("welcome")) navigate("/apps/knox/login");
+    if (settingsState.showWelcome && !path.includes("welcome"))
+      navigate("/apps/knox/welcome");
+  }, [path, settingsState]);
 
   return (
     <main className="flex justify-center h-screen">
