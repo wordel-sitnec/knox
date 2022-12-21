@@ -32,13 +32,12 @@
   ?>  =(our.bowl src.bowl)
   ?>  ?=(%knox-action mark)
   =/  act  !<(action vase)
-  ~&  >>  "that action was a {<-.act>}"
   ?-  -.act
       %add 
     =/  id  (~(rad og eny:bowl) (pow 2 32))  :: basic id handling, should improve
-    ?.  (~(has by vault) id)
+    ?.  (~(has by vault) id)  :: if this doesn't prevent collision then it wasn't meant to be
       `this(vault (~(put by vault) id `entry`[website.act username.act password.act now:bowl]))
-    `this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) :: if this doesn't prevent collision then it wasn't meant to be
+    `this(vault (~(put by vault) (add id 1) `entry`[website.act username.act password.act now:bowl])) 
       ::
       %del
     `this(vault (~(del by vault) id.act))

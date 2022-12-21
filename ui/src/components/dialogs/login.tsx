@@ -37,35 +37,33 @@ export const Login = () => {
     >
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
         <div className="border-2 border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] h-[35%] flex justify-center items-center shadow-lg pb-10">
-          <Dialog.Description>
-            <form className="flex flex-col" onSubmit={handleSubmit}>
-              <div className="flex flex-col m-2">
-                <button
-                  type="button"
-                  onClick={handleShowPassword}
-                  className="self-end"
-                >
-                  {showPassword ? "hide" : "show"}
-                </button>
-                <input
-                  type={!showPassword ? "password" : null}
-                  name="secret"
-                  value={secret}
-                  placeholder="set your secret"
-                  onChange={(e) => handleChange(e)}
-                  className="text-black border border-black p-1"
-                ></input>
-              </div>
-
+          <form className="flex flex-col" onSubmit={handleSubmit}>
+            <div className="flex flex-col m-2">
               <button
-                disabled={!secret}
-                className="border-black border-solid border rounded m-2"
-                type="submit"
+                type="button"
+                onClick={handleShowPassword}
+                className="self-end"
               >
-                set secret
+                {showPassword ? "hide" : "show"}
               </button>
-            </form>
-          </Dialog.Description>
+              <input
+                type={!showPassword ? "password" : null}
+                name="secret"
+                value={secret}
+                placeholder="set your secret"
+                onChange={handleChange}
+                className="text-black border border-black p-1"
+              ></input>
+            </div>
+
+            <button
+              disabled={!secret}
+              className="border-black border-solid border rounded m-2"
+              type="submit"
+            >
+              set secret
+            </button>
+          </form>
         </div>
       </div>
     </Dialog>

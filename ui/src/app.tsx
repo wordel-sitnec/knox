@@ -35,6 +35,8 @@ export function App() {
       .catch((err) => console.log("err", err));
   }, []);
 
+  // TODO: where do I send them to welcome?
+
   // TODO: this works, but annoying for dev. turn on for later testing and for prod
   useEffect(() => {
     if (!getSecret() && !path.includes("welcome")) navigate("/apps/knox/login");
