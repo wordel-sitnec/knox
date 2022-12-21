@@ -57,10 +57,8 @@
   |=  =path
   ^-  (quip card _this)
   ?>  ?=([%updates ~] path)
-  :: [%updates ~]  `this
   :_  this
-  [%give %fact ~ %knox-update !>(`update`[%init settings])]~
-  :: [%give %fact ~ %knox-update !>(`update`[%del `id`2])]~
+  [%give %fact ~ %knox-update !>(`update`[%init vault settings])]~
 ::
 ++  on-peek
   |=  =path
@@ -70,10 +68,6 @@
     [%x %generate ~]  ``noun+!>(eny.bowl)
     :: .^(@ %gx /=knox=/generate/noun)
      [%x %init ~]  ``noun+!>([vault settings])
-    :: ``noun+!>(`update`[%init vault settings])
-    :: in dojo, first build knoxsur from /=knox=/sur/knox/hoon, then scry
-    :: =knoxsur -build-file /=knox=/sur/knox/hoon
-    :: .^([vault:knoxsur settings:knoxsur] %gx /=knox=/init/noun)
    ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def

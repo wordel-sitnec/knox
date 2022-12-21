@@ -15,10 +15,8 @@
   =,  enjs:format
   |=  upd=update
   ^-  json
-  ~&  >>  "update: {<upd>}"
   |^
   ?-  -.upd
-           %del  (frond 'del' s+(scot %ud id.upd))
            %add  
         %+  frond  'add'
         %-  pairs
@@ -34,46 +32,26 @@
             ['password' s+password.upd]
             ['id' s+(scot %ud id.upd)]
         ==
+           %del  (frond 'del' s+(scot %ud id.upd))
            %sett  !!
-          ::  below is example turning settings into list and then passing to setsets
            %init
         %+  frond  'init'
         %-  pairs  
-        :~  ['settings' a+(turn ~(tap by settings.upd) setsets)]
+        :~  ['settings' a+(turn ~(tap by settings.upd) settings)]
+            ['vault' a+(turn ~(tap by vault.upd) vault)]
         ==
-          ::  (frond 'init' a+(turn ~(tap by settings.upd) setsets))
-          :: %init  (frond 'init' o+(~(rut by settings.upd) setsets))
-          ::  (frond 'init' (~(run by settings.upd) setsets))
-        :: %+  frond  'init'
-        :: %-  pairs
-        :: :~  ['key' s+(scot %tas 'val')]
-        :: ==
-        :: %+  frond  'init'
-        :: %-  pairs
-        :: :~  ['']
-        :: frond 'init' s+(scot %t 'hi'))
     ==
+    ++  settings
+      |=  setting=[@t @t]
+      (frond `@t`-.setting s+(scot %tas +.setting))
+    ++  vault
+      |=  entry=[id=@ud [website=@t username=@t password=@t updated=@da]]
+      %-  pairs
+      :~  ['id' s+(scot %ud id.entry)]
+          ['website' s+(scot %tas website.entry)]
+          ['username' s+(scot %tas username.entry)]
+          ['password' s+(scot %tas password.entry)]
+          ['updated' s+(scot %da updated.entry)]
+      ==
   --
-  ++  setsets
-      |=  setts=[@t @t]
-      ~&  >>  "setts {<setts>}"
-      ~&  >>  "- {<-.setts>}"
-      (frond:enjs:format `@t`-.setts s+(scot %tas +.setts))
-      :: !!
-      :: (frond:enjs:format `@t`p.setts s+(scot %t q.setts))
-      :: |=  setts=@t
-  ::     (frond:enjs:format 'hi' s+(scot %t setts))
-  ::
-  ::
-  :: ++  vault
-  ::   :-  %o
-  ::   :~  ['id' (numb id.vault.upd)]
-  ::       ['entry' (entry entry.vault.upd)]
-  ::   ==
-  :: ++  entry
-  ::   :-  %o
-  ::   :~  [%s website.vault.upd]
-  ::       [%s username.vault.upd]
-  ::       [%s password.vault.upd]
-  ::   ==
 --
