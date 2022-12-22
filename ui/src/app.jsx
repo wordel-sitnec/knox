@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { UrbitContext } from "./store/contexts/urbitContext";
 import { SettingsContext } from "./store/contexts/settingsContext";
 import settingsActions from "./store/actions/settingsActions";
-import { getSecret } from "./utils";
 
 // components
 import { Vault } from "./components/vault";
@@ -12,8 +11,6 @@ import { Login } from "./components/dialogs/login";
 
 export function App() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const path = location.pathname;
 
   const [urbitApi] = useContext(UrbitContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
@@ -31,27 +28,18 @@ export function App() {
   }, []);
 
   const handleEvent = (upd) => {
-    // TODO: set to entries context
     console.log("init", upd);
     if (upd.init) {
-      // TODO: this is a bit janky but it works for redirecting to welcome
+      // read settings and redirect to welcome if necessary
       const setsObj = upd.init.settings.find((set) =>
         Object.keys(set).includes("showWelcome")
       );
       const settings = upd.init.settings;
       settingsDispatch(setSettings(settings));
-      if (setsObj.showWelcome === "true") navigate("/apps/knox/welcome");
+      if (setsObj.showWelcome === "true" && settingsState.showWelcome)
+        navigate("/apps/knox/welcome");
     }
   };
-
-  useEffect(() => {
-    // TODO: this is still a cluster, clean the redirects up
-    // if (!getSecret() && !path.includes("welcome"))
-    // return navigate("/apps/knox/login");
-    if (getSecret() && path.includes("login") && !path.includes("welcome"))
-      return navigate("/apps/knox");
-    if (!getSecret()) return navigate("/apps/knox/login");
-  }, [path, settingsState]);
 
   return (
     <main className="flex justify-center h-screen">
@@ -62,12 +50,7 @@ export function App() {
           element={<WelcomeDialog />}
         />
         <Route path="/apps/knox/login" exact={true} element={<Login />} />
-        <Route
-          // this was for reload problem, investigate
-          path={`/apps/knox` || `/apps/knox/`}
-          exact={true}
-          element={<Vault />}
-        />
+        <Route path={"/apps/knox/"} exact={true} element={<Vault />} />
       </Routes>
     </main>
   );

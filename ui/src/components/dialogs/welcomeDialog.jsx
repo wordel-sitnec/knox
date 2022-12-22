@@ -3,14 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
-import { SettingsContext } from "../../store/contexts/settingsContext";
-import settingsActions from "../../store/actions/settingsActions";
 import { getSecret, storeSecret } from "../../utils";
 
 export const WelcomeDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
-  const [, settingsDispatch] = useContext(SettingsContext);
-  const { setSettings } = settingsActions;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [secret, setSecret] = useState("");
@@ -19,25 +15,6 @@ export const WelcomeDialog = () => {
   const [dontShow, setDontShow] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    urbitApi
-      .subscribe({
-        app: "knox",
-        path: "/updates",
-        event: handleEvent,
-      })
-      // TODO: use this to set an error?
-      .catch((err) => console.log("err", err));
-  }, []);
-
-  const handleEvent = (upd) => {
-    console.log("init", upd);
-    if (upd.init) {
-      const settings = upd.init.settings;
-      settingsDispatch(setSettings(settings));
-    }
-  };
 
   const handleSaveSettings = () => {
     urbitApi
@@ -203,7 +180,7 @@ export const WelcomeDialog = () => {
                   className="border border-black p-1 px-2 ml-2"
                   onClick={() => handleSetSecret(secret)}
                 >
-                  save
+                  set
                 </button>
               </div>
             </div>

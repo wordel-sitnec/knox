@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
+import { getSecret, storeSecret } from "../../utils";
 
 export const Login = () => {
   const [open, setOpen] = useState(true);
@@ -9,8 +10,8 @@ export const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!open) navigate("/apps/knox/");
-  }, [open]);
+    if (getSecret()) navigate("/apps/knox/");
+  });
 
   const handleShowPassword = (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    window.sessionStorage.setItem("secret", secret);
+    storeSecret(secret);
     navigate("/apps/knox/");
   };
 

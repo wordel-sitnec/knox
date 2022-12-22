@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { VaultContext } from "../../store/contexts/vaultContext";
@@ -7,7 +8,7 @@ import { SettingsContext } from "../../store/contexts/settingsContext";
 import dialogActions from "../../store/actions/dialogActions";
 import settingsActions from "../../store/actions/settingsActions";
 import vaultActions from "../../store/actions/vaultActions";
-import { generatePassword } from "../../utils";
+import { generatePassword, getSecret } from "../../utils";
 
 import { VaultTableBody } from "./vaultTableBody";
 import { InfoDialog } from "../dialogs/infoDialog";
@@ -30,6 +31,12 @@ export function Vault() {
   const { openAddDialog } = dialogActions;
   const { openSettings } = settingsActions;
   const { setVault } = vaultActions;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!getSecret()) navigate("/apps/knox/login");
+  }, []);
 
   useEffect(() => {
     urbitApi
@@ -83,10 +90,10 @@ export function Vault() {
   return (
     <>
       <InfoDialog open={showInfo} setOpen={setShowInfo} />
-      <Settings />
       <AddDialog password={showGenerated ? generated : null} />
       <EditDialog />
       <DeleteDialog />
+      <Settings />
 
       {/*
        * TODO: should refactor the small screen view so so much space
@@ -166,7 +173,7 @@ export function Vault() {
         <div className="flex p-2 sm:p-4 justify-between border-l border-r border-black border-t-4 bg-white sm:rounded-t-lg">
           <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle flex">
             knox
-            <span className="hidden md:inline"> - your password vault</span>
+            <span className="hidden md:inline ml-1">- your password vault</span>
             <button className="px-2" onClick={() => setShowInfo(true)}>
               <ion-icon name="information-circle-outline" />
             </button>
