@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useContext, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 

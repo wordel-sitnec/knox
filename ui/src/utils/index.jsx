@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 import AES from "crypto-js/aes";
 import CryptoJS from "crypto-js";

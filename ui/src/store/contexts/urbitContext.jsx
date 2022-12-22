@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { createContext, useState } from "react";
 import Urbit from "@urbit/http-api";
 

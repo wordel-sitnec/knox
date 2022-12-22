@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { actionTypes } from "../actions/dialogActions";
 
 export const dialogReducer = (state, action) => {

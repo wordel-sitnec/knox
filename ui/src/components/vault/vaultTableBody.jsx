@@ -1,6 +1,4 @@
-// @ts-nocheck
-import React, { useContext } from "react";
-import { VaultContext } from "../../store/contexts/vaultContext";
+import React from "react";
 
 import { VaultTableRow } from "./vaultTableRow";
 

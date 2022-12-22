@@ -1,4 +1,3 @@
-// @ts-nocheck
 export const actionTypes = {
   OPEN_SETTINGS: "OPEN_SETTINGS",
   CLOSE_SETTINGS: "CLOSE_SETTINGS",

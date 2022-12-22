@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tab } from "@headlessui/react";

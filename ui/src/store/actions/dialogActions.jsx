@@ -1,4 +1,3 @@
-// @ts-nocheck
 export const actionTypes = {
   OPEN_DELETE: "OPEN_DELETE",
   CLOSE_DELETE: "CLOSE_DELETE",

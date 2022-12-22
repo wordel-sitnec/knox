@@ -1,5 +1,4 @@
-// @ts-nocheck
-import React, { useState } from "react";
+import React from "react";
 import { Dialog } from "@headlessui/react";
 
 export const InfoDialog = (props) => {

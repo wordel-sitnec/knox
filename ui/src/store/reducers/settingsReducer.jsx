@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { actionTypes } from "../actions/settingsActions";
 
 export const settingsReducer = (state, action) => {

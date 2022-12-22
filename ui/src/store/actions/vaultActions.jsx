@@ -1,4 +1,3 @@
-// @ts-nocheck
 export const actionTypes = {
   SET_VAULT: "SET_VAULT",
 };

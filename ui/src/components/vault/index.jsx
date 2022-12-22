@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useContext, useState, useEffect } from "react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";

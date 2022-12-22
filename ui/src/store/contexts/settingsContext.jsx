@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { createContext, useReducer } from "react";
 import { settingsReducer } from "../reducers/settingsReducer";
 

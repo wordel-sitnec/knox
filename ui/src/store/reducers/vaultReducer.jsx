@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { actionTypes } from "../actions/vaultActions";
 import { aesDecrypt, getSecret, parseNumber } from "../../utils";
 
