@@ -71,9 +71,7 @@ export function Vault() {
           path: "/enty",
         })
         .then((res) => {
-          console.log("scry", res.enty);
           setGenerated(generatePassword(res.enty));
-          // console.log("entys", entys);
         })
         // TODO: handle this error?
         .catch((err) => console.log("err", err));
@@ -114,18 +112,6 @@ export function Vault() {
       setShowGenerated(false);
     }
   }, [dialogState, settingsState]);
-
-  // TODO: this is working, but do I need it? its not doing anything yet
-  // const handleScry = () => {
-  //   urbitApi
-  //     .scry({
-  //       app: "knox",
-  //       path: "/enty",
-  //     })
-  //     .then((res) => console.log("res", res))
-  //     // TODO: handle this error?
-  //     .catch((err) => console.log("err", err));
-  // };
 
   return (
     <>

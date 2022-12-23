@@ -28,7 +28,6 @@ export function App() {
   }, []);
 
   const handleEvent = (upd) => {
-    if (upd.enty) console.log("enty", upd);
     if (upd.init) {
       console.log("init", upd);
       // read settings and redirect to welcome if necessary
