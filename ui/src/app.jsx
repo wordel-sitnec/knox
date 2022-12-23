@@ -36,8 +36,7 @@ export function App() {
       );
       const settings = upd.init.settings;
       settingsDispatch(setSettings(settings));
-      if (setsObj.showWelcome === "true" && settingsState.showWelcome)
-        navigate("/apps/knox/welcome");
+      if (setsObj.showWelcome === "true") navigate("/apps/knox/welcome");
     }
   };
 

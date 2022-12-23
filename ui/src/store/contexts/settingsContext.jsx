@@ -6,7 +6,6 @@ const { Provider } = SettingsContext;
 
 export const defaultState = {
   settingsOpen: false,
-  showWelcome: true,
 };
 
 export const SettingsProvider = ({ children }) => {
