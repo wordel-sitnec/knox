@@ -33,9 +33,8 @@ export const aesDecrypt = (string, secret) => {
   return decrypted;
 };
 
-// TODO: replace math.floors/math.random with get ent from urbit
+// TODO: this works but is it actually good?
 String.prototype.pick = function (eny, min, max) {
-  console.log("eny", eny);
   let n,
     chars = "";
 
@@ -47,7 +46,7 @@ String.prototype.pick = function (eny, min, max) {
 
   for (let i = 0; i < n; i++) {
     // chars += this.charAt(Math.floor(Math.random() * this.length));
-    chars += this.charAt(Math.floor(parseFloat(`0.${eny})`) * this.length));
+    chars += this.charAt(Math.floor(parseFloat(eny[i] / 10) * this.length));
   }
 
   return chars;
@@ -98,7 +97,7 @@ export const generatePassword = (enty) => {
   password += lowercase.pick(entyArr.join("").shuffle(), 1);
   password += uppercase.pick(entyArr.join("").shuffle(), 1);
   password += numbers.pick(entyArr.join("").shuffle(), 1);
-  password += all.pick(4, 12);
+  password += all.pick(entyArr.join(""), 4, 12);
   password = password.shuffle();
   return password;
 };
