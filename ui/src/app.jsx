@@ -13,7 +13,7 @@ export function App() {
   const navigate = useNavigate();
 
   const [urbitApi] = useContext(UrbitContext);
-  const [settingsState, settingsDispatch] = useContext(SettingsContext);
+  const [, settingsDispatch] = useContext(SettingsContext);
   const { setSettings } = settingsActions;
 
   useEffect(() => {
