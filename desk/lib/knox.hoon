@@ -10,6 +10,7 @@
       [%edit (ot ~[id+ni website+so username+so password+so])]
       [%del (ot ~[id+ni])]
       [%sett (ot ~[setting-key+so setting-val+so])]
+      [%gen (ot ~[enty+ni])]
   ==
 ++  enjs-update
   =,  enjs:format
@@ -33,7 +34,9 @@
             ['id' (numb id.upd)]
         ==
            %del  (frond 'del' (numb id.upd))
+           %enty  (frond 'enty' (numb enty.upd))
            %sett  !!
+           %gen  !!
            %vault  (frond 'vault' a+(turn ~(tap by vault.upd) vault))
            %init
         %+  frond  'init'

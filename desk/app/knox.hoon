@@ -44,6 +44,10 @@
       ::
       %edit
     `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
+      %gen
+    :_
+      this(vault vault)
+    [%give %fact ~[/updates] %knox-update !>(`update`[%enty `enty`(~(rad og eny:bowl) (pow 2 32))])]~
       %sett
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
     :: removed all the updates, sample is below 
@@ -69,6 +73,10 @@
     :^  ~  ~  %knox-update
     !>  ^-  update
     [%vault vault]
+      [%x %enty ~]
+    :^  ~  ~  %knox-update
+    !>  ^-  update
+    [%enty (~(rad og eny:bowl) (pow 2 32))]
    ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def

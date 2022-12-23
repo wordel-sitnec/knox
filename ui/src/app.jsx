@@ -1,13 +1,13 @@
 import React, { useEffect, useContext } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+
 import { UrbitContext } from "./store/contexts/urbitContext";
 import { SettingsContext } from "./store/contexts/settingsContext";
 import settingsActions from "./store/actions/settingsActions";
 
-// components
-import { Vault } from "./components/vault";
 import { WelcomeDialog } from "./components/dialogs/welcomeDialog";
 import { Login } from "./components/dialogs/login";
+import { Vault } from "./components/vault";
 
 export function App() {
   const navigate = useNavigate();
@@ -36,7 +36,8 @@ export function App() {
       );
       const settings = upd.init.settings;
       settingsDispatch(setSettings(settings));
-      if (setsObj.showWelcome === "true") navigate("/apps/knox/welcome");
+      // TODO: need to add this to default state in agent.. how
+      if (setsObj?.showWelcome === "true") navigate("/apps/knox/welcome");
     }
   };
 

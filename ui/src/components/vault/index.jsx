@@ -87,6 +87,18 @@ export function Vault() {
     }
   }, [dialogState, settingsState]);
 
+  // TODO: this is working, but do I need it? its not doing anything yet
+  // const handleScry = () => {
+  //   urbitApi
+  //     .scry({
+  //       app: "knox",
+  //       path: "/enty",
+  //     })
+  //     .then((res) => console.log("res", res))
+  //     // TODO: handle this error?
+  //     .catch((err) => console.log("err", err));
+  // };
+
   return (
     <>
       <InfoDialog open={showInfo} setOpen={setShowInfo} />
