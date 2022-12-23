@@ -30,9 +30,9 @@
         :~  ['website' s+website.upd]
             ['username' s+username.upd]
             ['password' s+password.upd]
-            ['id' s+(scot %ud id.upd)]
+            ['id' (numb id.upd)]
         ==
-           %del  (frond 'del' s+(scot %ud id.upd))
+           %del  (frond 'del' (numb id.upd))
            %sett  !!
            %vault  (frond 'vault' a+(turn ~(tap by vault.upd) vault))
            %init
