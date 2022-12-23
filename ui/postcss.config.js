@@ -4,3 +4,11 @@ module.exports = {
     require('autoprefixer'),
   ]
 }
+
+// TODO: try the below once app is working again 
+// module.exports = {
+//   plugins: {
+//     tailwindcss: {},
+//     autoprefixer: {},
+//   }
+// }
