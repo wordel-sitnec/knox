@@ -34,7 +34,8 @@ export const aesDecrypt = (string, secret) => {
 };
 
 // TODO: replace math.floors/math.random with get ent from urbit
-String.prototype.pick = function (min, max) {
+String.prototype.pick = function (eny, min, max) {
+  console.log("eny", eny);
   let n,
     chars = "";
 
@@ -45,7 +46,8 @@ String.prototype.pick = function (min, max) {
   }
 
   for (let i = 0; i < n; i++) {
-    chars += this.charAt(Math.floor(Math.random() * this.length));
+    // chars += this.charAt(Math.floor(Math.random() * this.length));
+    chars += this.charAt(Math.floor(parseFloat(`0.${eny})`) * this.length));
   }
 
   return chars;
@@ -69,7 +71,21 @@ String.prototype.shuffle = function () {
 };
 
 // for creating a password
-export const generatePassword = () => {
+export const generatePassword = (enty) => {
+  let entyArr = [];
+  const stringArr = enty.toString().split("");
+
+  const getNonZero = (arr, i) => {
+    if (parseInt(arr[i]) === undefined) return parseInt(getNonZero(arr, 0));
+    return parseInt(arr[i]) === 0
+      ? parseInt(getNonZero(arr, i + 1))
+      : parseInt(arr[i]);
+  };
+
+  stringArr.forEach((enty, i) => {
+    entyArr.push(getNonZero(stringArr, i));
+  });
+
   let specials = "!@#$%^&*()_+{}:\"<>?|[];',./`~";
   let lowercase = "abcdefghijklmnopqrstuvwxyz";
   let uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -78,10 +94,10 @@ export const generatePassword = () => {
   let all = specials + lowercase + uppercase + numbers;
 
   let password = "";
-  password += specials.pick(1);
-  password += lowercase.pick(1);
-  password += uppercase.pick(1);
-  password += numbers.pick(1);
+  password += specials.pick(entyArr.join("").shuffle(), 1);
+  password += lowercase.pick(entyArr.join("").shuffle(), 1);
+  password += uppercase.pick(entyArr.join("").shuffle(), 1);
+  password += numbers.pick(entyArr.join("").shuffle(), 1);
   password += all.pick(4, 12);
   password = password.shuffle();
   return password;

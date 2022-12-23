@@ -63,7 +63,35 @@ export function Vault() {
 
   const handleDice = () => {
     if (!showGenerated) setShowGenerated(true);
-    setGenerated(generatePassword());
+
+    const handleScry = () => {
+      urbitApi
+        .scry({
+          app: "knox",
+          path: "/enty",
+        })
+        .then((res) => {
+          console.log("scry", res.enty);
+          setGenerated(generatePassword(res.enty));
+          // console.log("entys", entys);
+        })
+        // TODO: handle this error?
+        .catch((err) => console.log("err", err));
+    };
+
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          gen: { enty: parseInt(1) },
+        },
+      })
+      .then(handleScry())
+      // TODO: handle this error
+      .catch((err) => console.log("err", err));
+
+    // setGenerated(generatePassword());
   };
 
   useEffect(() => {
