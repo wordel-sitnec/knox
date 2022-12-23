@@ -100,11 +100,11 @@ export function Vault() {
        * isn't taken up by action buttons, search, etc
        */}
       <div
-        className={`flex flex-col min-w-[60%] xl:max-w-[40%] sm:h-screen80 mt-2 sm:mt-8 mx-2 ${
+        className={`flex flex-col min-w-[60%] lg:max-w-[60%] xl:max-w-[40%] mt-2 sm:mt-8 mx-2 ${
           dialogState.addOpen ||
           dialogState.deleteOpen ||
           dialogState.editOpen ||
-          dialogState.settingsOpen
+          settingsState.settingsOpen
             ? "opacity-50"
             : ""
         }`}
@@ -151,12 +151,21 @@ export function Vault() {
           )}
           {/* action buttons */}
           <div className="">
-            {/* TODO: make this button generate a new password and not close if already open */}
             <button className="text-xl font-bold px-2" onClick={handleDice}>
-              <ion-icon name="dice-outline" className="text-xl" />
+              <ion-icon name="dice-outline" />
             </button>
             <button
-              className="text-xl font-bold px-2 hover:scale-120 my-1"
+              className={`text-xl font-bold px-2 hover:scale-120 my-1 ${
+                !vaultState.length &
+                !(
+                  dialogState.addOpen ||
+                  dialogState.deleteOpen ||
+                  dialogState.editOpen ||
+                  settingsState.settingsOpen
+                )
+                  ? "animate-bounce"
+                  : ""
+              }`}
               onClick={() => dialogDispatch(openAddDialog())}
             >
               <ion-icon name="add" />
@@ -207,25 +216,51 @@ export function Vault() {
           </div>
         </div>
         {/* beginning of table */}
-        <div className="overflow-x-auto bg-white border border-t border-black shadow-lg sm:rounded-b-lg sm:h-screen80">
-          <table className="w-full text-gray-400 table-fixed">
-            <colgroup>
-              <col className="w-[25%]" />
-              <col className="w-[30%]" />
-              <col className="w-[20%]" />
-              <col className="w-[8%]" />
-              <col className="w-[12%]" />
-            </colgroup>
-            <thead className="sticky top-0 bg-white z-10">
-              <tr className="text-left bg-gray-200 text-center">
-                <th className="">site</th>
-                <th className="">username</th>
-                <th className="">password</th>
-                <th className="">view</th>
-                <th className="">edit</th>
-              </tr>
-            </thead>
-            <VaultTableBody searchValue={searchValue} vault={vaultState} />
+        <div className="overflow-x-auto bg-white border h-screen70 2xl:h-screen60 border-black shadow-lg sm:rounded-b-lg sm:p-0">
+          <table
+            className={`w-full text-gray-400 table-fixed w-full ${
+              !vaultState.length ? "h-full" : ""
+            }`}
+          >
+            {!vaultState.length ? (
+              <thead className="w-full h-full text-center sm:text-2xl md:text-3xl text-xl align-middle">
+                <tr>
+                  <td className="px-2 pt-20 sm:pt-0">
+                    Get started by clicking the{" "}
+                    <span className="inline-flex align-bottom pb-1">
+                      <ion-icon name="add" />
+                    </span>{" "}
+                    button above <br />
+                    <br />
+                    Click on the{" "}
+                    <span className="inline-flex align-bottom pb-1">
+                      <ion-icon name="dice-outline" />
+                    </span>{" "}
+                    button to generate a password
+                  </td>
+                </tr>
+              </thead>
+            ) : (
+              <>
+                <colgroup>
+                  <col className="w-[25%]" />
+                  <col className="w-[30%]" />
+                  <col className="w-[20%]" />
+                  <col className="w-[8%]" />
+                  <col className="w-[12%]" />
+                </colgroup>
+                <thead className="sticky top-0 bg-white z-10">
+                  <tr className="text-left bg-gray-200 text-center">
+                    <th className="">site</th>
+                    <th className="">username</th>
+                    <th className="">password</th>
+                    <th className="">view</th>
+                    <th className="">edit</th>
+                  </tr>
+                </thead>
+                <VaultTableBody searchValue={searchValue} vault={vaultState} />
+              </>
+            )}
           </table>
         </div>
       </div>

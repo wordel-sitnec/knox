@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    background-color: #D9D6D4;
+}
+
 main {
     /* find a nice dark color for background */
     /* themes in settings - dark mode, other themes */
