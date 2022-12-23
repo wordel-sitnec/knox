@@ -30,6 +30,7 @@ export const AddDialog = (props) => {
 
   // reset form state when modal closes
   useEffect(() => {
+    setSuccess(false);
     setFormState({
       website: "",
       username: "",
@@ -48,8 +49,7 @@ export const AddDialog = (props) => {
   useEffect(() => {
     if (success)
       setTimeout(() => {
-        setSuccess(false);
-        setFormState({ website: "", username: "", password: "" });
+        dialogDispatch(closeAddDialog());
       }, 5000);
     if (error) setTimeout(() => setError(false), 7000);
   }, [success, error]);

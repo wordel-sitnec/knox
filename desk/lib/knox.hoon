@@ -48,11 +48,11 @@
     ++  vault
       |=  entry=[id=@ud [website=@t username=@t password=@t updated=@da]]
       %-  pairs
-      :~  ['id' s+(scot %ud id.entry)]
+      :~  ['id' (numb id.entry)]
           ['website' s+(scot %tas website.entry)]
           ['username' s+(scot %tas username.entry)]
           ['password' s+(scot %tas password.entry)]
-          ['updated' s+(scot %da updated.entry)]
+          ['updated' (time updated.entry)]
       ==
   --
 --

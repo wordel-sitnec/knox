@@ -1,5 +1,5 @@
 import { actionTypes } from "../actions/vaultActions";
-import { aesDecrypt, getSecret, parseNumber } from "../../utils";
+import { aesDecrypt, getSecret } from "../../utils";
 
 export const vaultReducer = (state, action) => {
   if (!action || !action.type) return state;
@@ -11,14 +11,15 @@ export const vaultReducer = (state, action) => {
       let newVault = [];
       vault.forEach((entry) => {
         newVault.push({
-          id: parseNumber(entry.id),
+          id: entry.id,
           website: aesDecrypt(entry.website, getSecret()),
           username: aesDecrypt(entry.username, getSecret()),
           password: aesDecrypt(entry.password, getSecret()),
-          updated: entry.updated,
+          // TODO: do I want date an object or a string? .toString(), other options
+          updated: new Date(entry.updated),
         });
       });
-      return newVault;
+      return newVault.sort((a, b) => (a.website > b.website ? 1 : -1));
     }
   }
 };

@@ -28,6 +28,7 @@ export const EditDialog = () => {
   const [showPass, setShowPass] = useState(false);
 
   useEffect(() => {
+    setSuccess(false);
     setFormState({
       website: dialogState.editWebsite,
       username: dialogState.editUsername,
@@ -44,7 +45,7 @@ export const EditDialog = () => {
 
   // clear error and success messages after 5 seconds
   useEffect(() => {
-    if (success) setTimeout(() => setSuccess(false), 5000);
+    if (success) setTimeout(() => dialogDispatch(closeEditDialog()), 5000);
     if (error) setTimeout(() => setError(false), 7000);
   }, [success, error]);
 
