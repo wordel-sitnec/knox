@@ -76,8 +76,6 @@ export const EditDialog = () => {
   };
 
   const handleError = (err) => {
-    // TODO: log for error, remove later
-    console.log("err", err);
     setLoading(false);
     setError(true);
   };

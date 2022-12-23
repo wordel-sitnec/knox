@@ -2,15 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
-
 import { password } from "./password";
 
 // TODO: need to get settings from settings context, change what happens with delete button accordingly
 // show warning ? modal : just delete
 export function VaultTableRow(props) {
-  // TODO: remove mocks
   const { entry } = props;
-
   const [, dialogDispatch] = useContext(DialogContext);
   const { openDeleteDialog, openEditDialog } = dialogActions;
 
@@ -106,14 +103,12 @@ export function VaultTableRow(props) {
           {/* TODO: Delete button here next to edit now. Should come back to this UX */}
           <div className="whitespace-nowrap">
             <button
-              // TODO: make sure the arg below is correct shape - see dialog actions
               onClick={() => dialogDispatch(openEditDialog(entry))}
               className="pr-1 md:px-2"
             >
               <ion-icon name="pencil" />
             </button>
             <button
-              // TODO: make sure the arg below is correct shape - need id
               onClick={() => dialogDispatch(openDeleteDialog(entry.id))}
               className="pl-1 md:px-2"
             >

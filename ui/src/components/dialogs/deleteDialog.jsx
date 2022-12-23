@@ -48,8 +48,6 @@ export const DeleteDialog = () => {
   };
 
   const handleError = (err) => {
-    // TODO: remove log
-    console.log("err", err);
     setLoading(false);
     setError(true);
   };

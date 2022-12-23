@@ -45,7 +45,7 @@ export const AddDialog = (props) => {
     else setDisabled(true);
   }, [formState]);
 
-  // clear error and success messages after 5 seconds
+  // clear error after 7 seconds/close on success after 5 seconds
   useEffect(() => {
     if (success)
       setTimeout(() => {
@@ -74,7 +74,6 @@ export const AddDialog = (props) => {
   };
 
   const handleSuccess = (res) => {
-    // TODO: log for dev, remove later
     setSuccess(true);
     setDisabled(true);
     setLoading(false);
@@ -82,8 +81,6 @@ export const AddDialog = (props) => {
   };
 
   const handleError = (err) => {
-    // TODO: log for error, remove later
-    console.log("err", err);
     setLoading(false);
     setError(true);
   };

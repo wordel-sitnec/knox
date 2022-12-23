@@ -115,7 +115,6 @@ export function Vault() {
             showGenerated ? "justify-between" : "justify-end"
           }`}
         >
-          {/* TODO: close this when add dialog is entered and then closed */}
           {showGenerated && (
             <div className="w-[70%] sm:max-w-[50%] flex">
               <button
@@ -133,7 +132,7 @@ export function Vault() {
                     className="pl-2"
                   />
                 )}
-                {/* TODO: need to have some save the new password flow, what though */}
+                {/* TODO: have a save password flow, but could be improved */}
                 <button
                   className="text-xl font-bold pl-2"
                   onClick={() => dialogDispatch(openAddDialog())}
