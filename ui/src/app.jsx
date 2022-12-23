@@ -13,8 +13,27 @@ export function App() {
   const navigate = useNavigate();
 
   const [urbitApi] = useContext(UrbitContext);
-  const [, settingsDispatch] = useContext(SettingsContext);
+  const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const { setSettings } = settingsActions;
+
+  const getSettings = () => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/settings",
+      })
+      .then((res) => handleSettings(res.settings))
+      // TODO: handle this error?
+      .catch((err) => console.log("err", err));
+  };
+
+  const handleSettings = (settings) => {
+    const showWelcome = settings.find((set) => {
+      return Object.keys(set).includes("showWelcome");
+    });
+    settingsDispatch(setSettings(settings));
+    if (showWelcome.showWelcome === "true") navigate("/apps/knox/welcome");
+  };
 
   useEffect(() => {
     urbitApi
@@ -29,15 +48,14 @@ export function App() {
 
   const handleEvent = (upd) => {
     if (upd.init) {
+      if (!upd.init.settings.length) getSettings();
       console.log("init", upd);
-      // read settings and redirect to welcome if necessary
-      const setsObj = upd.init.settings.find((set) =>
-        Object.keys(set).includes("showWelcome")
-      );
-      const settings = upd.init.settings;
-      settingsDispatch(setSettings(settings));
-      // TODO: need to add this to default state in agent.. how
-      if (setsObj?.showWelcome === "true") navigate("/apps/knox/welcome");
+      const showWelcome = upd.init.settings.find((set) => {
+        return Object.keys(set).includes("showWelcome");
+      });
+      if (showWelcome && showWelcome.showWelcome === "true")
+        navigate("/apps/knox/welcome");
+      // TODO: handle other events here?
     }
   };
 

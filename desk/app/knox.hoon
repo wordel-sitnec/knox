@@ -60,7 +60,10 @@
   |=  =path
   ^-  (quip card _this)
   ?>  ?=([%updates ~] path)
-  :_  this
+  :_  
+    ?:  (~(has by settings) `@tas`'showWelcome')
+      this
+    this(settings (~(put by settings) `setting-key`'showWelcome' [`setting-val`'true']))
   [%give %fact ~ %knox-update !>(`update`[%init vault settings])]~
 ::
 ++  on-peek
@@ -73,6 +76,10 @@
     :^  ~  ~  %knox-update
     !>  ^-  update
     [%vault vault]
+      [%x %settings ~]
+    :^  ~  ~  %knox-update
+    !>  ^-  update
+    [%settings settings]
       [%x %enty ~]
     :^  ~  ~  %knox-update
     !>  ^-  update

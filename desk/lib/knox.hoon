@@ -18,6 +18,8 @@
   ^-  json
   |^
   ?-  -.upd
+           %gen  !!
+           %sett  !!
            %add  
         %+  frond  'add'
         %-  pairs
@@ -35,8 +37,7 @@
         ==
            %del  (frond 'del' (numb id.upd))
            %enty  (frond 'enty' (numb enty.upd))
-           %sett  !!
-           %gen  !!
+           %settings  (frond 'settings' a+(turn ~(tap by settings.upd) settings))
            %vault  (frond 'vault' a+(turn ~(tap by vault.upd) vault))
            %init
         %+  frond  'init'
@@ -46,7 +47,7 @@
         ==
     ==
     ++  settings
-      |=  setting=[@t @t]
+      |=  setting=[@tas @t]
       (frond `@t`-.setting s+(scot %tas +.setting))
     ++  vault
       |=  entry=[id=@ud [website=@t username=@t password=@t updated=@da]]

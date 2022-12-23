@@ -6,7 +6,7 @@
 +$  id        @ud  :: change this to dif type
 +$  entry  [=website =username =password =updated]
 +$  enty  @ud
-+$  setting-key  @t
++$  setting-key  @tas
 +$  setting-val  @t
 :: poke actions
 +$  action
@@ -20,6 +20,7 @@
   $%  [%init =vault =settings]
       [%vault =vault]
       [%enty =enty]
+      [%settings =settings]
       action
   ==
 :: types for agent state
