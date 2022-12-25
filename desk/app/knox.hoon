@@ -44,16 +44,13 @@
       ::
       %edit
     `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
+      %sett
+    `this(settings (~(put by settings) setting-key.act [setting-val.act]))
+    :: below is an example of sending an update with :_
       %gen
     :_
       this(vault vault)
     [%give %fact ~[/updates] %knox-update !>(`update`[%enty `enty`(~(rad og eny:bowl) (pow 2 32))])]~
-      %sett
-    `this(settings (~(put by settings) setting-key.act [setting-val.act]))
-    :: removed all the updates, sample is below 
-    :: %edit
-    :: :_  this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
-    :: [%give %fact ~[/updates] %knox-update !>(`update`[%vault vault])]~
  ==
 ::
 ++  on-watch
@@ -71,7 +68,6 @@
   ^-  (unit (unit cage))
   ?>  (team:title our.bowl src.bowl)
   ?+  path  (on-peek:def path)
-      [%x %generate ~]  ``noun+!>(eny.bowl)
       [%x %vault ~]
     :^  ~  ~  %knox-update
     !>  ^-  update

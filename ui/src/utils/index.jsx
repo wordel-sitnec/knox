@@ -33,7 +33,7 @@ export const aesDecrypt = (string, secret) => {
   return decrypted;
 };
 
-// TODO: this works but is it actually good?
+// TODO: this works but is it actually good? I think no
 String.prototype.pick = function (eny, min, max) {
   let n,
     chars = "";

@@ -120,8 +120,9 @@ export const WelcomeDialog = () => {
             </a>{" "}
             <br />
             <br />
-            Due to this, Knox alpha includes design decisions that will change
-            as due diligence in the broader urbit ecosystem is completed (see{" "}
+            Due to this, Knox alpha includes design decisions that will change,
+            like client-side password generation, as due diligence in the
+            broader urbit ecosystem is completed (see{" "}
             <a
               href="https://roadmap.urbit.org/project/userspace-permissioning"
               target="_blank"
